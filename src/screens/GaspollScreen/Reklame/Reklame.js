@@ -146,7 +146,7 @@ const Reklame = ({ navigation, route }) => {
           PlaceholderContent={
             <ActivityIndicator
               size={'large'}
-              color={colorApp.primaryGaspoll}
+              color={colorApp.button.primary}
               style={{
                 alignSelf: 'center',
               }}
@@ -246,7 +246,7 @@ const Reklame = ({ navigation, route }) => {
         >
           <ActivityIndicator
             size={'large'}
-            color={colorApp.primaryGaspoll}
+            color={colorApp.button.primary}
             style={{
               alignSelf: 'center',
             }}

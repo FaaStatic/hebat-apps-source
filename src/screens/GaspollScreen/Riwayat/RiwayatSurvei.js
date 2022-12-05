@@ -26,7 +26,7 @@ import {
 } from '../../../statemanager/HeaderDateState/HeaderDateSlicer';
 import { Api } from '../../../util/ApiManager';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { stringApp } from '../../../util/globalvar';
+import { colorApp, stringApp } from '../../../util/globalvar';
 import RNFetchBlob from 'rn-fetch-blob';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { useFocusEffect } from '@react-navigation/native';
@@ -346,6 +346,7 @@ export default function RiwayatSurvey({ navigation, route }) {
       <View>
         <DateTimePicker
           testID="dateTimePicker"
+          display='spinner'
           value={status === 'start' ? changeDateStartTemp : changeDateEndTemp}
           mode={'date'}
           onChange={(event, selectedDate) => {
@@ -357,7 +358,7 @@ export default function RiwayatSurvey({ navigation, route }) {
         <TouchableOpacity
           style={{
             margin: 16,
-            backgroundColor: '#FC572C',
+            backgroundColor: colorApp.button.primary,
             justifyContent: 'center',
             padding: 8,
           }}
@@ -405,7 +406,7 @@ export default function RiwayatSurvey({ navigation, route }) {
           PlaceholderContent={
             <ActivityIndicator
               size={'large'}
-              color={'#FC572C'}
+              color={colorApp.button.primary}
               style={{
                 alignSelf: 'center',
               }}
@@ -489,7 +490,7 @@ export default function RiwayatSurvey({ navigation, route }) {
           width: '100%',
         }}
       >
-        <ActivityIndicator color="'#FC572C'" size={'small'} style={{ alignSelf: 'center' }} />
+        <ActivityIndicator color={colorApp.button.primary} size={'small'} style={{ alignSelf: 'center' }} />
       </View>;
     } else {
       return <></>;
@@ -528,7 +529,7 @@ export default function RiwayatSurvey({ navigation, route }) {
             style={{
               alignSelf: 'center',
             }}
-            color={'#FC572C'}
+            color={colorApp.button.primary}
           />
         </View>
       ) : (

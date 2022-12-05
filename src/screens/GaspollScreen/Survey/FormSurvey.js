@@ -23,7 +23,7 @@ import { Api } from '../../../util/ApiManager';
 import { launchCamera } from 'react-native-image-picker';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { stringApp } from '../../../util/globalvar';
+import { colorApp, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { HeaderWithoutHistory } from '../../Komponen/HeaderWithoutHistory';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
@@ -556,7 +556,7 @@ export default function FormSurvey({ navigation, route }) {
           }}
         >
           <ActivityIndicator
-            color={'#FC572C'}
+            color={colorApp.button.primary}
             size={'large'}
             style={{
               alignSelf: 'center',
@@ -848,7 +848,8 @@ export default function FormSurvey({ navigation, route }) {
             }}
           >
             <MapView
-              ref={mapsLayout}
+            provider={MapView.PROVIDER_GOOGLE}
+            ref={mapsLayout}
               style={{
                 flex: 1,
               }}
@@ -906,9 +907,6 @@ export default function FormSurvey({ navigation, route }) {
                 }}
                 pinColor="blue"
                 title="You are here"
-                onPointerEnter={() => {
-                  console.log('test');
-                }}
               />
             </MapView>
             <TouchableOpacity

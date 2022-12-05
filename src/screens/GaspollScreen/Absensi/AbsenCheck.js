@@ -172,7 +172,7 @@ const AbsenCheck = ({ navigation, route }) => {
       >
         <ActivityIndicator
           style={{ alignSelf: 'center' }}
-          color={colorApp.primaryGaspoll}
+          color={colorApp.button.primary}
           size={'large'}
         />
       </View>
@@ -206,7 +206,9 @@ const AbsenCheck = ({ navigation, route }) => {
           marginTop: ViewHeight / 1.6,
         }}
       >
+       
         <MapView
+          provider={MapView.PROVIDER_GOOGLE}
           ref={mapsLayout}
           initialRegion={{
             latitude: latitude,

@@ -20,7 +20,7 @@ export const HeaderWithChip = ({ Title, back, selectedItem = null }) => {
           flexDirection: 'row',
           justifyContent: 'flex-start',
 
-          height: StatusBar.currentHeight + 20,
+    height: Platform.OS === "ios" ? StatusBar.currentHeight+80 :StatusBar.currentHeight + 20,
           marginStart: 16,
           marginTop: 8,
         }}
@@ -100,7 +100,8 @@ const style = StyleSheet.create({
   container: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: StatusBar.currentHeight + 88,
+    paddingTop:Platform.OS === "ios" ? 28 : 0,
+    height: Platform.OS === "ios" ? StatusBar.currentHeight+180 :StatusBar.currentHeight + 88,
   },
   textTitle: {
     fontSize: 20,

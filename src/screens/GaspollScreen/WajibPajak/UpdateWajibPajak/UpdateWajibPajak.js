@@ -369,7 +369,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
           PlaceholderContent={
             <ActivityIndicator
               size={'large'}
-              color={colorApp.primaryGaspoll}
+              color={colorApp.button.primary}
               style={{ alignSelf: 'center' }}
             />
           }
@@ -421,7 +421,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
             width: '100%',
           }}
         >
-          <ActivityIndicator color="'#FC572C'" size={'small'} style={{ alignSelf: 'center' }} />
+          <ActivityIndicator color={colorApp.button.primary} size={'small'} style={{ alignSelf: 'center' }} />
         </View>
       );
     } else {
@@ -490,7 +490,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
           }}
         >
           <ActivityIndicator
-            color={'#FC572C'}
+            color={colorApp.button.primary}
             size={'large'}
             style={{
               alignSelf: 'center',
@@ -551,7 +551,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                 <ActivityIndicator
                   style={{ alignSelf: 'center' }}
                   size={'large'}
-                  color={colorApp.primaryGaspoll}
+                  color={colorApp.button.primary}
                 />
               }
             />
@@ -745,6 +745,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                   style={{
                     flex: 1,
                   }}
+                  provider={MapView.PROVIDER_GOOGLE}
                   initialRegion={{
                     latitude: latitude,
                     longitude: longitude,
@@ -791,9 +792,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                     }}
                     pinColor="blue"
                     title="You are here"
-                    onPointerEnter={() => {
-                      console.log('test');
-                    }}
+                   
                   />
                 </MapView>
                 <TouchableOpacity

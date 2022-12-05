@@ -237,7 +237,7 @@ const RiwayatReklame = ({ navigation, route }) => {
           }}
           PlaceholderContent={
             <ActivityIndicator
-              color={colorApp.primaryGaspoll}
+              color={colorApp.button.primary}
               size={'large'}
               style={{
                 alignSelf: 'center',
@@ -317,7 +317,7 @@ const RiwayatReklame = ({ navigation, route }) => {
           width: '100%',
         }}
       >
-        <ActivityIndicator color="'#FC572C'" size={'small'} style={{ alignSelf: 'center' }} />
+        <ActivityIndicator color={colorApp.button.primary} size={'small'} style={{ alignSelf: 'center' }} />
       </View>;
     } else {
       return <></>;
@@ -329,6 +329,7 @@ const RiwayatReklame = ({ navigation, route }) => {
       <View>
         <DateTimePicker
           testID="dateTimePicker"
+          display='spinner'
           value={status === 'start' ? startDate : endDate}
           mode={'date'}
           onChange={(event, selectedDate) => {
@@ -343,7 +344,7 @@ const RiwayatReklame = ({ navigation, route }) => {
           }}
           style={{
             margin: 16,
-            backgroundColor: '#FC572C',
+            backgroundColor: colorApp.button.primary,
             justifyContent: 'center',
             padding: 8,
           }}

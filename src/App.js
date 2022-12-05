@@ -23,16 +23,16 @@ const App = () => {
     NotificationUtil.channelExistCheck();
     NotificationUtil.firebaseBackgroundHandlerNotification();
     if (Platform.OS === 'ios') {
-      // PushNotificationIOS.addEventListener(
-      //   stringApp.typeNotif,
-      //   NotificationUtil.onRemoteNotification
-      // );
-      // var handler = NotificationUtil.notificationHandler();
+      PushNotificationIOS.addEventListener(
+        stringApp.typeNotif,
+        NotificationUtil.onRemoteNotification
+      );
+      var handler = NotificationUtil.notificationHandler();
 
-      // return () => {
-      //   PushNotificationIOS.removeEventListener(stringApp.typeNotif);
-      //   handler;
-      // };
+      return () => {
+        PushNotificationIOS.removeEventListener(stringApp.typeNotif);
+        handler;
+      };
     } else {
       NotificationUtil.notificationHandler();
     }

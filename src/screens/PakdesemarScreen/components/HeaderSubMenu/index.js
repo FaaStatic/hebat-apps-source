@@ -10,7 +10,7 @@ import { colorApp, fontsCustom } from '../../../../util/globalvar';
 import { Button } from './../index';
 const height = Dimensions.get('window').height;
 
-const HeaderSubMenu = ({ gapCustom, title, onPress, icon, type, color, background }) => {
+const HeaderSubMenu = ({ absolute,gapCustom, title, onPress, icon, type, color, background }) => {
   const APPBAR_HEIGHT = gapCustom == undefined ? 140 : 100;
   return (
     <>

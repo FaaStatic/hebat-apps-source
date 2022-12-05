@@ -24,7 +24,7 @@ import { Api } from '../../../util/ApiManager';
 import { launchCamera } from 'react-native-image-picker';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { stringApp } from '../../../util/globalvar';
+import { colorApp, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -565,6 +565,7 @@ export default function Pendataan({ navigation, route }) {
             style={{
               flex: 1,
             }}
+            provider={MapView.PROVIDER_GOOGLE}
             initialRegion={{
               latitude: latitude,
               longitude: longitude,
@@ -615,9 +616,7 @@ export default function Pendataan({ navigation, route }) {
               }}
               pinColor="blue"
               title="You are here"
-              onPointerEnter={() => {
-                console.log('test');
-              }}
+            
             />
           </MapView>
           <TouchableOpacity
@@ -803,7 +802,7 @@ export default function Pendataan({ navigation, route }) {
             checkStatus();
           }}
           style={{
-            backgroundColor: '#FC572C',
+            backgroundColor: colorApp.gradientSatu,
             justifyContent: 'center',
             flexDirection: 'column',
             borderRadius: 4,
@@ -846,7 +845,7 @@ export default function Pendataan({ navigation, route }) {
               }}
             >
               <ActivityIndicator
-                color={'#FC572C'}
+                color={colorApp.button.primary}
                 size={'large'}
                 style={{
                   alignSelf: 'center',

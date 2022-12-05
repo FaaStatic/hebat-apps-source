@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Api } from '../../../util/ApiManager';
-import { stringApp } from '../../../util/globalvar';
+import { colorApp, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import GapList from '../../Komponen/GapList';
@@ -155,7 +155,7 @@ const Notification = ({ navigation, route }) => {
           PlaceholderContent={
             <ActivityIndicator
               size={'large'}
-              color={'#FC572C'}
+              color={colorApp.button.primary}
               style={{
                 alignSelf: 'center',
               }}
@@ -227,7 +227,7 @@ const Notification = ({ navigation, route }) => {
         >
           <ActivityIndicator
             size={'large'}
-            color={'#FC572C'}
+            color={colorApp.button.primary}
             style={{
               alignSelf: 'center',
             }}
@@ -263,7 +263,7 @@ const Notification = ({ navigation, route }) => {
         >
           <ActivityIndicator
             size={'large'}
-            color={'#FC572C'}
+            color={colorApp.button.primary}
             style={{
               alignSelf: 'center',
             }}

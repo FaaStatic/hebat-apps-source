@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from 'react';
+import react, { useEffect, useState,useCallback } from 'react';
 import {
   View,
   Alert,
@@ -12,6 +12,7 @@ import {
   Platform,
   ActivityIndicator,
   ScrollView,
+  InteractionManager
 } from 'react-native';
 import { Button, CustomModal, Gap, HeaderPrimary, Input } from './PakdesemarScreen/components';
 import LinearGradient from 'react-native-linear-gradient';
@@ -21,6 +22,8 @@ import { SessionManager } from '../util/SessionUtil/SessionManager';
 import { colorApp, fontsCustom, stringApp } from '../util/globalvar';
 import { BackgroundLocationServices } from '../util/BackgroundLocationServices';
 import { stylesheet } from './PakdesemarScreen/assets';
+import { MessageUtil } from '../util/MessageUtil';
+import { useFocusEffect } from '@react-navigation/native';
 
 const { height: ViewPortHeight, width: ViewPortWidth } = Dimensions.get('window');
 
@@ -32,19 +35,18 @@ export default function Login({ navigation, route }) {
   const [first, setFirst] = useState(false);
   const [isSecure, setIsSecure] = useState(true);
 
-  useEffect(() => {
-    sessionCheck();
-    const subscribe = navigation.addListener('focus', () => {
+
+  useFocusEffect(useCallback(()=>{
+    const task = InteractionManager.runAfterInteractions(()=>{
+      setLoading(true);
       sessionCheck();
     });
-    return () => {
-      subscribe;
-    };
-  }, [navigation, sessionCheck]);
+    return()=> task.cancel();
+  },[]));
+
 
   const sessionCheck = () => {
     setFirst(true);
-    setLoading(true);
     var data = SessionManager.GetAsObject(stringApp.session);
     if (data !== null) {
       BackgroundLocationServices.startBackgroundServices();
@@ -58,6 +60,14 @@ export default function Login({ navigation, route }) {
   };
 
   const loginResponse = async () => {
+    if(userName.length === 0 && passWord.length === 0){
+      MessageUtil.errorMessage("Username dan password kosong! mohon diisi terlebih dahulu");
+      return;
+    }else if(userName.length === 0 || passWord.length === 0){
+      MessageUtil.errorMessage("Username atau password masih kosong! mohon diisi terlebih dahulu");
+
+      return;
+    }
     dispatch(storeUsername(userName));
     dispatch(storePassword(passWord));
     setLoading(true);
@@ -75,6 +85,23 @@ export default function Login({ navigation, route }) {
   const resetPassword = () => {
     Alert.alert('Hebat!', 'No Action!!');
   };
+  if(loading)
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }}
+    >
+      <ActivityIndicator
+        style={{ alignSelf: 'center' }}
+        color={colorApp.button.primary}
+        size={'large'}
+      />
+    </View>
+  );
   return (
     <View style={style.container}>
       <KeyboardAvoidingView

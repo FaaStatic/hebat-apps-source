@@ -329,7 +329,7 @@ const WajibPajakTutup = ({ navigation, route }) => {
           PlaceholderContent={
             <ActivityIndicator
               size={'large'}
-              color={colorApp.primaryGaspoll}
+              color={colorApp.button.primary}
               style={{ alignSelf: 'center' }}
             />
           }
@@ -381,7 +381,7 @@ const WajibPajakTutup = ({ navigation, route }) => {
             width: '100%',
           }}
         >
-          <ActivityIndicator color="'#FC572C'" size={'small'} style={{ alignSelf: 'center' }} />
+          <ActivityIndicator color={colorApp.button.primary} size={'small'} style={{ alignSelf: 'center' }} />
         </View>
       );
     } else {
@@ -450,7 +450,7 @@ const WajibPajakTutup = ({ navigation, route }) => {
           }}
         >
           <ActivityIndicator
-            color={'#FC572C'}
+            color={colorApp.button.primary}
             size={'large'}
             style={{
               alignSelf: 'center',
@@ -511,7 +511,7 @@ const WajibPajakTutup = ({ navigation, route }) => {
                 <ActivityIndicator
                   style={{ alignSelf: 'center' }}
                   size={'large'}
-                  color={colorApp.primaryGaspoll}
+                  color={colorApp.button.primary}
                 />
               }
             />
@@ -747,7 +747,7 @@ const WajibPajakTutup = ({ navigation, route }) => {
                     }}
                     PlaceholderContent={
                       <ActivityIndicator
-                        color={colorApp.primaryGaspoll}
+                        color={colorApp.button.primary}
                         size={'large'}
                         style={{
                           alignSelf: 'center',
@@ -913,7 +913,7 @@ const WajibPajakTutup = ({ navigation, route }) => {
         >
           <ActivityIndicator
             size={'large'}
-            color={colorApp.primaryGaspoll}
+            color={colorApp.button.primary}
             style={{ alignSelf: 'center' }}
           />
         </Dialog>

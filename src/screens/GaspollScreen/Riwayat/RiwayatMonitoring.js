@@ -5,7 +5,7 @@ import { setShowSearch } from '../../../statemanager/HeaderDateState/HeaderDateS
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { Api } from '../../../util/ApiManager';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { stringApp } from '../../../util/globalvar';
+import { stringApp,colorApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import {
   FlatList,
@@ -214,6 +214,7 @@ const RiwayatMonitoring = ({ navigation, route }) => {
       <View>
         <DateTimePicker
           testID="dateTimePicker"
+          display='spinner'
           value={status === 'start' ? startDate : endDate}
           mode={'date'}
           onChange={(event, selectedDate) => {
@@ -237,7 +238,7 @@ const RiwayatMonitoring = ({ navigation, route }) => {
           }}
           style={{
             margin: 16,
-            backgroundColor: '#FC572C',
+            backgroundColor: colorApp.button.primary,
             justifyContent: 'center',
             padding: 8,
           }}

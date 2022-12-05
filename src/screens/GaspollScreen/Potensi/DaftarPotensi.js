@@ -17,6 +17,7 @@ import { Api } from '../../../util/ApiManager';
 import { MessageUtil } from '../../../util/MessageUtil';
 import LinearGradient from 'react-native-linear-gradient';
 import { useFocusEffect } from '@react-navigation/native';
+import { colorApp } from '../../../util/globalvar';
 
 const { height: ViewHeight, width: ViewWidth } = Dimensions.get('window');
 export default function DaftarPotensi({ navigation, route }) {
@@ -127,6 +128,7 @@ export default function DaftarPotensi({ navigation, route }) {
       <View>
         <DateTimePicker
           testID="dateTimePicker"
+          display='spinner'
           value={status === 'start' ? dateStart : dateEnd}
           mode={'date'}
           onChange={(event, selectedDate) => {
@@ -141,7 +143,7 @@ export default function DaftarPotensi({ navigation, route }) {
           }}
           style={{
             margin: 16,
-            backgroundColor: '#FC572C',
+            backgroundColor: colorApp.button.primary,
             justifyContent: 'center',
             padding: 8,
           }}

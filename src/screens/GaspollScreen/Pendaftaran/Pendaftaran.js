@@ -13,7 +13,7 @@ import { BottomSheet, Image, Dialog } from '@rneui/themed';
 import GapList from '../../Komponen/GapList';
 import { Api } from '../../../util/ApiManager';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { stringApp } from '../../../util/globalvar';
+import { colorApp, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 
 var count = 0;
@@ -130,7 +130,7 @@ export default function Pendaftaran({ navigation, route }) {
           PlaceholderContent={
             <ActivityIndicator
               size={'small'}
-              color={'#FC572C'}
+              color={colorApp.button.primary}
               style={{
                 alignSelf: 'center',
               }}
@@ -203,7 +203,7 @@ export default function Pendaftaran({ navigation, route }) {
         <View>
           <ActivityIndicator
             size={'large'}
-            color={'#FC572C'}
+            color={colorApp.button.primary}
             style={{
               alignSelf: 'center',
             }}
@@ -250,7 +250,7 @@ export default function Pendaftaran({ navigation, route }) {
             style={{
               alignSelf: 'center',
             }}
-            color={'#FC572C'}
+            color={colorApp.button.primary}
           />
         </View>
       ) : (

@@ -515,6 +515,7 @@ const FormReklame = ({ navigation, route }) => {
             style={{
               flex: 1,
             }}
+            provider={MapView.PROVIDER_GOOGLE}
             initialRegion={{
               latitude: Number(modelData.latitude),
               longitude: Number(modelData.longitude),
@@ -569,9 +570,7 @@ const FormReklame = ({ navigation, route }) => {
               }}
               pinColor="blue"
               title="You are here"
-              onPointerEnter={() => {
-                console.log('test');
-              }}
+            
             />
           </MapView>
           {status === null && (

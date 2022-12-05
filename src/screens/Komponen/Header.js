@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, StatusBar, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, StatusBar, StyleSheet, Text, Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
 import { colorApp } from '../../util/globalvar';
@@ -66,7 +66,8 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: StatusBar.currentHeight + 30,
+    paddingTop:Platform.OS === "ios" ? 28 : 0,
+    height: Platform.OS === "ios" ? StatusBar.currentHeight+100 :StatusBar.currentHeight + 30,
   },
   textTitle: {
     fontSize: 20,
