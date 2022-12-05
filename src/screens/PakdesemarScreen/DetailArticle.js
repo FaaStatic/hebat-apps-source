@@ -8,6 +8,8 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import { Skeleton } from '@rneui/themed';
+import LinearGradient from 'react-native-linear-gradient';
 import { colorApp, fontsCustom } from '../../util/globalvar';
 import { stylesheet } from './assets';
 import { Gap, HeaderSubMenu } from './components';
@@ -52,6 +54,7 @@ export default DetailArticle = ({ navigation, route }) => {
   return (
     <>
       <StatusBar backgroundColor={colorApp.header.primary} />
+      <View style={{ height: APPBAR_HEIGHT }} />
       <HeaderSubMenu
         title="Artikel"
         logo={data.image}
@@ -60,7 +63,6 @@ export default DetailArticle = ({ navigation, route }) => {
         background={colorApp.header.secondary}
         onPress={() => navigation.goBack()}
       />
-      <View style={{ height: APPBAR_HEIGHT }} />
       <View
         style={{
           flex: 1,
@@ -70,32 +72,51 @@ export default DetailArticle = ({ navigation, route }) => {
         }}
       >
         {load ? (
-          <>
-            <Gap height={30} />
-            <ActivityIndicator size="large" color={colorApp.header.primary} />
-          </>
+          <><Gap height={30} />
+            <View style={{ marginHorizontal: 25 }}>
+              <Skeleton
+                LinearGradientComponent={LinearGradient}
+                animation="wave"
+                width={'100%'}
+                height={200}
+                variant="rectangular" />
+              <Gap height={20} />
+              <Skeleton
+                LinearGradientComponent={LinearGradient}
+                animation="wave"
+                width={'90%'}
+                height={30}
+                variant="rectangular" />
+              <Gap height={10} />
+              <Skeleton
+                LinearGradientComponent={LinearGradient}
+                animation="wave"
+                width={'50%'}
+                height={20}
+                variant="rectangular" />
+            </View></>
         ) : (
           <View style={[stylesheet.content]}>
             <View style={{ marginHorizontal: 5 }}>
-              <Gap height={10} />
-              <Image
-                source={{
-                  uri:
-                    detail.image != ''
-                      ? detail.image
-                      : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPQNWqRv8vEezVuO_Ooo7Q2BL1mTfsDFGV7BuUj-2bh9N8OrxNPI62tVgrZf0cCGNDK_g&usqp=CAU',
-                }}
-                style={{
-                  borderRadius: 35,
-                  height: 200,
-                }}
-                resizeMode='cover'
-              />
-              <Gap height={20} />
               <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 showsVerticalScrollIndicator={false}
               >
+                <Gap height={10} />
+                <Image
+                  source={{
+                    uri:
+                      detail.image != ''
+                        ? detail.image
+                        : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPQNWqRv8vEezVuO_Ooo7Q2BL1mTfsDFGV7BuUj-2bh9N8OrxNPI62tVgrZf0cCGNDK_g&usqp=CAU',
+                  }}
+                  style={{
+                    borderRadius: 35,
+                    height: 200,
+                  }}
+                  resizeMode='cover'
+                />
+                <Gap height={20} />
                 <Text
                   style={{
                     fontSize: 24,
@@ -108,8 +129,8 @@ export default DetailArticle = ({ navigation, route }) => {
                 <Text>{moment(detail.tgl_news).format('dddd, hh MMMM YYYY')}</Text>
                 <Gap height={10} />
                 <RenderHTML contentWidth={width} source={{ html: detail.keterangan }} />
+                <Gap height={35} />
               </ScrollView>
-              <Gap height={35} />
             </View>
           </View>
         )}

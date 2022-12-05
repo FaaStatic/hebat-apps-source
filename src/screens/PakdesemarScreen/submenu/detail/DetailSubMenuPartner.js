@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, StatusBar, Text, Alert } from 'react-native';
+import { View, StatusBar, Text, Alert, Platform, Linking } from 'react-native';
+import { AppInstalledChecker } from 'react-native-check-app-install';
 import { colorApp } from '../../../../util/globalvar';
 import { stylesheet } from '../../assets';
 import { Gap } from '../../components';
@@ -33,7 +34,22 @@ export default DetailSubMenuPartner = ({ navigation, route }) => {
     }
   };
   const onPressBankPartner = (link) => {
-    Alert.alert('App', `Link Apps ${link} !!`);
+    if (Platform.OS === 'ios') {
+      AppInstalledChecker
+        .checkURLScheme(link.link_app_ios)
+        .then((isInstalled) => {
+          Linking.openURL(`${link.link_app_ios}://app`)
+        })
+        .catch(Linking.openURL('https://apps.apple.com/sg/app/'))
+
+    } else { // Android
+      AppInstalledChecker
+        .checkURLScheme('com.hdb.healthAnd')
+        .then((isInstalled) => {
+          Linking.openURL('hdbhealth://app')
+        })
+        .catch(Linking.openURL(`https://play.google.com/store/apps/details?id=${link.link_app_android}`))
+    }
   };
   const onPressBankPartnerQris = (link) => {
     Alert.alert('App', `Link Qris ${link} !!`);
@@ -42,6 +58,8 @@ export default DetailSubMenuPartner = ({ navigation, route }) => {
     <>
       <StatusBar backgroundColor={colorApp.header.primary} />
       <View style={[stylesheet.container]}>
+        <Gap height={30} />
+        <View style={{ height: APPBAR_HEIGHT }} />
         <HeaderSubMenuDetail
           title=""
           logo={data.image}
@@ -50,8 +68,6 @@ export default DetailSubMenuPartner = ({ navigation, route }) => {
           background={colorApp.header.secondary}
           onPress={() => navigation.goBack()}
         />
-        <Gap height={30} />
-        <View style={{ height: APPBAR_HEIGHT }} />
         <View
           style={{
             flex: 1,

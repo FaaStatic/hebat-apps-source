@@ -103,6 +103,7 @@ export default DetailStatusBayar = ({ navigation, route }) => {
     <>
       <StatusBar backgroundColor={colorApp.header.primary} />
       <View style={[stylesheet.container]}>
+        <View style={{ height: APPBAR_HEIGHT }} />
         <HeaderSubMenu
           title={data.name}
           logo={data.logo}
@@ -111,7 +112,6 @@ export default DetailStatusBayar = ({ navigation, route }) => {
           background={colorApp.header.secondary}
           onPress={() => navigation.goBack()}
         />
-        <View style={{ height: APPBAR_HEIGHT }} />
         <View
           style={{
             flex: 1,
