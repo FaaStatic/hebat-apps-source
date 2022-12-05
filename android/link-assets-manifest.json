@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/NeoSansStd-Bold.ttf",
+      "sha1": "6e20c2eaa0d1724afc37ee7739bc1160d1957a8f"
+    },
+    {
+      "path": "assets/fonts/NeoSansStd-Light.ttf",
+      "sha1": "903e42bf3468deec24662d883485bf18bb55f892"
+    },
+    {
+      "path": "assets/fonts/NeoSansStd-Regular.ttf",
+      "sha1": "358fe6fa936578644fea09e3c3c5c7495e028d1a"
+    }
+  ]
+}

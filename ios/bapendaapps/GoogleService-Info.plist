@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>461986255627-e6d6l5ifi9728sbk413kkqf4l45moh00.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.461986255627-e6d6l5ifi9728sbk413kkqf4l45moh00</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>461986255627-enstvfi14hrmlql3jo4hh5tu4i4m8f3i.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAOOgxJNvlU29gLJ8r3l2D0TVdCwgJXUCM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>461986255627</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>co.id.gmedia.bapendaIOS</string>
+	<key>PROJECT_ID</key>
+	<string>bapendaapps</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bapendaapps.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:461986255627:ios:f1c48b23a0c1a1c9fbc80e</string>
+</dict>
+</plist>

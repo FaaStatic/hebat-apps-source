@@ -1,0 +1,4 @@
+<resources>
+    <!-- <string name="app_name">Bapenda Apps</string> -->
+    <string name="default_notification_channel_id">HEBAT Semarang Apps</string>
+</resources>
