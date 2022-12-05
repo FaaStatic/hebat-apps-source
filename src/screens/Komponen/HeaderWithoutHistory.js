@@ -1,0 +1,67 @@
+import { View, TouchableOpacity, StatusBar, StyleSheet, Text } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/dist/AntDesign';
+import { colorApp } from '../../util/globalvar';
+
+export const HeaderWithoutHistory = ({ Title, back }) => {
+  return (
+    <LinearGradient
+      colors={[colorApp.gradientSatu,colorApp.gradientSatu]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      style={style.container}
+    >
+      <View
+        style={{
+          flexDirection: 'row',
+          marginStart: 16,
+        }}
+      >
+        <TouchableOpacity onPress={back} style={{ justifyContent: 'center' }}>
+          <Icon name="arrowleft" size={24} color={'white'} />
+        </TouchableOpacity>
+
+        <Text
+          style={[
+            style.textTitle,
+            {
+              marginStart: 16,
+              fontWeight:'700'
+            },
+          ]}
+        >
+          {Title}
+        </Text>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+        }}
+      ></View>
+    </LinearGradient>
+  );
+};
+
+const style = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: StatusBar.currentHeight + 30,
+  },
+  textTitle: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: '400',
+  },
+  buttonRiwayat: {
+    borderRadius: 8,
+    height: StatusBar.currentHeight,
+    width: 125,
+    marginEnd: 16,
+    backgroundColor: 'transparent',
+    borderWidth: 0.5,
+    borderColor: 'white',
+    justifyContent: 'center',
+  },
+});

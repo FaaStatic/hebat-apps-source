@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "461986255627",
+    "project_id": "bapendaapps",
+    "storage_bucket": "bapendaapps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461986255627:android:bb15263c8e8349c5fbc80e",
+        "android_client_info": {
+          "package_name": "co.id.gmedia.bapenda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "461986255627-enstvfi14hrmlql3jo4hh5tu4i4m8f3i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.id.gmedia.bapenda",
+            "certificate_hash": "70f6f01b231cde6fd98bc65396e011f3880663ec"
+          }
+        },
+        {
+          "client_id": "461986255627-1d3n53qks16q8168pd1uupvo4rrrb306.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPJQpphmWeUosBI7Wzpf5oZf93XXMwe9A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461986255627-1d3n53qks16q8168pd1uupvo4rrrb306.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
