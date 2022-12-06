@@ -28,7 +28,7 @@ export default MetodePembayaran = ({ data, onPressMenu }) => {
               <Gap width={40} />
               <Image style={{ width: 21, height: 21 }} source={item.logo} resizeMode="contain" />
               <Gap width={30} />
-              <View style={{ width: '30%' }}>
+              <View style={{ width: item.list.length > 0 ? '29%' : '100%' }}>
                 <Text
                   style={{
                     fontSize: 14,
@@ -59,7 +59,7 @@ export default MetodePembayaran = ({ data, onPressMenu }) => {
             borderRadius: 15,
           }}
         >
-          {item.map((it) => {
+          {item.slice(0, 4).map((it) => {
             return (
               <>
                 <Image

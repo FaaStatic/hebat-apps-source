@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
     borderRadius: 19,
   },
   imgCardViewNewsSingle: {
-    height: 258,
+    height: 240,
     width: '100%',
     borderRadius: 19,
     opacity: 0.18,
@@ -287,6 +287,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     opacity: 0.8,
     margin: 20,
-    marginTop: '45%'
+    marginTop: '42%'
   },
 });
