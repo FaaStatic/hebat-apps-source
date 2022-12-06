@@ -424,6 +424,7 @@ const PajakContent = forwardRef((props, ref) => {
                         fontSize: 14,
                         color: 'black',
                         fontWeight: '400',
+                        width: Platform.isPad ? "100%" : 200,
                       }}
                     >
                       {item.alamat}

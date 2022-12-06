@@ -156,8 +156,8 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
           marginEnd: 16,
           marginStart: 16,
           backgroundColor: 'white',
-          padding: 8,
-          justifyContent: 'space-around',
+          
+          justifyContent: 'space-evenly',
         }}
       >
         <Image
@@ -169,7 +169,7 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
           resizeMode={item.image.length === 0 ? 'contain' : 'cover'}
           style={{
             height: 120,
-            width: 100,
+            width: 120,
           }}
           PlaceholderContent={
             <ActivityIndicator
@@ -188,6 +188,8 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
           containerStyle={{
             width: 100,
             height: 120,
+            flex:1,
+
             justifyContent: 'center',
             backgroundColor: 'white',
             flexDirection: 'column',
@@ -198,6 +200,7 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
           style={{
             flexDirection: 'column',
             justifyContent: 'center',
+            flex:2,
             marginStart: 10,
           }}
         >
@@ -396,6 +399,7 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
     return (
       <View>
         <DateTimePicker
+          themeVariant='light'
           testID="dateTimePicker"
           display='spinner'
           value={status === 'start' ? startDate : endDate}
@@ -407,6 +411,9 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
           }}
         />
         <TouchableOpacity
+        onPress={()=>{
+          status === 'start' ? setOpenDialogStart(false) : setOpenDialogEnd(false);
+        }}
           style={{
             margin: 16,
             backgroundColor: colorApp.button.primary,

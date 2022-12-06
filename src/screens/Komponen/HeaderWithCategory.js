@@ -43,7 +43,7 @@ export const HeaderWithCategory = ({ Title, back, selectedItem = null }) => {
           flexDirection: 'row',
           justifyContent: 'flex-start',
 
-          height: StatusBar.currentHeight + 20,
+          height: Platform.OS === "ios" ? StatusBar.currentHeight+80 :StatusBar.currentHeight + 20,
           marginStart: 16,
           marginTop: 8,
         }}

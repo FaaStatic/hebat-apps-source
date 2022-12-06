@@ -11,15 +11,16 @@ import {
   ActivityIndicator,
   LayoutAnimation,
   UIManager,
-  InteractionManager
+  InteractionManager,
+  Platform
 } from 'react-native';
-import { Image, Dialog } from '@rneui/themed';
+import { Image, Dialog, BottomSheet } from '@rneui/themed';
 import MapView, { Marker } from 'react-native-maps';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Geolocation from 'react-native-geolocation-service';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Api } from '../../../util/ApiManager';
-import { launchCamera } from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import { colorApp, stringApp } from '../../../util/globalvar';
@@ -52,6 +53,8 @@ export default function EditData({ navigation, route }) {
   const [loadDialog, setLoadDialog] = useState(false);
   const [savingFileData, setSavingFileData] = useState([]);
   const [loadingField, setLoadingField] = useState(false);
+  const [openBottom,setOpenBottom] = useState(false);
+
   const [mapState, setMapState] = useState({
     latitude: -6.966667,
     longitude: 110.416664,
@@ -194,7 +197,7 @@ export default function EditData({ navigation, route }) {
       telp_usaha: phone,
       bidang_usaha: 'Dia dia',
       pemilik: owner,
-      alamat_pemilik: 'Jalan ngaliyan',
+      alamat_pemilik: "",
       nik_pemilik: '',
       latitude: mapState.latitude,
       longitude: mapState.longitude,
@@ -204,7 +207,7 @@ export default function EditData({ navigation, route }) {
       kecamatan: '',
       kota: '',
       keterangan: '',
-      ttd: 'siap',
+      ttd: "",
       image: savingFileData,
     };
 
@@ -273,7 +276,7 @@ export default function EditData({ navigation, route }) {
           longitude = datapos.longitude;
           var params = {
             latitude: datapos.latitude,
-            longitude: datapos.latitude,
+            longitude: datapos.longitude,
             latitudeDelta: limitlatitudeDelta,
             longitudeDelta: limitLongitudeDelta,
           };
@@ -352,6 +355,51 @@ export default function EditData({ navigation, route }) {
     }
   };
 
+  const pickGalery = async () => {
+    let options = {
+      mediaType: 'photo',
+      maxWidth: 800,
+      maxHeight: 800,
+      cameraType: 'back',
+      includeBase64: true,
+      quality: 0.7,
+      storageOptions: {
+        skipBackup: true,
+        path: 'Pictures',
+      },
+      saveToPhotos: true,
+    };
+    let cameraPermission = await PermissionUtil.requestCameraPermission();
+    let saveStorage = await PermissionUtil.requestExternalWritePermission();
+    if (cameraPermission && saveStorage) {
+     launchImageLibrary(options, (response) => {
+        if (response.didCancel) {
+          console.log('Canceled By User');
+        } else {
+          var number = Math.floor(Math.random() * 100) + 1;
+          var item = [
+            {
+              id: number,
+              image: response.assets[0].base64,
+            },
+          ];
+          if (fileList.length > 0) {
+            setFileList(fileList.concat(item));
+            setSavingFileData((current) => [...current, response.assets[0].base64]);
+          } else {
+            setFileList(item);
+            setSavingFileData((current) => [...current, response.assets[0].base64]);
+          }
+
+          console.log('====================================');
+          console.log(savingFileData);
+          console.log('====================================');
+          console.log(fileList);
+        }
+      });
+    }
+  };
+
   return (
     <View
       style={{
@@ -359,7 +407,7 @@ export default function EditData({ navigation, route }) {
         flex: 1,
       }}
     >
-      <HeaderWithoutHistory Title={'Edit Data'} back={() => navigation.goBack()} />
+      <HeaderWithoutHistory Title={'Ubah Data'} back={() => navigation.goBack()} />
       {loadingField ? (
         <View
           style={{
@@ -395,7 +443,7 @@ export default function EditData({ navigation, route }) {
               marginBottom: 16,
             }}
           >
-            <Text style={style.textInput}>Taxpayer's name</Text>
+            <Text style={style.textInput}>Nama Wajib Pajak</Text>
             <View style={style.textInputContainer}>
               <TextInput
                 style={style.styleInput}
@@ -406,7 +454,7 @@ export default function EditData({ navigation, route }) {
                 }}
               />
             </View>
-            <Text style={style.textInput}>Name of the owner</Text>
+            <Text style={style.textInput}>Nama Pemilik</Text>
 
             <View style={style.textInputContainer}>
               <TextInput
@@ -418,7 +466,7 @@ export default function EditData({ navigation, route }) {
                 }}
               />
             </View>
-            <Text style={style.textInput}>Taxpayer Address</Text>
+            <Text style={style.textInput}>Alamat Wajib Pajak</Text>
 
             <View style={style.textInputContainer}>
               <TextInput
@@ -430,7 +478,7 @@ export default function EditData({ navigation, route }) {
                 keyboardType={'default'}
               />
             </View>
-            <Text style={style.textInput}>Phone number</Text>
+            <Text style={style.textInput}>Nomor Telepon</Text>
 
             <View style={style.textInputContainer}>
               <TextInput
@@ -452,7 +500,7 @@ export default function EditData({ navigation, route }) {
                 },
               ]}
             >
-              Category
+                Kategori Pajak
             </Text>
 
             {listData.length > 0 ? (
@@ -462,6 +510,15 @@ export default function EditData({ navigation, route }) {
                 items={listData}
                 setOpen={setOpen}
                 setValue={setValueCategory}
+                placeholder={'Pilih Kategori Pajak'}
+                containerStyle={{
+                  backgroundColor:'white'
+                }}
+                dropDownContainerStyle={{
+                  elevation:2,
+                  backgroundColor:'white'
+                }}
+                dropDownDirection={'TOP'}
                 listMode={'SCROLLVIEW'}
               />
             ) : (
@@ -472,10 +529,11 @@ export default function EditData({ navigation, route }) {
                     marginBottom: 16,
                     fontWeight: '500',
                     fontSize: 12,
+                    marginStart:16,
                   },
                 ]}
               >
-                Please wait ...
+                 Tunggu Sebentar ...
               </Text>
             )}
           </View>
@@ -484,14 +542,14 @@ export default function EditData({ navigation, route }) {
             style={[
               style.textInput,
               {
-                marginBottom: 8,
+                marginBottom: 16,
                 fontWeight: '800',
                 fontSize: 16,
                 marginLeft: 24,
               },
             ]}
           >
-            Maps
+            Peta
           </Text>
           <View
             style={{
@@ -520,10 +578,7 @@ export default function EditData({ navigation, route }) {
                 latitudeDelta: limitlatitudeDelta,
                 longitudeDelta: limitLongitudeDelta,
               }}
-              onRegionChange={(region) => {
-                latitude = region.latitude;
-                longitude = region.longitude;
-              }}
+            
               onRegionChangeComplete={(region) => {
                 latitude = region.latitude;
                 longitude = region.longitude;
@@ -602,7 +657,7 @@ export default function EditData({ navigation, route }) {
                 alignSelf: 'center',
               }}
             >
-              Latitude : {mapState.latitude}
+              Latitude : {mapState.latitude.toFixed(4)}
             </Text>
             <Text
               style={{
@@ -613,7 +668,7 @@ export default function EditData({ navigation, route }) {
                 alignSelf: 'center',
               }}
             >
-              Longitude : {mapState.longitude}
+              Longitude : {mapState.longitude.toFixed(4)}
             </Text>
           </View>
           <Text
@@ -626,7 +681,7 @@ export default function EditData({ navigation, route }) {
               },
             ]}
           >
-            Upload Photo
+             Unggah Gambar
           </Text>
           <Text
             style={[
@@ -639,7 +694,7 @@ export default function EditData({ navigation, route }) {
               },
             ]}
           >
-            Please Press Button Below to Upload Photo
+             Mohon Tekan Tombol Dibawah Ini Untuk Unggah Gambar
           </Text>
           {fileList.length > 0 ? (
             <FlatList
@@ -647,7 +702,10 @@ export default function EditData({ navigation, route }) {
               ListHeaderComponent={() => {
                 return (
                   <TouchableOpacity
-                    onPress={pickImage}
+                    onPress={() => {
+                      setOpenBottom(true);
+
+                    }}
                     style={{
                       width: 150,
                       height: 150,
@@ -719,7 +777,9 @@ export default function EditData({ navigation, route }) {
             />
           ) : (
             <TouchableOpacity
-              onPress={pickImage}
+            onPress={() => {
+              setOpenBottom(true);
+            }}
               style={{
                 width: 150,
                 height: 150,
@@ -737,7 +797,7 @@ export default function EditData({ navigation, route }) {
               validationCheck();
             }}
             style={{
-              backgroundColor: '#FC572C',
+              backgroundColor: colorApp.button.primary,
               justifyContent: 'center',
               flexDirection: 'column',
               borderRadius: 4,
@@ -754,7 +814,7 @@ export default function EditData({ navigation, route }) {
                 color: 'white',
               }}
             >
-              Save
+              Simpan
             </Text>
           </TouchableOpacity>
         </ScrollView>
@@ -771,7 +831,7 @@ export default function EditData({ navigation, route }) {
           }}
         >
           <Text style={{ color: 'black', fontSize: 16, fontWeight: '600' }}>
-            Are You Sure for Edit this data?
+            Anda yakin ingin mengubah data ini?
           </Text>
           <View
             style={{
@@ -794,7 +854,7 @@ export default function EditData({ navigation, route }) {
                   textAlign: 'center',
                 }}
               >
-                No
+               Batal
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -810,12 +870,56 @@ export default function EditData({ navigation, route }) {
                   textAlign: 'center',
                 }}
               >
-                Yes, Edit the Data
+                Iya, Ubah Data Ini
               </Text>
             </TouchableOpacity>
           </View>
         </View>
       </Dialog>
+      <BottomSheet  isVisible={openBottom} onBackdropPress={()=>{
+  setOpenBottom(false);
+}}>
+ <View
+          style={{
+            backgroundColor: 'white',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            flex: 1,
+            padding: 16,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              setOpenBottom(false);
+             pickImage()
+            }}
+            style={[
+              style.btnBottom,
+              {
+                backgroundColor: '#fb9c3e',
+              },
+            ]}
+          >
+            <Text style={style.textBtn}>Ambil dari Kamera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              style.btnBottom,
+              {
+                backgroundColor: '#669beb',
+              },
+            ]}
+            onPress={() => {
+              setOpenBottom(false);
+             pickGalery();
+            }}
+          >
+            <Text style={style.textBtn}>Ambil dari Galeri</Text>
+          </TouchableOpacity>
+         
+        </View>
+
+</BottomSheet>
     </View>
   );
 }
@@ -841,6 +945,7 @@ const style = StyleSheet.create({
     backgroundColor: '#dadce0',
     borderRadius: 8,
     marginTop: 4,
+    height:45,
   },
   gap: {
     color: 'grey',
@@ -857,5 +962,18 @@ const style = StyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
     color: 'black',
+  },
+  btnBottom: {
+    marginBottom: 16,
+    height: 55,
+    justifyContent: 'center',
+    flexDirection: 'column',
+    borderRadius: 8,
+  },
+  textBtn: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: '600',
+    textAlign: 'center',
   },
 });

@@ -214,6 +214,7 @@ const RiwayatMonitoring = ({ navigation, route }) => {
       <View>
         <DateTimePicker
           testID="dateTimePicker"
+          themeVariant='light'
           display='spinner'
           value={status === 'start' ? startDate : endDate}
           mode={'date'}
@@ -262,6 +263,7 @@ const RiwayatMonitoring = ({ navigation, route }) => {
     return (
       <TouchableOpacity
         onPress={() => {
+          console.log(item);
           navigation.navigate('DetailMonitoring', {
             modelData: item,
             status: 'Riwayat',

@@ -329,6 +329,7 @@ const RiwayatUpdatePajak = ({ navigation, route }) => {
     return (
       <View>
         <DateTimePicker
+        themeVariant='light'
           testID="dateTimePicker"
           display='spinner'
           value={status === 'start' ? startDate : endDate}

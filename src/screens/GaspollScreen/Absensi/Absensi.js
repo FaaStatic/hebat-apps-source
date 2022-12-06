@@ -1,5 +1,5 @@
 import React, { useState,useEffect,useCallback } from 'react';
-import { TouchableOpacity, View, Text, StyleSheet, Dimensions,InteractionManager } from 'react-native';
+import { TouchableOpacity, View, Text, StyleSheet, Dimensions,InteractionManager, Platform } from 'react-native';
 import { colorApp } from '../../../util/globalvar';
 import { HeaderWithoutHistory } from '../../Komponen/HeaderWithoutHistory';
 import Icon from 'react-native-vector-icons/dist/Entypo';
@@ -12,8 +12,13 @@ const Absensi = ({ navigation, route }) => {
 
   useFocusEffect(useCallback(()=>{
     const task = InteractionManager.runAfterInteractions(()=>{
-      PermissionUtil.requestCameraPermission();
-    PermissionUtil.requestExternalWritePermission();
+      if(Platform.OS === "ios"){
+        PermissionUtil.accessIosCameraPhotoLibrary();
+      }else{
+        PermissionUtil.requestCameraPermission();
+        PermissionUtil.requestExternalWritePermission();
+      }
+     
     });
     return()=> task.cancel();
   },[]));

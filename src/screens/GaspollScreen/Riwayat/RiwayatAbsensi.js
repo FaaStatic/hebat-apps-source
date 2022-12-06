@@ -11,7 +11,7 @@ import {
   StatusBar,
   ActivityIndicator,
   Platform,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import HeaderDate from '../../Komponen/HeaderDate';
 import { Api } from '../../../util/ApiManager';
@@ -96,28 +96,31 @@ const RiwayatAbsensi = ({ navigation, route }) => {
 
   const DialogIOSPicker = useCallback(({ status }) => {
     return (
-      <View style={{
-        flexDirection:'column',
-        justifyContent:'center'
-      }}>
-        <View style={{
-         alignSelf:'center'
-        }}>
-      <DateTimePicker
-      display='spinner'
-          testID="dateTimePicker"
-          value={status === 'start' ? startDate : endDate}
-          mode={'date'}
-        
-        
-          onChange={(event, selectedDate) => {
-            if (event.type === 'set') {
-              changeDateIOS(selectedDate, status);
-            }
+      <View
+        style={{
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+      >
+        <View
+          style={{
+            alignSelf: 'center',
           }}
-        />
+        >
+          <DateTimePicker
+            themeVariant="light"
+            display="spinner"
+            testID="dateTimePicker"
+            value={status === 'start' ? startDate : endDate}
+            mode={'date'}
+            onChange={(event, selectedDate) => {
+              if (event.type === 'set') {
+                changeDateIOS(selectedDate, status);
+              }
+            }}
+          />
         </View>
-       
+
         <TouchableOpacity
           onPress={() => {
             status === 'start' ? setOpenIosDate(false) : setCloseIosDate(false);
@@ -201,7 +204,7 @@ const RiwayatAbsensi = ({ navigation, route }) => {
           backgroundColor: colorApp.backgroundView,
           flexDirection: 'row',
           justifyContent: 'space-around',
-          height: Platform.OS === "ios" ? 30:StatusBar.currentHeight + 15,
+          height: Platform.OS === 'ios' ? 30 : StatusBar.currentHeight + 15,
           padding: 4,
         }}
       >
@@ -237,10 +240,10 @@ const RiwayatAbsensi = ({ navigation, route }) => {
         data={responseItem}
         keyExtractor={(index) => index}
         contentContainerStyle={{
-            paddingTop:16,
-            paddingBottom:16,
+          paddingTop: 16,
+          paddingBottom: 16,
         }}
-        ItemSeparatorComponent={<GapList/>}
+        ItemSeparatorComponent={<GapList />}
         renderItem={({ item }) => {
           return (
             <View

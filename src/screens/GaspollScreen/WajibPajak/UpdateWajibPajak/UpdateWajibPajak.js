@@ -10,9 +10,10 @@ import {
   UIManager,
   Dimensions,
   ScrollView,
+  StyleSheet,
   InteractionManager
 } from 'react-native';
-import { Image, Input, Dialog } from '@rneui/themed';
+import { Image, Input, Dialog, BottomSheet } from '@rneui/themed';
 import MapView, { Marker } from 'react-native-maps';
 import { Header } from '../../../Komponen/Header';
 import { colorApp, stringApp } from '../../../../util/globalvar';
@@ -21,7 +22,7 @@ import Icon2 from 'react-native-vector-icons/MaterialIcons';
 import { Api } from '../../../../util/ApiManager';
 import { MessageUtil } from '../../../../util/MessageUtil';
 import GapList from '../../../Komponen/GapList';
-import { launchCamera } from 'react-native-image-picker';
+import { launchCamera,launchImageLibrary  } from 'react-native-image-picker';
 import { PermissionUtil } from '../../../../util/PermissionUtil';
 import { SessionManager } from '../../../../util/SessionUtil/SessionManager';
 import Geolocation from 'react-native-geolocation-service';
@@ -59,6 +60,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [fileList, setFileList] = useState([]);
   const [savingFileData, setSavingFileData] = useState([]);
+  const [openBottom,setOpenBottom] = useState(false);
+
   const fs = RNFetchBlob.fs;
 
   useFocusEffect(useCallback(()=>{
@@ -124,7 +127,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
           longitude = datapos.longitude;
           var params = {
             latitude: datapos.latitude,
-            longitude: datapos.latitude,
+            longitude: datapos.longitude,
             latitudeDelta: limitlatitudeDelta,
             longitudeDelta: limitLongitudeDelta,
           };
@@ -287,6 +290,57 @@ const UpdateWajibPajak = ({ navigation, route }) => {
     let saveStorage = await PermissionUtil.requestExternalWritePermission();
     if (cameraPermission && saveStorage) {
       launchCamera(options, (response) => {
+        if (response.didCancel) {
+          console.log('Canceled By User');
+          setOpenDialog2(false);
+        } else {
+          var number = Math.floor(Math.random() * 100) + 1;
+          var item = [
+            {
+              id: number,
+              image: response.assets[0].base64,
+            },
+          ];
+          if (fileList.length > 0) {
+            setFileList(fileList.concat(item));
+            setSavingFileData((current) => [...current, response.assets[0].base64]);
+          } else {
+            setFileList(item);
+            setSavingFileData((current) => [...current, response.assets[0].base64]);
+          }
+
+          console.log('====================================');
+          console.log(savingFileData);
+          console.log('====================================');
+          console.log(fileList);
+          setTimeout(() => {
+            setOpenDialog2(false);
+            console.log(fileList);
+          }, 1000);
+        }
+      });
+    }
+  };
+
+  const pickLibrary = async () => {
+    setOpenDialog2(true);
+    let options = {
+      mediaType: 'photo',
+      maxWidth: 800,
+      maxHeight: 800,
+      cameraType: 'back',
+      includeBase64: true,
+      quality: 0.7,
+      storageOptions: {
+        skipBackup: true,
+        path: 'Pictures',
+      },
+      saveToPhotos: true,
+    };
+    let cameraPermission = await PermissionUtil.requestCameraPermission();
+    let saveStorage = await PermissionUtil.requestExternalWritePermission();
+    if (cameraPermission && saveStorage) {
+      launchImageLibrary(options, (response) => {
         if (response.didCancel) {
           console.log('Canceled By User');
           setOpenDialog2(false);
@@ -610,7 +664,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                   marginStart: 16,
                 }}
               >
-                Upload Foto
+                Unggah Gambar
               </Text>
               <Text
                 style={{
@@ -629,7 +683,9 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                   ListHeaderComponent={() => {
                     return (
                       <TouchableOpacity
-                        onPress={pickImage}
+                        onPress={()=>{
+                          setOpenBottom(true);
+                        }}
                         style={{
                           width: 150,
                           height: 150,
@@ -701,7 +757,9 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                 />
               ) : (
                 <TouchableOpacity
-                  onPress={pickImage}
+                onPress={()=>{
+                  setOpenBottom(true);
+                }}
                   style={{
                     width: 150,
                     height: 150,
@@ -841,7 +899,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                     alignSelf: 'center',
                   }}
                 >
-                  Latitude : {mapState.latitude}
+                  Latitude : {mapState.latitude.toFixed(4)}
                 </Text>
                 <Text
                   style={{
@@ -852,7 +910,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                     alignSelf: 'center',
                   }}
                 >
-                  Longitude : {mapState.longitude}
+                  Longitude : {mapState.longitude.toFixed(4)}
                 </Text>
               </View>
               <TouchableOpacity
@@ -867,7 +925,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                   flexDirection: 'column',
                   marginTop: 16,
                   padding: 8,
-                  backgroundColor: colorApp.primaryGaspoll,
+                  backgroundColor: colorApp.button.primary,
                 }}
               >
                 <Text
@@ -881,6 +939,51 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                   Simpan Lokasi
                 </Text>
               </TouchableOpacity>
+              <BottomSheet
+        isVisible={openBottom}
+        onBackdropPress={() => {
+          setOpenBottom(false);
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            flex: 1,
+            padding: 16,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              setOpenBottom(false);
+              pickImage();
+            }}
+            style={[
+              style.btnBottom,
+              {
+                backgroundColor: '#fb9c3e',
+              },
+            ]}
+          >
+            <Text style={style.textBtn}>Ambil dari Kamera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              style.btnBottom,
+              {
+                backgroundColor: '#669beb',
+              },
+            ]}
+            onPress={() => {
+              setOpenBottom(false);
+              pickLibrary();
+            }}
+          >
+            <Text style={style.textBtn}>Ambil dari Galeri</Text>
+          </TouchableOpacity>
+        </View>
+      </BottomSheet>
             </ScrollView>
           </>
         )}
@@ -979,5 +1082,19 @@ const UpdateWajibPajak = ({ navigation, route }) => {
     </View>
   );
 };
-
+const style = StyleSheet.create({
+  btnBottom: {
+    marginBottom: 16,
+    height: 55,
+    justifyContent: 'center',
+    flexDirection: 'column',
+    borderRadius: 8,
+  },
+  textBtn: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+});
 export default UpdateWajibPajak;

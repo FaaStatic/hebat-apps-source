@@ -12,13 +12,14 @@ import {
   ActivityIndicator,
   UIManager,
   LayoutAnimation,
-  InteractionManager
+  InteractionManager,
+  Platform
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Image, CheckBox, Dialog, BottomSheet, LinearProgress } from '@rneui/themed';
-import { launchCamera } from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Header } from '../../Komponen/Header';
-import { menuMain, stringApp } from '../../../util/globalvar';
+import { colorApp, menuMain, stringApp } from '../../../util/globalvar';
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
@@ -43,8 +44,8 @@ const DetailMonitoring = ({ navigation, route }) => {
   const fs = RNFetchBlob.fs;
   const [positionY, setPositionY] = useState(0);
   const [mapState, setMapState] = useState({
-    latitude: -6.966667,
-    longitude: 110.416664,
+    latitude: Number(modelData.latitude),
+    longitude: Number(modelData.longitude),
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
@@ -65,6 +66,8 @@ const DetailMonitoring = ({ navigation, route }) => {
   const [ttdTidak, setTtdTidak] = useState(false);
   const [ttdKet, setTtdKet] = useState('');
   const [openBottom, setOpenBottom] = useState(false);
+  const [openBottom1, setOpenBottom1] = useState(false);
+
 
   const headerHeight = scrollPosition.interpolate({
     inputRange: [0, DISTANCE - 100],
@@ -90,6 +93,7 @@ const DetailMonitoring = ({ navigation, route }) => {
       getLocation();
     }
     const task = InteractionManager.runAfterInteractions(()=>{
+      clearData();
       if (status === null) {
         getLocation();
       }
@@ -99,6 +103,7 @@ const DetailMonitoring = ({ navigation, route }) => {
   },[]));
 
   const addData = () => {
+    console.log("yuhu : ",modelData);
     if (status !== null) {
       setDeskripsi(modelData.hasil_monitor);
       if (modelData.monitoring_image.length > 0) {
@@ -148,7 +153,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           longitude = datapos.longitude;
           var params = {
             latitude: datapos.latitude,
-            longitude: datapos.latitude,
+            longitude: datapos.longitude,
             latitudeDelta: limitlatitudeDelta,
             longitudeDelta: limitLongitudeDelta,
           };
@@ -165,6 +170,17 @@ const DetailMonitoring = ({ navigation, route }) => {
       console.log('====================================');
     }
   };
+
+  const clearData = () => {
+    setSavingFileData([]);
+    setFileList([]);
+    setMapState({
+      latitude: -6.966667,
+      longitude: 110.416664,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    });
+  }
 
   const saveData = async () => {
     const params = {
@@ -228,6 +244,51 @@ const DetailMonitoring = ({ navigation, route }) => {
           ];
           setFileList(fileList.concat(item));
           setSavingFileData((current) => [...current, response.assets[0].base64]);
+          console.log('====================================');
+          console.log(savingFileData);
+          console.log('====================================');
+          console.log(fileList);
+        }
+      });
+    }
+  };
+
+  const pickGalery = async () => {
+    let options = {
+      mediaType: 'photo',
+      maxWidth: 800,
+      maxHeight: 800,
+      cameraType: 'back',
+      includeBase64: true,
+      quality: 0.7,
+      storageOptions: {
+        skipBackup: true,
+        path: 'Pictures',
+      },
+      saveToPhotos: true,
+    };
+    let cameraPermission = await PermissionUtil.requestCameraPermission();
+    let saveStorage = await PermissionUtil.requestExternalWritePermission();
+    if (cameraPermission && saveStorage) {
+     launchImageLibrary(options, (response) => {
+        if (response.didCancel) {
+          console.log('Canceled By User');
+        } else {
+          var number = Math.floor(Math.random() * 100) + 1;
+          var item = [
+            {
+              id: number,
+              image: response.assets[0].base64,
+            },
+          ];
+          if (fileList.length > 0) {
+            setFileList(fileList.concat(item));
+            setSavingFileData((current) => [...current, response.assets[0].base64]);
+          } else {
+            setFileList(item);
+            setSavingFileData((current) => [...current, response.assets[0].base64]);
+          }
+
           console.log('====================================');
           console.log(savingFileData);
           console.log('====================================');
@@ -319,7 +380,8 @@ const DetailMonitoring = ({ navigation, route }) => {
       const configOption = Platform.select({
         ios: {
           fileCache: true,
-          path: `${fs.dirs.DocumentDir}/berita_acara_monitoring.pdf`,
+          notification:true,
+          path: fs.dirs.DocumentDir + "/berita_acara_monitoring.pdf",
           appendExt: 'pdf',
         },
         android: {
@@ -351,13 +413,17 @@ const DetailMonitoring = ({ navigation, route }) => {
         })
         .then(async (res) => {
           if (Platform.OS === 'ios') {
-            RNFetchBlob.fs.writeFile(configOption.path, res.data, 'base64');
-            RNFetchBlob.ios.previewDocument(configOption.path);
+            var response = JSON.stringify(res);
+            console.log(response);
             setDialogDownload(false);
+            setTimeout(()=>{
+              RNFetchBlob.ios.openDocument(res.data);
+            },1000);
             setTimeout(() => {
               MessageUtil.successMessage(`File Successfully Downloaded! ${configOption.path}`);
               clearTimeout();
             }, 5000);
+          
           } else {
             setDialogDownload(false);
             RNFetchBlob.android.actionViewIntent;
@@ -435,7 +501,8 @@ const DetailMonitoring = ({ navigation, route }) => {
                 flexDirection: 'row',
                 position: 'absolute',
                 marginStart: 16,
-                marginTop: 8,
+                marginTop: Platform.OS === "ios" ? 35 :  8,
+
               }}
             >
               <TouchableOpacity
@@ -508,11 +575,12 @@ const DetailMonitoring = ({ navigation, route }) => {
               setOpenBottom(true);
             }}
             style={{
-              backgroundColor: '#FC572C',
+              backgroundColor: colorApp.button.primary,
               alignSelf: 'flex-end',
               borderRadius: 8,
               padding: 8,
               marginRight: 16,
+              padding:8,
               marginTop: 16,
               marginBottom: 16,
               justifyContent: 'center',
@@ -534,7 +602,7 @@ const DetailMonitoring = ({ navigation, route }) => {
         <Text
           style={{
             fonstSize: 16,
-            fontWeight: '600',
+            fontWeight: '700',
             color: 'black',
             marginTop: 8,
             marginStart: 16,
@@ -589,7 +657,13 @@ const DetailMonitoring = ({ navigation, route }) => {
         </View>
 
         <View />
-        <Text>Map</Text>
+        <Text style={{
+          marginBottom:16,
+          marginTop:8,
+          fontSize:14,
+          marginStart : 16,
+          fontWeight:'700'
+        }}>Map</Text>
         <View
           style={{
             height: 250,
@@ -618,12 +692,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               latitudeDelta: limitlatitudeDelta,
               longitudeDelta: limitLongitudeDelta,
             }}
-            onRegionChange={(region) => {
-              if (status === null) {
-                latitude = region.latitude;
-                longitude = region.longitude;
-              }
-            }}
+         
             onRegionChangeComplete={(region) => {
               if (status === null) {
                 latitude = region.latitude;
@@ -706,7 +775,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               alignSelf: 'center',
             }}
           >
-            Latitude : {mapState.latitude}
+            Latitude : {mapState.latitude.toFixed(4)}
           </Text>
           <Text
             style={{
@@ -717,7 +786,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               alignSelf: 'center',
             }}
           >
-            Longitude : {mapState.longitude}
+            Longitude : {mapState.longitude.toFixed(4)}
           </Text>
         </View>
         {status === null && (
@@ -754,7 +823,7 @@ const DetailMonitoring = ({ navigation, route }) => {
             },
           ]}
         >
-          Upload Photo
+         Unggah Gambar
         </Text>
         <Text
           style={[
@@ -767,7 +836,7 @@ const DetailMonitoring = ({ navigation, route }) => {
             },
           ]}
         >
-          Please Press Button Below to Upload Photo
+         Mohon Tekan Tombol Dibawah Ini Untuk Unggah Gambar
         </Text>
         {fileList.length > 0 ? (
           <FlatList
@@ -808,7 +877,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               var image = '';
               console.log(item.image);
               if (status !== null) {
-                if (item.image.includes('https')) {
+                if (item.path.includes('https')) {
                   image = item.image;
                 } else if (item.path.includes('http')) {
                   image = item.image;
@@ -1141,7 +1210,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               color: 'black',
             }}
           >
-            Download in Progress, Please Wait...
+            Pengunduhan Dalam Proses, Mohon Ditunggu...
           </Text>
           <View
             style={{
@@ -1156,7 +1225,7 @@ const DetailMonitoring = ({ navigation, route }) => {
             <LinearProgress
               style={{ alignSelf: 'center' }}
               value={downloadProgress}
-              color={'#FC572C'}
+              color={colorApp.button.primary}
               variant="determinate"
             />
             <Text
@@ -1186,7 +1255,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           style={{
             backgroundColor: 'white',
             flexDirection: 'column',
-            padding: 8,
+            padding: 12,
           }}
         >
           <Text
@@ -1216,6 +1285,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               fontSize: 12,
               fontWeight: '400',
               marginTop: 8,
+              marginBottom:8,
               marginStart: 16,
               color: 'black',
             }}
@@ -1239,6 +1309,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               fontWeight: '400',
               marginTop: 8,
               marginStart: 16,
+              marginBottom:8,
               color: 'black',
             }}
           >
@@ -1260,8 +1331,8 @@ const DetailMonitoring = ({ navigation, route }) => {
             checked={ttdYa}
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
-            checkedColor={'#FC572C'}
-            uncheckedColor={'#FC572C'}
+            checkedColor={colorApp.button.primary}
+            uncheckedColor={colorApp.button.primary}
             style={{
               marginEnd: 8,
               marginTop: 8,
@@ -1273,8 +1344,8 @@ const DetailMonitoring = ({ navigation, route }) => {
           <CheckBox
             title={'Tidak'}
             checked={ttdTidak}
-            checkedColor={'#FC572C'}
-            uncheckedColor={'#FC572C'}
+            checkedColor={colorApp.button.primary}
+            uncheckedColor={colorApp.button.primary}
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
             style={{
@@ -1328,7 +1399,7 @@ const DetailMonitoring = ({ navigation, route }) => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 elevation: 2,
-                backgroundColor: '#FC572C',
+                backgroundColor: colorApp.button.primary,
                 borderRadius: 8,
               }}
             >
@@ -1346,9 +1417,54 @@ const DetailMonitoring = ({ navigation, route }) => {
           </View>
         </View>
       </BottomSheet>
+      <BottomSheet  isVisible={openBottom1} onBackdropPress={()=>{
+  setOpenBottom1(false);
+}}>
+ <View
+          style={{
+            backgroundColor: 'white',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            flex: 1,
+            padding: 16,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              setOpenBottom1(false);
+             pickImage()
+            }}
+            style={[
+              style.btnBottom,
+              {
+                backgroundColor: '#fb9c3e',
+              },
+            ]}
+          >
+            <Text style={style.textBtn}>Ambil dari Kamera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              style.btnBottom,
+              {
+                backgroundColor: '#669beb',
+              },
+            ]}
+            onPress={() => {
+              setOpenBottom1(false);
+             pickGalery();
+            }}
+          >
+            <Text style={style.textBtn}>Ambil dari Galeri</Text>
+          </TouchableOpacity>
+         
+        </View>
+
+</BottomSheet>
     </View>
   );
 };
+ 
 
 const style = StyleSheet.create({
   container: {
@@ -1378,6 +1494,19 @@ const style = StyleSheet.create({
     fontWeight: '800',
     color: 'black',
     marginBottom: 8,
+  },
+  btnBottom: {
+    marginBottom: 16,
+    height: 55,
+    justifyContent: 'center',
+    flexDirection: 'column',
+    borderRadius: 8,
+  },
+  textBtn: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: '600',
+    textAlign: 'center',
   },
 });
 
