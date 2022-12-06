@@ -10,6 +10,7 @@ import {
   InteractionManager,
   Platform,
   StatusBar,
+  BackHandler,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Image } from '@rneui/themed';
@@ -29,13 +30,24 @@ export default function Beranda({ navigation, route }) {
 
   useFocusEffect(
     useCallback(() => {
+      const backHome = BackHandler.addEventListener('hardwareBackPress', backHandler);
       const task = InteractionManager.runAfterInteractions(() => {
         getUser();
       });
-      return () => task.cancel();
-    }, [])
+      return () => {
+        task.cancel();
+        backHome.remove();
+      };
+    }, [backHandler])
   );
 
+  const backHandler = () => {
+    if (navigation.isFocused()) {
+      navigation.navigate('Home');
+      return true;
+    }
+    return false;
+  };
 
   const getUser = async () => {
     var data = SessionManager.GetAsObject(stringApp.session);
@@ -81,9 +93,9 @@ export default function Beranda({ navigation, route }) {
           }}
         >
           <TouchableOpacity
-          onPress={()=>{
-            navigation.replace("Home")
-          }}
+            onPress={() => {
+              navigation.replace('Home');
+            }}
           >
             <Icon name="arrowleft" size={24} color={'black'} />
           </TouchableOpacity>
@@ -92,8 +104,7 @@ export default function Beranda({ navigation, route }) {
               marginStart: 30,
               fontSize: 22,
               fontWeight: '700',
-              color:'black',
-
+              color: 'black',
             }}
           >
             Menu Mitra
@@ -136,21 +147,20 @@ export default function Beranda({ navigation, route }) {
           marginTop: 20,
         }}
       >
-        <View style={{
-          borderTopStartRadius:45,
-          borderTopEndRadius:45,
-          backgroundColor:'white',
-          height:65,
-
-        }} />
+        <View
+          style={{
+            borderTopStartRadius: 45,
+            borderTopEndRadius: 45,
+            backgroundColor: 'white',
+            height: 65,
+          }}
+        />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           style={{
             flexGrow: 1,
-           
           }}
-      
         >
           <Image
             source={require('../../../assets/images/illustration_mitra.png')}
@@ -179,10 +189,10 @@ export default function Beranda({ navigation, route }) {
           {menuMain.map((item) => {
             return (
               <TouchableOpacity
-              onPress={()=>{
-                navigation.navigate(item.nextPage);
-              }}  
-              style={{
+                onPress={() => {
+                  navigation.navigate(item.nextPage);
+                }}
+                style={{
                   marginEnd: 24,
                   marginStart: 24,
                   flexDirection: 'row',
@@ -210,7 +220,7 @@ export default function Beranda({ navigation, route }) {
                 <Text
                   style={{
                     fontWeight: '700',
-                    color:'black',
+                    color: 'black',
 
                     fontSize: 14,
                     alignSelf: 'center',
@@ -235,9 +245,9 @@ export default function Beranda({ navigation, route }) {
             Menu Lainnya
           </Text>
           <TouchableOpacity
-          onPress={()=>{
-            navigation.navigate("SettingScreen")
-          }}
+            onPress={() => {
+              navigation.navigate('SettingScreen');
+            }}
             style={{
               marginEnd: 24,
               marginStart: 24,
@@ -267,7 +277,7 @@ export default function Beranda({ navigation, route }) {
               style={{
                 fontWeight: '700',
                 fontSize: 14,
-                color:'black',
+                color: 'black',
                 alignSelf: 'center',
                 marginStart: 30,
               }}

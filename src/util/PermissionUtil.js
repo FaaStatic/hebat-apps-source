@@ -1,5 +1,6 @@
 import { Platform, PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+import {checkMultiple, requestMultiple,request, PERMISSIONS} from 'react-native-permissions';
 
 export const PermissionUtil = {
   requestCameraPermission: async () => {
@@ -71,4 +72,19 @@ export const PermissionUtil = {
       return true;
     }
   },
+  
+  accesLocationIosAlways: () => {
+    request(PERMISSIONS.IOS.LOCATION_ALWAYS).then((stat)=>{
+      console.log('Location', statuses[PERMISSIONS.IOS.LOCATION_ALWAYS]);
+    })
+  },
+  accessIosCameraPhotoLibrary: () => {
+    requestMultiple([PERMISSIONS.IOS.CAMERA,PERMISSIONS.IOS.PHOTO_LIBRARY , PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY]).then((statuses) => {
+      console.log('Library Photo', statuses[PERMISSIONS.IOS.PHOTO_LIBRARY]);
+      console.log('Photo AddOns', statuses[PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY]);
+      console.log('Camera', statuses[PERMISSIONS.IOS.CAMERA]);
+    });
+  },
+
+  
 };
