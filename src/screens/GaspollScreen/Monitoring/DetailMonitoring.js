@@ -601,6 +601,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           }}
         >
           <MapView
+            provider={MapView.PROVIDER_GOOGLE}
             ref={mapsLayout}
             style={{
               flex: 1,
@@ -659,9 +660,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               }}
               pinColor="blue"
               title="You are here"
-              onPointerEnter={() => {
-                console.log('test');
-              }}
+              
             />
           </MapView>
           {status === null && (

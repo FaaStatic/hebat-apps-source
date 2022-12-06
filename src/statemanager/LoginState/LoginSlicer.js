@@ -45,12 +45,12 @@ export const loginProcess = (params, navigation) => async (dispatch) => {
           GeolocationUtil.accessLocation();
           BackgroundLocationServices.startBackgroundServices();
           setTimeout(() => {
-            navigation.navigate('BerandaGaspoll');
+            navigation.replace('BerandaGaspoll');
             clearTimeout();
           }, 1000);
           console.log(SessionManager.GetAsObject(stringApp.session));
         } else {
-          MessageUtil.errorMessage(message);
+          MessageUtil.errorMessage("Username atau password salah! Mohon diperiksa kembali");
           console.log('fail', message);
         }
       })

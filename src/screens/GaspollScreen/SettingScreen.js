@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Header } from '../Komponen/Header';
 import { SessionManager } from '../../util/SessionUtil/SessionManager';
-import { stringApp } from '../../util/globalvar';
+import { colorApp, stringApp } from '../../util/globalvar';
 import { Api } from '../../util/ApiManager';
 import { BackgroundLocationServices } from '../../util/BackgroundLocationServices';
 import { PermissionUtil } from '../../util/PermissionUtil';
@@ -281,7 +281,7 @@ const SettingScreen = ({ navigation, route }) => {
         >
           <ActivityIndicator
             size={'large'}
-            color={'#FC572C'}
+            color={colorApp.button.primary}
             style={{
               alignSelf: 'center',
             }}
@@ -309,7 +309,7 @@ const SettingScreen = ({ navigation, route }) => {
               PlaceholderContent={
                 <ActivityIndicator
                   size={'large'}
-                  color={'blue'}
+                  color={colorApp.button.secondary}
                   style={{
                     alignSelf: 'center',
                   }}

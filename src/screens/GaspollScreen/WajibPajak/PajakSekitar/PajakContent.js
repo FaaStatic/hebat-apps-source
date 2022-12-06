@@ -16,6 +16,7 @@ import {
   Dimensions,
   Keyboard,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { Image, Input } from '@rneui/themed';
 import EvilIcon from 'react-native-vector-icons/dist/EvilIcons';
@@ -36,7 +37,7 @@ const PajakContent = forwardRef((props, ref) => {
   const { latitudeInit, longitudeInit } = useSelector((state) => state.mapupdate);
   const heightTranslated = useSharedValue(0);
   const contextBS = useSharedValue({ y: 0 });
-  const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
+  const MAX_TRANSLATE_Y = Platform.OS === "ios" ? -SCREEN_HEIGHT + 100 :-SCREEN_HEIGHT;
   const statHeight = useSharedValue(false);
   const [keyword, setKeyword] = useState('');
   const [idKategori, setIdKategori] = useState('1');
@@ -271,7 +272,7 @@ const PajakContent = forwardRef((props, ref) => {
             placeholder="Cari Wajib Pajak"
             containerStyle={{
               margin: 0,
-              height: StatusBar.currentHeight + 20,
+              height: Platform.OS === "ios" ? StatusBar.currentHeight + 40 : StatusBar.currentHeight + 20,
             }}
           />
         </View>
@@ -283,10 +284,12 @@ const PajakContent = forwardRef((props, ref) => {
         >
           <FlatList
             horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             data={categoryItem}
             contentContainerStyle={{
               padding: 8,
-              height: 100,
+              height: Platform.OS === 'ios' ? 50 : 100,
             }}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
@@ -337,7 +340,7 @@ const PajakContent = forwardRef((props, ref) => {
             }}
           >
             <ActivityIndicator
-              color={'#FC572C'}
+              color={colorApp.button.primary}
               size={'large'}
               style={{
                 alignSelf: 'center',

@@ -238,7 +238,7 @@ const RiwayatUpdatePajak = ({ navigation, route }) => {
           }}
           PlaceholderContent={
             <ActivityIndicator
-              color={colorApp.primaryGaspoll}
+              color={colorApp.button.primary}
               size={'large'}
               style={{
                 alignSelf: 'center',
@@ -318,7 +318,7 @@ const RiwayatUpdatePajak = ({ navigation, route }) => {
           width: '100%',
         }}
       >
-        <ActivityIndicator color="'#FC572C'" size={'small'} style={{ alignSelf: 'center' }} />
+        <ActivityIndicator color={colorApp.button.primary} size={'small'} style={{ alignSelf: 'center' }} />
       </View>;
     } else {
       return <></>;
@@ -330,6 +330,7 @@ const RiwayatUpdatePajak = ({ navigation, route }) => {
       <View>
         <DateTimePicker
           testID="dateTimePicker"
+          display='spinner'
           value={status === 'start' ? startDate : endDate}
           mode={'date'}
           onChange={(event, selectedDate) => {
@@ -344,7 +345,7 @@ const RiwayatUpdatePajak = ({ navigation, route }) => {
           }}
           style={{
             margin: 16,
-            backgroundColor: '#FC572C',
+            backgroundColor: colorApp.button.primary,
             justifyContent: 'center',
             padding: 8,
           }}

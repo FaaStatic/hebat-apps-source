@@ -12,7 +12,7 @@ import {
 import { MessageUtil } from '../../../util/MessageUtil';
 import { Api } from '../../../util/ApiManager';
 import moment from 'moment/moment';
-import { stringApp } from '../../../util/globalvar';
+import { colorApp, stringApp } from '../../../util/globalvar';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import { Header } from '../../Komponen/Header';
 import GapList from '../../Komponen/GapList';
@@ -202,7 +202,7 @@ const Monitoring = ({ navigation, route }) => {
           width: '100%',
         }}
       >
-        <ActivityIndicator color="'#FC572C'" size={'small'} style={{ alignSelf: 'center' }} />
+        <ActivityIndicator color={colorApp.button.primary} size={'small'} style={{ alignSelf: 'center' }} />
       </View>;
     } else {
       return <></>;
@@ -229,7 +229,7 @@ const Monitoring = ({ navigation, route }) => {
       <View
         style={{
           backgroundColor: '#F5F5F5',
-          height: StatusBar.currentHeight + 10,
+          height: Platform.OS === "ios" ? StatusBar.currentHeight +35 :StatusBar.currentHeight + 10,
           flexDirection: 'column',
           padding: 8,
           justifyContent: 'flex-start',
@@ -257,7 +257,7 @@ const Monitoring = ({ navigation, route }) => {
             style={{
               alignSelf: 'center',
             }}
-            color={'#FC572C'}
+            color={colorApp.button.primary}
           />
         </View>
       ) : (

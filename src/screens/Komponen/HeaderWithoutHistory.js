@@ -47,7 +47,8 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: StatusBar.currentHeight + 30,
+    paddingTop:Platform.OS === "ios" ? 28 : 0,
+    height: Platform.OS === "ios" ? StatusBar.currentHeight+100 :StatusBar.currentHeight + 30,
   },
   textTitle: {
     fontSize: 20,

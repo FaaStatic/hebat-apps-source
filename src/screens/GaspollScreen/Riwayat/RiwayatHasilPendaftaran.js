@@ -20,7 +20,7 @@ import { setShowSearch } from '../../../statemanager/HeaderDateState/HeaderDateS
 import { TabItem } from '@rneui/base/dist/Tab/Tab.Item';
 import { TabViewItem } from '@rneui/base/dist/TabView/TabView.Item';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { stringApp } from '../../../util/globalvar';
+import { colorApp, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -174,7 +174,7 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
           PlaceholderContent={
             <ActivityIndicator
               size={'small'}
-              color={'#FC572C'}
+              color={colorApp.button.primary}
               style={{
                 alignSelf: 'center',
               }}
@@ -397,6 +397,7 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
       <View>
         <DateTimePicker
           testID="dateTimePicker"
+          display='spinner'
           value={status === 'start' ? startDate : endDate}
           mode={'date'}
           onChange={(event, selectedDate) => {
@@ -408,7 +409,7 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
         <TouchableOpacity
           style={{
             margin: 16,
-            backgroundColor: '#FC572C',
+            backgroundColor: colorApp.button.primary,
             justifyContent: 'center',
             padding: 8,
           }}
@@ -490,7 +491,7 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
                 style={{
                   alignSelf: 'center',
                 }}
-                color={'#FC572C'}
+                color={colorApp.button.primary}
               />
             </View>
           ) : (
@@ -524,7 +525,7 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
                 style={{
                   alignSelf: 'center',
                 }}
-                color={'#FC572C'}
+                color={colorApp.button.primary}
               />
             </View>
           ) : (

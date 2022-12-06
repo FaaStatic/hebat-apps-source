@@ -198,7 +198,7 @@ const DataPetugasList = ({ navigation, route }) => {
             style={{
               alignSelf: 'center',
             }}
-            color={'#FC572C'}
+            color={colorApp.button.primary}
           />
         </View> : <FlatList
         data={responseItem}
@@ -253,7 +253,7 @@ const DataPetugasList = ({ navigation, route }) => {
                 PlaceholderContent={
                   <ActivityIndicator
                     size={'large'}
-                    color={colorApp.primaryGaspoll}
+                    color={colorApp.button.primary}
                     style={{
                       alignSelf: 'center',
                     }}

@@ -11,6 +11,7 @@ import {
   StatusBar,
   ActivityIndicator,
   Platform,
+  TouchableOpacity
 } from 'react-native';
 import HeaderDate from '../../Komponen/HeaderDate';
 import { Api } from '../../../util/ApiManager';
@@ -95,24 +96,35 @@ const RiwayatAbsensi = ({ navigation, route }) => {
 
   const DialogIOSPicker = useCallback(({ status }) => {
     return (
-      <View>
-        <DateTimePicker
+      <View style={{
+        flexDirection:'column',
+        justifyContent:'center'
+      }}>
+        <View style={{
+         alignSelf:'center'
+        }}>
+      <DateTimePicker
+      display='spinner'
           testID="dateTimePicker"
           value={status === 'start' ? startDate : endDate}
           mode={'date'}
+        
+        
           onChange={(event, selectedDate) => {
             if (event.type === 'set') {
               changeDateIOS(selectedDate, status);
             }
           }}
         />
+        </View>
+       
         <TouchableOpacity
           onPress={() => {
             status === 'start' ? setOpenIosDate(false) : setCloseIosDate(false);
           }}
           style={{
             margin: 16,
-            backgroundColor: '#FC572C',
+            backgroundColor: colorApp.button.primary,
             justifyContent: 'center',
             padding: 8,
           }}
@@ -189,7 +201,7 @@ const RiwayatAbsensi = ({ navigation, route }) => {
           backgroundColor: colorApp.backgroundView,
           flexDirection: 'row',
           justifyContent: 'space-around',
-          height: StatusBar.currentHeight + 15,
+          height: Platform.OS === "ios" ? 30:StatusBar.currentHeight + 15,
           padding: 4,
         }}
       >

@@ -88,6 +88,7 @@ const PajakSekitar = ({ navigation, route }) => {
           }}
         >
           <MapView
+          provider={MapView.PROVIDER_GOOGLE}
             ref={mapsLayout}
             style={{
               flex: 1,
@@ -140,9 +141,7 @@ const PajakSekitar = ({ navigation, route }) => {
               }}
               pinColor="blue"
               title="You are here"
-              onPointerEnter={() => {
-                console.log('test');
-              }}
+              
             />
           </MapView>
           <TouchableOpacity
@@ -150,7 +149,7 @@ const PajakSekitar = ({ navigation, route }) => {
               locationLock();
             }}
             style={{
-              backgroundColor: colorApp.primaryGaspoll,
+              backgroundColor: colorApp.button.primary,
               paddingLeft: 16,
               paddingRight: 16,
               paddingTop: 8,
@@ -159,7 +158,7 @@ const PajakSekitar = ({ navigation, route }) => {
               position: 'absolute',
               top: 0,
               right: 0,
-              marginTop: 16,
+              marginTop: Platform.OS === "ios" ? 55: 16,
               marginEnd: 16,
               flexDirection: 'column',
               justifyContent: 'center',
