@@ -7,7 +7,8 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   Keyboard,
-  InteractionManager
+  InteractionManager,
+  Platform
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { storeLatInit, storeLongInit } from '../../../../statemanager/MapUpdate/MapUpdateSlicer';
@@ -17,6 +18,7 @@ import { MessageUtil } from '../../../../util/MessageUtil';
 import PajakContent from './PajakContent';
 import { colorApp } from '../../../../util/globalvar';
 import { useDispatch } from 'react-redux';
+import Icon from 'react-native-vector-icons/dist/AntDesign';
 import { useFocusEffect } from '@react-navigation/native';
 
 
@@ -56,7 +58,7 @@ const PajakSekitar = ({ navigation, route }) => {
             longitude = datapos.longitude;
             var params = {
               latitude: datapos.latitude,
-              longitude: datapos.latitude,
+              longitude: datapos.longitude,
               latitudeDelta: limitlatitudeDelta,
               longitudeDelta: limitLongitudeDelta,
             };
@@ -176,6 +178,31 @@ const PajakSekitar = ({ navigation, route }) => {
               Reset
             </Text>
           </TouchableOpacity>
+          {Platform.OS === 'ios' &&  <TouchableOpacity
+            onPress={() => {
+              navigation.goBack()
+            }}
+            style={{
+            
+              paddingLeft: 16,
+              paddingRight: 16,
+              paddingTop: 8,
+              paddingBottom: 8,
+              width: 100,
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              marginTop: Platform.OS === "ios" ? 55: 16,
+              marginStart: 16,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              borderRadius: 8,
+            }}
+          >
+                        <Icon name="arrowleft" size={24} color={'black'} />
+
+          </TouchableOpacity>}
+         
         </View>
 
         <PajakContent ref={{ nav: navigation, map: mapState }} />

@@ -359,10 +359,10 @@ const SettingScreen = ({ navigation, route }) => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-around',
-              marginEnd: 8,
+              marginEnd: 24,
               marginTop: 16,
               marginBottom: 16,
-              marginStart: 8,
+              marginStart: 24,
             }}
           >
             <Icon
@@ -423,10 +423,11 @@ const SettingScreen = ({ navigation, route }) => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-around',
-              marginEnd: 8,
+              marginEnd: 24,
               marginTop: 16,
               marginBottom: 16,
-              marginStart: 8,
+              marginStart: 24,
+            
             }}
           >
             <Icon
@@ -487,10 +488,10 @@ const SettingScreen = ({ navigation, route }) => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-around',
-              marginEnd: 8,
+              marginEnd: 24,
               marginTop: 16,
               marginBottom: 16,
-              marginStart: 8,
+              marginStart: 24,
             }}
           >
             <Icon
@@ -554,6 +555,7 @@ const SettingScreen = ({ navigation, route }) => {
             }}
             style={{
               marginTop: 16,
+              marginStart:24,
               padding: 8,
               flexDirection: 'row',
               justifyContent: 'flex-start',
@@ -660,7 +662,8 @@ const SettingScreen = ({ navigation, route }) => {
             flexDirection: 'column',
             backgroundColor: 'white',
             justifyContent: 'space-around',
-            padding: 16,
+            padding: 24,
+
           }}
         >
           <Text
@@ -724,7 +727,7 @@ const SettingScreen = ({ navigation, route }) => {
                 textAlign={'center'}
                 style={{
                   fontSize: 14,
-                  color: '#FC572C',
+                  color: colorApp.button.primary,
                 }}
               >
                 Simpan
@@ -746,7 +749,8 @@ const SettingScreen = ({ navigation, route }) => {
             flexDirection: 'column',
             backgroundColor: 'white',
             justifyContent: 'space-around',
-            padding: 16,
+            padding: 24,
+
           }}
         >
           <Text
@@ -810,7 +814,7 @@ const SettingScreen = ({ navigation, route }) => {
                 textAlign={'center'}
                 style={{
                   fontSize: 14,
-                  color: '#FC572C',
+                  color: colorApp.button.primary,
                 }}
               >
                 Simpan
@@ -832,7 +836,8 @@ const SettingScreen = ({ navigation, route }) => {
             flexDirection: 'column',
             backgroundColor: 'white',
             justifyContent: 'space-around',
-            padding: 16,
+            padding: 24,
+
           }}
         >
           <Text
@@ -1008,7 +1013,7 @@ const SettingScreen = ({ navigation, route }) => {
                 textAlign={'center'}
                 style={{
                   fontSize: 14,
-                  color: '#FC572C',
+                  color: colorApp.button.primary,
                 }}
               >
                 Simpan

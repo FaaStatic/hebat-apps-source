@@ -336,6 +336,7 @@ const RiwayatPajakTutup = ({ navigation, route }) => {
         <DateTimePicker
               display='spinner'
           testID="dateTimePicker"
+          themeVariant='light'
           value={status === 'start' ? startDate : endDate}
           mode={'date'}
           onChange={(event, selectedDate) => {

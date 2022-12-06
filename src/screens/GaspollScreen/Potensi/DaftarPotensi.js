@@ -127,6 +127,7 @@ export default function DaftarPotensi({ navigation, route }) {
     return (
       <View>
         <DateTimePicker
+          themeVariant='light'
           testID="dateTimePicker"
           display='spinner'
           value={status === 'start' ? dateStart : dateEnd}
@@ -156,7 +157,7 @@ export default function DaftarPotensi({ navigation, route }) {
               color: 'white',
             }}
           >
-            Save
+            Simpan
           </Text>
         </TouchableOpacity>
       </View>
@@ -234,7 +235,8 @@ export default function DaftarPotensi({ navigation, route }) {
     return (
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('FormPotensi', { id: id_merchant, id_potensi: item.id_potensi });
+          console.log(item);
+        navigation.navigate('FormPotensi', { id: id_merchant, id_potensi: item.id_potensi });
         }}
         style={{
           marginBottom: 8,
@@ -262,7 +264,7 @@ export default function DaftarPotensi({ navigation, route }) {
             padding: 8,
             borderTopEndRadius: 16,
           }}
-          colors={['#FC3434', '#FC472F', '#FC572C']}
+          colors={[colorApp.gradientSatu,colorApp.gradientSatu]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
         >
@@ -396,7 +398,7 @@ export default function DaftarPotensi({ navigation, route }) {
         }}
         placement="right"
         icon={{ name: 'add', color: 'white' }}
-        color="#FC572C"
+        color={colorApp.button.primary}
         size="large"
       />
       <Dialog isVisible={showIosDate}>

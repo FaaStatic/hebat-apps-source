@@ -21,8 +21,10 @@ const App = () => {
     }
 
     NotificationUtil.channelExistCheck();
+    NotificationUtil.notificationConfigure();
     NotificationUtil.firebaseBackgroundHandlerNotification();
     if (Platform.OS === 'ios') {
+      NotificationUtil.notificationConfigure();
       PushNotificationIOS.addEventListener(
         stringApp.typeNotif,
         NotificationUtil.onRemoteNotification
@@ -36,7 +38,7 @@ const App = () => {
     } else {
       NotificationUtil.notificationHandler();
     }
-    NotificationUtil.notificationConfigure();
+    
   }, []);
 
   return (

@@ -398,7 +398,7 @@ const DataPetugasList = ({ navigation, route }) => {
             <Icon2
               name="calendar"
               size={24}
-              color={colorApp.primaryGaspoll}
+              color={colorApp.button.primary}
               style={{
                 alignSelf: 'center',
                 textAlignVertical: 'center',
@@ -408,7 +408,7 @@ const DataPetugasList = ({ navigation, route }) => {
             <Text
               style={{
                 fontSize: 14,
-                color: colorApp.primaryGaspoll,
+                color: colorApp.button.primary,
                 textAlignVertical: 'center',
               }}
             >
@@ -514,7 +514,7 @@ const DataPetugasList = ({ navigation, route }) => {
               flexDirection: 'column',
               justifyContent: 'center',
               borderRadius: 8,
-              backgroundColor: colorApp.primaryGaspoll,
+              backgroundColor: colorApp.button.primary,
             }}
           >
             <Text

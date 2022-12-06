@@ -1,23 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState,useCallback } from 'react';
 import {
   TouchableOpacity,
   Dimensions,
   View,
   StyleSheet,
-  FlatList,
   Text,
-  ActivityIndicator,
   InteractionManager,
   Platform,
-  StatusBar,
   BackHandler,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Image } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
-import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import { colorApp, menuMain, stringApp } from '../../util/globalvar';
-import { MainMenu } from '../ListScreen/MainMenu';
 import { Api } from '../../util/ApiManager';
 import { SessionManager } from '../../util/SessionUtil/SessionManager';
 import { useFocusEffect } from '@react-navigation/native';
@@ -38,12 +33,12 @@ export default function Beranda({ navigation, route }) {
         task.cancel();
         backHome.remove();
       };
-    }, [backHandler])
+    }, [])
   );
 
   const backHandler = () => {
     if (navigation.isFocused()) {
-      navigation.navigate('Home');
+      navigation.replace('Home');
       return true;
     }
     return false;
@@ -159,14 +154,18 @@ export default function Beranda({ navigation, route }) {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           style={{
-            flexGrow: 1,
+
           }}
-        >
-          <Image
+        ><View style={{
+          width: Platform.isPad ? '40%' :'80%',
+          alignSelf:'center',
+        }}>
+     <Image
             source={require('../../../assets/images/illustration_mitra.png')}
             style={{
               height: 250,
-              marginStart: viewWidth / 10,
+              width:'100%'
+           
             }}
             resizeMode={'contain'}
             containerStyle={{
@@ -175,6 +174,8 @@ export default function Beranda({ navigation, route }) {
               justifyContent: 'center',
             }}
           />
+        </View>
+
           <Text
             style={{
               color: 'black',
