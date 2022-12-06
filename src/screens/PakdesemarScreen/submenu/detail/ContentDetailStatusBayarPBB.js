@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   descriptionDua: {
-    flex: 0.5,
+    flex: 0.6,
     fontFamily: fontsCustom.primary[400],
     color: colorApp.black,
     fontSize: 12,

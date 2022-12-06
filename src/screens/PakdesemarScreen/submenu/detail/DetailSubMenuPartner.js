@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StatusBar, Text, Alert, Platform, Linking } from 'react-native';
+import { View, StatusBar, Text, Alert, Platform, Linking, Dimensions } from 'react-native';
 import { AppInstalledChecker } from 'react-native-check-app-install';
 import { colorApp } from '../../../../util/globalvar';
 import { stylesheet } from '../../assets';
@@ -9,7 +9,8 @@ import SegeraHadir from '../SegeraHadir';
 import Partner from './detailsubmenu/Partner';
 import { MessageUtil } from '../../../../util/MessageUtil';
 import ServiceHelper from '../../addOns/ServiceHelper';
-const APPBAR_HEIGHT = 150;
+const height = Dimensions.get('window').height;
+const APPBAR_HEIGHT = Platform.isPad == true ? height / 6 : 150;
 export default DetailSubMenuPartner = ({ navigation, route }) => {
   const { data } = route.params;
   const [dataLangkah, setDataLangkah] = useState([]);
@@ -35,18 +36,22 @@ export default DetailSubMenuPartner = ({ navigation, route }) => {
   };
   const onPressBankPartner = (link) => {
     if (Platform.OS === 'ios') {
-      AppInstalledChecker
-        .checkURLScheme(link.link_app_ios)
-        .then((isInstalled) => {
-          Linking.openURL(`${link.link_app_ios}://app`)
-        })
-        .catch(Linking.openURL('https://apps.apple.com/sg/app/'))
-
+      Alert.alert('HEBAT!', 'OnProgress!!')
+      // AppInstalledChecker
+      //   .checkURLScheme('kekancanku')
+      //   .then((isInstalled) => {
+      //     Linking.openURL(`${link.link_app_ios}://app`)
+      //   })
+      //   .catch(Linking.openURL('kekancanku://app'))
     } else { // Android
       AppInstalledChecker
-        .checkURLScheme('com.hdb.healthAnd')
+        .isAppInstalled('Kekancanku')
         .then((isInstalled) => {
-          Linking.openURL('hdbhealth://app')
+          if (isInstalled == false) {
+            Linking.openURL(`https://play.google.com/store/apps/details?id=${link.link_app_android}`)
+          } else {
+            Linking.openURL('kekancangroup://app')
+          }
         })
         .catch(Linking.openURL(`https://play.google.com/store/apps/details?id=${link.link_app_android}`))
     }

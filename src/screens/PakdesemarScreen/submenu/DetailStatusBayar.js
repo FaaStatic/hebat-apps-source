@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StatusBar, StyleSheet, Text, ScrollView, Platform } from 'react-native';
+import { View, StatusBar, StyleSheet, Text, ScrollView, Platform, Dimensions } from 'react-native';
 import { colorApp, fontsCustom } from '../../../util/globalvar';
 import { stylesheet } from '../assets';
 import { CustomModal, Gap, HeaderSubMenu, Input } from '../components';
@@ -9,7 +9,8 @@ import ServiceHelper from '../addOns/ServiceHelper';
 import ContentDetailStatusBayarPBB from './detail/ContentDetailStatusBayarPBB';
 import ContentDetailStatusBayarSKPD from './detail/ContentDetailStatusBayarSKPD';
 import { NomorNOPFormat } from '../addOns/NomorNOPFormat';
-const APPBAR_HEIGHT = 110;
+const height = Dimensions.get('window').height;
+const APPBAR_HEIGHT = Platform.isPad == true ? height / 7 : 110;
 export default DetailStatusBayar = ({ navigation, route }) => {
   const { data } = route.params;
   const [nomor, setNomor] = useState('');

@@ -1,4 +1,4 @@
-import { View, StatusBar, Linking, Platform, ScrollView } from 'react-native';
+import { View, StatusBar, Linking, Platform, ScrollView, Dimensions } from 'react-native';
 import { colorApp } from '../../../util/globalvar';
 import { stylesheet } from '../assets';
 import { Gap, HeaderSubMenu } from '../components';
@@ -6,7 +6,8 @@ import React, { useEffect, useState } from 'react';
 import ServiceHelper from '../addOns/ServiceHelper';
 import DetailMetodeBayar from './detail/DetailMetodeBayar';
 import SegeraHadir from './SegeraHadir';
-const APPBAR_HEIGHT = 110;
+const height = Dimensions.get('window').height;
+const APPBAR_HEIGHT = Platform.isPad == true ? height / 7 : 110;
 export default DetailPembayaran = ({ navigation, route }) => {
   const { data } = route.params;
   const [loading, setLoading] = useState(true);

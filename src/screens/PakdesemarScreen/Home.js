@@ -121,17 +121,12 @@ export default function Home({ navigation, route }) {
           </View>
           <View style={styles.coverTitle}>
             <Text
-              style={{ fontSize: 7, color: colorApp.black, fontFamily: fontsCustom.primary[400] }}
-            >
-              {moment(item.tgl_news).format('dddd, hh MMMM YYYY')}
-            </Text>
-            <Text
               style={{
-                fontSize: 15,
+                fontSize: 11,
                 color: colorApp.black,
                 fontFamily: fontsCustom.primary[700],
               }}
-              numberOfLines={1}
+              numberOfLines={3}
             >
               {item.judul_news}
             </Text>
@@ -272,8 +267,7 @@ const styles = StyleSheet.create({
   },
   coverTitle: {
     flex: 1,
-    justifyContent: 'flex-end',
-    padding: 19,
+    marginHorizontal: 10,
   },
   cardMainMenu: {
     width: 55,

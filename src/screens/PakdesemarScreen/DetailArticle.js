@@ -6,7 +6,7 @@ import {
   Text,
   Image,
   ScrollView,
-  ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { Skeleton } from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
@@ -18,7 +18,8 @@ import 'moment/locale/id';
 import ServiceHelper from './addOns/ServiceHelper';
 import { MessageUtil } from '../../util/MessageUtil';
 import RenderHTML from 'react-native-render-html';
-const APPBAR_HEIGHT = 110;
+const height = Dimensions.get('window').height;
+const APPBAR_HEIGHT = Platform.isPad == true ? height / 7 : 110;
 const width = Dimensions.get('window').width;
 export default DetailArticle = ({ navigation, route }) => {
   const { data } = route.params;
@@ -49,6 +50,19 @@ export default DetailArticle = ({ navigation, route }) => {
       setLoad(false);
     } else {
       MessageUtil.errorMessage(metadata.message);
+    }
+  };
+  const tagsStyles = {
+    p: {
+      whiteSpace: 'normal',
+      color: colorApp.black
+    },
+    div: {
+      whiteSpace: 'normal',
+      color: colorApp.black
+    },
+    li: {
+      color: colorApp.black
     }
   };
   return (
@@ -112,9 +126,9 @@ export default DetailArticle = ({ navigation, route }) => {
                   }}
                   style={{
                     borderRadius: 35,
-                    height: 200,
+                    height: 260,
                   }}
-                  resizeMode='cover'
+                  resizeMode='contain'
                 />
                 <Gap height={20} />
                 <Text
@@ -126,9 +140,9 @@ export default DetailArticle = ({ navigation, route }) => {
                 >
                   {detail.title}
                 </Text>
-                <Text>{moment(detail.tgl_news).format('dddd, hh MMMM YYYY')}</Text>
+                {/* <Text>{moment(detail.tgl_news).format('dddd, hh MMMM YYYY')}</Text> */}
                 <Gap height={10} />
-                <RenderHTML contentWidth={width} source={{ html: detail.keterangan }} />
+                <RenderHTML tagsStyles={tagsStyles} contentWidth={width} source={{ html: detail.keterangan }} />
                 <Gap height={35} />
               </ScrollView>
             </View>
