@@ -107,6 +107,7 @@ export default MainSubMenu = ({ navigation, route }) => {
   return (
     <>
       <StatusBar backgroundColor={colorApp.header.primary} />
+      <View style={{ height: APPBAR_HEIGHT }} />
       <HeaderSubMenu
         title={data.nama}
         logo={data.logo}
@@ -115,7 +116,6 @@ export default MainSubMenu = ({ navigation, route }) => {
         background={colorApp.header.secondary}
         onPress={() => navigation.goBack()}
       />
-      <View style={{ height: APPBAR_HEIGHT }} />
       <View
         style={{
           flex: 1,

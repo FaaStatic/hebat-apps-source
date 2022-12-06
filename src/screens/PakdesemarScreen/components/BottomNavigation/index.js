@@ -65,5 +65,6 @@ const styles = StyleSheet.create({
     elevation: 6,
     borderTopEndRadius: 15,
     borderTopStartRadius: 15,
+    paddingBottom: Platform.OS == 'android' ? 0 : 25
   },
 });

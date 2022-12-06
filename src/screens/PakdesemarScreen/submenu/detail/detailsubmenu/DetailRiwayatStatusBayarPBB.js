@@ -6,7 +6,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { colorApp, fontsCustom } from '../../../../../util/globalvar';
 import { Gap, HeaderSubMenu } from '../../../components';
 import { stylesheet } from '../../../assets';
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 90 : 110;
+const APPBAR_HEIGHT = 110;
 export default DetailRiwayatStatusBayarPBB = ({ navigation, route }) => {
     const { data } = route.params;
     const formatDate = (tgl) => {
@@ -15,13 +15,13 @@ export default DetailRiwayatStatusBayarPBB = ({ navigation, route }) => {
     }
     return (
         <><StatusBar backgroundColor={colorApp.header.primary} /><View style={[stylesheet.container]}>
+            <View style={{ height: APPBAR_HEIGHT }} />
             <HeaderSubMenu
                 title={"Detail PBB"}
                 type="icon-only"
                 icon="black"
                 background={colorApp.header.secondary}
                 onPress={() => navigation.goBack()} />
-            <View style={{ height: APPBAR_HEIGHT }} />
             <View
                 style={{
                     flex: 1,

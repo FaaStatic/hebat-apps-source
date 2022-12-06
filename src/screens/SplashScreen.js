@@ -70,7 +70,7 @@ export default function SplashScreen({ navigation, route }) {
             position: 'absolute',
             resizeMode: 'contain',
             width: width,
-            marginTop: height / 3.4,
+            marginTop: height / 3.3,
           }}
         />
         <View style={{ flex: 0.2, bottom: 0 }}>

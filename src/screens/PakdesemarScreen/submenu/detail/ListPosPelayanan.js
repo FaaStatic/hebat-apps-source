@@ -16,7 +16,7 @@ export default ListPosPelayanan = ({ data, onPressMenu }) => {
             flexDirection: 'row',
           }}
         >
-          <View style={{ width: '50%', paddingEnd: 20 }}>
+          <View style={{ width: '53%', paddingEnd: 20 }}>
             <Text
               style={{
                 fontSize: 15,

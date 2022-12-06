@@ -141,6 +141,7 @@ export default FormRegistrasi = ({ navigation, route }) => {
     <>
       <StatusBar backgroundColor={colorApp.header.primary} />
       <View style={[stylesheet.container]}>
+        <View style={{ height: APPBAR_HEIGHT }} />
         <HeaderSubMenuDetail
           title={data.name}
           type="icon-only"
@@ -191,7 +192,6 @@ export default FormRegistrasi = ({ navigation, route }) => {
           </View>
         </View>
         <Gap height={30} />
-        <View style={{ height: APPBAR_HEIGHT }} />
         <View
           style={{
             flex: 1,

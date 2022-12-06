@@ -28,13 +28,38 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>localhost</key>
+			<key>eregister.semarangkota.go.id</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>esptpd.semarangkota.go.id</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>esumpah.semarangkota.go.id</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>gmedia.bz</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
 				<true/>
 			</dict>
 		</dict>
@@ -47,6 +72,8 @@
 	<string>$(PRODUCT_NAME) need access location to support application features</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) need access location  to support application features</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>$(PRODUCT_NAME) show photo after take camera as a supporting feature</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NeoSansStd-Bold.ttf</string>

@@ -1,4 +1,4 @@
-import { View, StatusBar, Linking, Platform } from 'react-native';
+import { View, StatusBar, Linking, Platform, ScrollView } from 'react-native';
 import { colorApp } from '../../../util/globalvar';
 import { stylesheet } from '../assets';
 import { Gap, HeaderSubMenu } from '../components';
@@ -38,6 +38,8 @@ export default DetailPembayaran = ({ navigation, route }) => {
       kode_partner: data.kode_partner,
       name: data.judul,
       image: data.image,
+      link_app_ios: data.link_app_ios,
+      link_app_android: data.link_app_android,
     };
     navigation.navigate('DetailSubMenuPartner', { data: item });
   };
@@ -47,6 +49,8 @@ export default DetailPembayaran = ({ navigation, route }) => {
       kode_partner: data.kode_partner,
       name: data.judul,
       image: data.image,
+      link_app_ios: data.link_app_ios,
+      link_app_android: data.link_app_android,
     };
     navigation.navigate('DetailSubMenuPartner', { data: item });
   };
@@ -62,6 +66,7 @@ export default DetailPembayaran = ({ navigation, route }) => {
     <>
       <StatusBar backgroundColor={colorApp.header.primary} />
       <View style={[stylesheet.container]}>
+        <View style={{ height: APPBAR_HEIGHT }} />
         <HeaderSubMenu
           title={data.name}
           logo={data.logo}
@@ -70,7 +75,6 @@ export default DetailPembayaran = ({ navigation, route }) => {
           background={colorApp.header.secondary}
           onPress={() => navigation.goBack()}
         />
-        <View style={{ height: APPBAR_HEIGHT }} />
         <View
           style={{
             flex: 1,
@@ -79,35 +83,38 @@ export default DetailPembayaran = ({ navigation, route }) => {
             backgroundColor: colorApp.primary,
           }}
         >
-          <Gap height={30} />
+          <Gap height={20} />
           <View style={[stylesheet.content]}>
-            {data.id == 'BankPartner' ? (
-              <DetailMetodeBayar
-                type={'partner'}
-                status={'Bank'}
-                data={data.list}
-                load={loading}
-                onPressMenu={(data) => onPressMenuBankPartner(data)}
-              />
-            ) : data.id == 'AgenPartner' ? (
-              <DetailMetodeBayar
-                type={'partner'}
-                status={'Agen'}
-                data={data.list}
-                load={loading}
-                onPressMenu={(data) => onPressMenuAgenPartner(data)}
-              />
-            ) : data.id == 'PosPelayanan' ? (
-              <DetailMetodeBayar
-                type={'pos'}
-                status={'PosPelayanan'}
-                data={list}
-                load={loading}
-                onPressMenu={(data) => onPressMenuPosPelayanan(data)}
-              />
-            ) : (
-              <SegeraHadir />
-            )}
+            <ScrollView>
+              {data.id == 'BankPartner' ? (
+                <DetailMetodeBayar
+                  type={'partner'}
+                  status={'Bank'}
+                  data={data.list}
+                  load={loading}
+                  onPressMenu={(data) => onPressMenuBankPartner(data)}
+                />
+              ) : data.id == 'AgenPartner' ? (
+                <DetailMetodeBayar
+                  type={'partner'}
+                  status={'Agen'}
+                  data={data.list}
+                  load={loading}
+                  onPressMenu={(data) => onPressMenuAgenPartner(data)}
+                />
+              ) : data.id == 'PosPelayanan' ? (
+                <DetailMetodeBayar
+                  type={'pos'}
+                  status={'PosPelayanan'}
+                  data={list}
+                  load={loading}
+                  onPressMenu={(data) => onPressMenuPosPelayanan(data)}
+                />
+              ) : (
+                <SegeraHadir />
+              )}
+              {Platform.OS == 'ios' && <Gap height={35} />}
+            </ScrollView>
           </View>
         </View>
       </View>
