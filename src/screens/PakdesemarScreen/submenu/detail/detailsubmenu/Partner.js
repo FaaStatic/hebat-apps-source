@@ -52,7 +52,7 @@ export default Partner = ({ load, primaryDataBank, data, onPressOpenApps, onPres
                 isReadOnly={true}
                 backgroundColor={colorApp.secondary}
                 borderColor={colorApp.primary}
-                onPressIcon={() => onPressOpenApps('')}
+                onPressIcon={() => onPressOpenApps(primaryDataBank)}
                 icon="external-link"
               />
             </View>

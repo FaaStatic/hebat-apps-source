@@ -74,7 +74,7 @@ export default Support = ({ navigation, route }) => {
   const renderItemSosmed = (item, index) => {
     return (
       <>
-        <View style={{ flexDirection: 'row', flex: index != 3 ? 0.45 : 0.47 }}>
+        <View style={{ flexDirection: 'row', flex: index != 3 ? Platform.isPad == true ? 1 : 0.45 : Platform.isPad == true ? 1 : 0.47 }}>
           <View style={{ height: 50, justifyContent: 'center' }}>
             <Image source={item.logo} style={styles.sosemed} />
           </View>

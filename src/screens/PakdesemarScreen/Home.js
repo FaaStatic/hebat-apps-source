@@ -121,17 +121,12 @@ export default function Home({ navigation, route }) {
           </View>
           <View style={styles.coverTitle}>
             <Text
-              style={{ fontSize: 7, color: colorApp.black, fontFamily: fontsCustom.primary[400] }}
-            >
-              {moment(item.tgl_news).format('dddd, hh MMMM YYYY')}
-            </Text>
-            <Text
               style={{
-                fontSize: 15,
+                fontSize: 11,
                 color: colorApp.black,
                 fontFamily: fontsCustom.primary[700],
               }}
-              numberOfLines={1}
+              numberOfLines={3}
             >
               {item.judul_news}
             </Text>
@@ -211,13 +206,27 @@ export default function Home({ navigation, route }) {
                       height={120}
                       variant="rectangular"
                     />
+                    {Platform.isPad == true &&
+                      <><Gap width={10} /><Skeleton
+                        LinearGradientComponent={LinearGradient}
+                        animation="wave"
+                        width={160}
+                        height={120}
+                        variant="rectangular" />
+                        <Gap width={10} /><Skeleton
+                          LinearGradientComponent={LinearGradient}
+                          animation="wave"
+                          width={160}
+                          height={120}
+                          variant="rectangular" /></>}
                   </View>
                 </>
               )}
               <FlatList
                 showsHorizontalScrollIndicator={false}
                 nestedScrollEnabled={true}
-                horizontal={true}
+                horizontal={Platform.isPad == true ? false : true}
+                numColumns={Platform.isPad == true && 4}
                 data={article}
                 keyExtractor={(item) => 'Article-' + item.title}
                 onEndReachedThreshold={0.5}
@@ -272,8 +281,7 @@ const styles = StyleSheet.create({
   },
   coverTitle: {
     flex: 1,
-    justifyContent: 'flex-end',
-    padding: 19,
+    marginHorizontal: 10,
   },
   cardMainMenu: {
     width: 55,

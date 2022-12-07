@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Dimensions, View } from 'react-native';
+import { StyleSheet, Dimensions, View, Platform } from 'react-native';
 import PDFView from 'react-native-view-pdf';
 import RNFetchBlob from 'rn-fetch-blob';
 import { colorApp } from '../../../util/globalvar';
@@ -18,6 +18,7 @@ const ViewPdf = ({ navigation, route }) => {
     let date = new Date();
     const { config, fs } = RNFetchBlob;
     const downloads = fs.dirs.DownloadDir;
+    const documents = fs.dirs.DocumentDir;
     var fileExtension = resources.url.split('.').pop();
     var filePath =
       downloads +
@@ -25,15 +26,28 @@ const ViewPdf = ({ navigation, route }) => {
       Math.floor(date.getTime() + date.getSeconds() / 2) +
       '.' +
       fileExtension;
-
-    return config({
-      fileCache: true,
-      addAndroidDownloads: {
-        useDownloadManager: true,
-        notification: true,
-        path: filePath,
+    var filePathIos =
+      documents +
+      '/pakdesemar_' +
+      Math.floor(date.getTime() + date.getSeconds() / 2) +
+      '.' +
+      fileExtension;
+    const configOption = Platform.select({
+      ios: {
+        fileCache: true,
+        path: filePathIos,
+        appendExt: 'pdf',
       },
-    })
+      android: {
+        fileCache: true,
+        addAndroidDownloads: {
+          useDownloadManager: true,
+          notification: true,
+          path: filePath,
+        },
+      },
+    });
+    return config(configOption)
       .fetch('GET', resources.url)
       .then((res) => {
         setLoading(false);
@@ -49,12 +63,13 @@ const ViewPdf = ({ navigation, route }) => {
           background={colorApp.primary}
           type="icon-only"
           icon="black"
+          gapCustom={true}
           onPress={() => navigation.goBack()}
         />
         <View
           style={{
             position: 'absolute',
-            top: 60,
+            top: 30,
             right: 15,
           }}
         >

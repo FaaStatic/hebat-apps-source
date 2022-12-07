@@ -81,6 +81,9 @@
 		01F91730293DA77500F1F2E2 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		01F91731293DA77500F1F2E2 /* NeoSansStd-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NeoSansStd-Light.ttf"; sourceTree = "<group>"; };
 		01F91732293DA77500F1F2E2 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		0C9470CA293EEB570017CF77 /* libRNPDF.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNPDF.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C9470CC293EEB6A0017CF77 /* libReact-RCTBlob.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTBlob.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C9470CE293EEB6A0017CF77 /* librn-fetch-blob.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "librn-fetch-blob.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* bapendaapps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bapendaapps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = bapendaapps/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = bapendaapps/AppDelegate.mm; sourceTree = "<group>"; };
@@ -152,6 +155,9 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0C9470CC293EEB6A0017CF77 /* libReact-RCTBlob.a */,
+				0C9470CE293EEB6A0017CF77 /* librn-fetch-blob.a */,
+				0C9470CA293EEB570017CF77 /* libRNPDF.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-bapendaapps.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-bapendaapps-bapendaappsTests.a */,

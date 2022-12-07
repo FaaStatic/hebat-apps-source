@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Image, Text } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Text, Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { colorApp, fontsCustom } from '../../../util/globalvar';
 import { Gap } from '../components';
@@ -24,7 +24,7 @@ export default StatusBayar = ({ data, onPressMenu }) => {
               >
                 <View>
                   <View style={{ flexDirection: 'row' }}>
-                    <View style={{ position: 'absolute', marginStart: '52%', opacity: 0.5 }}>
+                    <View style={{ position: 'absolute', marginStart: Platform.isPad == true ? '72%' : Platform.OS == 'android' ? '50%' : '49%', opacity: 0.5 }}>
                       <Image
                         source={item.image}
                         style={{

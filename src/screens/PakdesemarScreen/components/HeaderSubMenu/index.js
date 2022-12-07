@@ -9,16 +9,15 @@ import {
 import { colorApp, fontsCustom } from '../../../../util/globalvar';
 import { Button } from './../index';
 const height = Dimensions.get('window').height;
-
 const HeaderSubMenu = ({ absolute, gapCustom, title, onPress, icon, type, color, background }) => {
-  const APPBAR_HEIGHT = gapCustom == undefined ? 140 : 100;
+  const APPBAR_HEIGHT = Platform.isPad == true ? gapCustom == undefined ? height / 5 : height / 9 : gapCustom == undefined ? 140 : 100;
   return (
     <>
       <View
         style={{
           position: absolute != undefined ? null : 'absolute',
           backgroundColor: background,
-          paddingTop: gapCustom == undefined ? height / 12 : height / 23,
+          paddingTop: gapCustom == undefined ? height / 12 : height / 20,
           width: '100%',
           paddingHorizontal: 16,
           height: APPBAR_HEIGHT,
