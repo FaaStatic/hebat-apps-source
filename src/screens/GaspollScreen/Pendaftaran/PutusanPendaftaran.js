@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, StyleSheet, ScrollView, Platform } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { HeaderWithoutHistory } from '../../Komponen/HeaderWithoutHistory';
 import Gaplist from '../../Komponen/GapList';
 import { CheckBox, Dialog } from '@rneui/themed';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { stringApp } from '../../../util/globalvar';
+import { colorApp, stringApp } from '../../../util/globalvar';
 import { Api } from '../../../util/ApiManager';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { MessageUtil } from '../../../util/MessageUtil';
@@ -299,7 +299,7 @@ export default function PutusanPendaftaran({ navigation, route }) {
                 kirimSurveySetuju();
               }}
               style={{
-                backgroundColor: '#FC572C',
+                backgroundColor: colorApp.button.primary,
                 justifyContent: 'center',
                 flexDirection: 'column',
                 height: 45,
@@ -377,7 +377,7 @@ export default function PutusanPendaftaran({ navigation, route }) {
                   kirimSurveyMenolak();
                 }}
                 style={{
-                  backgroundColor: '#FC572C',
+                  backgroundColor: colorApp.button.primary,
                   justifyContent: 'center',
                   flexDirection: 'column',
                   height: 45,
@@ -403,7 +403,7 @@ export default function PutusanPendaftaran({ navigation, route }) {
                 setOpenDialog(true);
               }}
               style={{
-                backgroundColor: '#FC572C',
+                backgroundColor: colorApp.button.primary,
                 justifyContent: 'center',
                 flexDirection: 'column',
                 height: 45,
@@ -520,6 +520,8 @@ const style = StyleSheet.create({
   inputStyle: {
     fontSize: 14,
     color: 'black',
+    paddingStart:8,
+    height:50
   },
   textTitle: {
     fontSize: 16,

@@ -8,7 +8,8 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
-  InteractionManager
+  InteractionManager,
+  Platform
 } from 'react-native';
 import CurrencyInput from 'react-native-currency-input';
 import { Header } from '../../Komponen/Header';
@@ -16,7 +17,7 @@ import Gaplist from '../../Komponen/GapList';
 import { Dialog } from '@rneui/themed';
 import { Api } from '../../../util/ApiManager';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { stringApp } from '../../../util/globalvar';
+import { colorApp, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -90,6 +91,7 @@ export default function FormPotensi({ navigation, route }) {
         var message = body.metadata.message;
         var response = body.response;
         if (status === 200) {
+        
           setResponseItem(response);
           setNpwpd(response.npwpdwp === '' ? '...' : response.npwpdwp);
           setNamaUsaha(response.nama);
@@ -463,7 +465,7 @@ export default function FormPotensi({ navigation, route }) {
           </Text>
         </TouchableOpacity>
         <Gaplist />
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>NIK</Text>
+        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>NIK Pemilik Usaha</Text>
         <View style={Style.backgroundTextInput}>
           <TextInput
             style={Style.textInput}
@@ -473,7 +475,7 @@ export default function FormPotensi({ navigation, route }) {
             }}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Nama Pemilik</Text>
+        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Nama Pemilik Usaha</Text>
         <View style={Style.backgroundTextInput}>
           <TextInput
             style={Style.textInput}
@@ -483,7 +485,7 @@ export default function FormPotensi({ navigation, route }) {
             }}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Alamat Pemilik</Text>
+        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Alamat Pemilik Usaha</Text>
         <View style={Style.backgroundTextInput}>
           <TextInput
             style={Style.textInput}
@@ -493,7 +495,7 @@ export default function FormPotensi({ navigation, route }) {
             }}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Telpon Pemilik</Text>
+        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Telpon Pemilik Usaha</Text>
         <View style={Style.backgroundTextInput}>
           <TextInput
             style={Style.textInput}
@@ -689,12 +691,15 @@ const Style = StyleSheet.create({
   backgroundTextInput: {
     marginTop: 8,
     marginBottom: 8,
-    padding: 8,
+    paddingTop: 4,
+    paddingBottom:4,
+    paddingStart:8,
+    height:50,
     borderRadius: 8,
     backgroundColor: '#dadce0',
   },
   btnSimpan: {
-    backgroundColor: '#FC572C',
+    backgroundColor: colorApp.button.primary,
     padding: 16,
     marginTop: 16,
     marginBottom: 16,

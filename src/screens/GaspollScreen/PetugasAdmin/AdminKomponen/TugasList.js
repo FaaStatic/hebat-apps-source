@@ -534,7 +534,7 @@ const TugasList = ({ navigation, route }) => {
                 flexDirection: 'row',
                 backgroundColor: 'white',
 
-                borderColor: colorApp.primaryGaspoll,
+                borderColor: colorApp.button.primary,
                 borderRadius: 8,
                 borderWidth: 0.5,
                 justifyContent: 'center',
@@ -546,7 +546,7 @@ const TugasList = ({ navigation, route }) => {
               <Icon2
                 name="calendar"
                 size={24}
-                color={colorApp.primaryGaspoll}
+                color={colorApp.button.primary}
                 style={{
                   alignSelf: 'center',
                   textAlignVertical: 'center',
@@ -556,7 +556,7 @@ const TugasList = ({ navigation, route }) => {
               <Text
                 style={{
                   fontSize: 14,
-                  color: colorApp.primaryGaspoll,
+                  color: colorApp.button.primary,
                   textAlignVertical: 'center',
                 }}
               >
@@ -664,7 +664,7 @@ const TugasList = ({ navigation, route }) => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 borderRadius: 8,
-                backgroundColor: colorApp.primaryGaspoll,
+                backgroundColor: colorApp.button.primary,
               }}
             >
               <Text

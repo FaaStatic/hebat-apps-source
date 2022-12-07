@@ -1,4 +1,4 @@
-import React, {  useState, useRef,useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { Api } from '../../../util/ApiManager';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
@@ -15,13 +15,14 @@ import {
   ActivityIndicator,
   UIManager,
   LayoutAnimation,
-  InteractionManager
+  InteractionManager,
+  Platform,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { Image, CheckBox, Dialog, BottomSheet, LinearProgress } from '@rneui/themed';
-import { launchCamera } from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Header } from '../../Komponen/Header';
 import { colorApp, menuMain, stringApp } from '../../../util/globalvar';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -31,7 +32,6 @@ import Icon3 from 'react-native-vector-icons/dist/AntDesign';
 import GapList from '../../Komponen/GapList';
 import RNFetchBlob from 'rn-fetch-blob';
 import { useFocusEffect } from '@react-navigation/native';
-
 
 const { width: viewWidth, height: viewHeight } = Dimensions.get('window');
 const MIN_HEIGHT_HEADER = StatusBar.currentHeight + 30;
@@ -50,6 +50,7 @@ const FormReklame = ({ navigation, route }) => {
   const [listCategory, setListCategory] = useState([]);
   const [deskripsi, setDeskripsi] = useState(null);
   const [openList, setOpenList] = useState(false);
+  const [openBottom, setOpenBottom] = useState(false);
   const [mapState, setMapState] = useState({
     latitude: Number(modelData.latitude),
     longitude: Number(modelData.longitude),
@@ -78,15 +79,17 @@ const FormReklame = ({ navigation, route }) => {
     extrapolateRight: 'clamp',
   });
 
-  useFocusEffect(useCallback(()=>{
-    const task = InteractionManager.runAfterInteractions(()=>{
-      clearData();
-      getCategoryReklame();
-      addData();
-    });
-    return()=> task.cancel();
-  },[]));
-
+  useFocusEffect(
+    useCallback(() => {
+      const task = InteractionManager.runAfterInteractions(() => {
+        getLocation();
+        clearData();
+        getCategoryReklame();
+        addData();
+      });
+      return () => task.cancel();
+    }, [])
+  );
 
   const clearData = () => {
     setFileList([]);
@@ -161,7 +164,7 @@ const FormReklame = ({ navigation, route }) => {
           longitude = datapos.longitude;
           var params = {
             latitude: datapos.latitude,
-            longitude: datapos.latitude,
+            longitude: datapos.longitude,
             latitudeDelta: limitlatitudeDelta,
             longitudeDelta: limitLongitudeDelta,
           };
@@ -214,6 +217,51 @@ const FormReklame = ({ navigation, route }) => {
             setFileList(item);
             setSavingFileData((current) => [...current, response.assets[0].base64]);
           }
+          console.log('====================================');
+          console.log(savingFileData);
+          console.log('====================================');
+          console.log(fileList);
+        }
+      });
+    }
+  };
+
+  const pickGalery = async () => {
+    let options = {
+      mediaType: 'photo',
+      maxWidth: 800,
+      maxHeight: 800,
+      cameraType: 'back',
+      includeBase64: true,
+      quality: 0.7,
+      storageOptions: {
+        skipBackup: true,
+        path: 'Pictures',
+      },
+      saveToPhotos: true,
+    };
+    let cameraPermission = await PermissionUtil.requestCameraPermission();
+    let saveStorage = await PermissionUtil.requestExternalWritePermission();
+    if (cameraPermission && saveStorage) {
+      launchImageLibrary(options, (response) => {
+        if (response.didCancel) {
+          console.log('Canceled By User');
+        } else {
+          var number = Math.floor(Math.random() * 100) + 1;
+          var item = [
+            {
+              id: number,
+              image: response.assets[0].base64,
+            },
+          ];
+          if (fileList.length > 0) {
+            setFileList(fileList.concat(item));
+            setSavingFileData((current) => [...current, response.assets[0].base64]);
+          } else {
+            setFileList(item);
+            setSavingFileData((current) => [...current, response.assets[0].base64]);
+          }
+
           console.log('====================================');
           console.log(savingFileData);
           console.log('====================================');
@@ -347,7 +395,7 @@ const FormReklame = ({ navigation, route }) => {
                 flexDirection: 'row',
                 position: 'absolute',
                 marginStart: 16,
-                marginTop: 8,
+                marginTop: Platform.OS === 'ios' ? 35 : 8,
               }}
             >
               <TouchableOpacity
@@ -400,6 +448,8 @@ const FormReklame = ({ navigation, route }) => {
               fontWeight: '600',
               color: 'black',
               marginTop: 8,
+              marginBottom:8,
+              marginStart:8,
             }}
           >
             {modelData.nama}
@@ -409,6 +459,8 @@ const FormReklame = ({ navigation, route }) => {
               fontSize: 14,
               fontWeight: '400',
               color: 'black',
+              marginStart:8,
+              marginBottom:8,
             }}
           >
             {modelData.alamat}
@@ -442,6 +494,7 @@ const FormReklame = ({ navigation, route }) => {
           {listCategory.length > 0 ? (
             <DropDownPicker
               open={openList}
+              placeholder={'Pilih Deskripsi Pajak Reklame'}
               disabled={status === null ? false : true}
               value={deskripsi}
               closeAfterSelecting={true}
@@ -480,7 +533,7 @@ const FormReklame = ({ navigation, route }) => {
                 fontSize: 12,
               }}
             >
-              Please wait ...
+              Tunggu Sebentar ...
             </Text>
           )}
         </View>
@@ -498,7 +551,7 @@ const FormReklame = ({ navigation, route }) => {
             marginBottom: 16,
           }}
         >
-          Map
+          Peta
         </Text>
         <View
           style={{
@@ -570,7 +623,6 @@ const FormReklame = ({ navigation, route }) => {
               }}
               pinColor="blue"
               title="You are here"
-            
             />
           </MapView>
           {status === null && (
@@ -616,7 +668,7 @@ const FormReklame = ({ navigation, route }) => {
               alignSelf: 'center',
             }}
           >
-            Latitude : {mapState.latitude}
+            Latitude : {mapState.latitude.toFixed(4)}
           </Text>
           <Text
             style={{
@@ -627,7 +679,7 @@ const FormReklame = ({ navigation, route }) => {
               alignSelf: 'center',
             }}
           >
-            Longitude : {mapState.longitude}
+            Longitude : {mapState.longitude.toFixed(4)}
           </Text>
         </View>
 
@@ -641,7 +693,7 @@ const FormReklame = ({ navigation, route }) => {
             },
           ]}
         >
-          Upload Photo
+          Unggah Gambar
         </Text>
         <Text
           style={[
@@ -654,7 +706,7 @@ const FormReklame = ({ navigation, route }) => {
             },
           ]}
         >
-          Please Press Button Below to Upload Photo
+          Mohon Tekan Tombol Dibawah Ini Untuk Unggah Gambar
         </Text>
         {fileList.length > 0 ? (
           <FlatList
@@ -664,7 +716,9 @@ const FormReklame = ({ navigation, route }) => {
                 <>
                   {status === null && (
                     <TouchableOpacity
-                      onPress={pickImage}
+                      onPress={() => {
+                        setOpenBottom(true);
+                      }}
                       style={{
                         width: 150,
                         height: 150,
@@ -758,7 +812,9 @@ const FormReklame = ({ navigation, route }) => {
           <>
             {status === null && (
               <TouchableOpacity
-                onPress={pickImage}
+                onPress={() => {
+                  setOpenBottom(true);
+                }}
                 style={{
                   width: 150,
                   height: 150,
@@ -791,7 +847,7 @@ const FormReklame = ({ navigation, route }) => {
               marginEnd: 24,
               marginStart: 24,
               borderRadius: 8,
-              backgroundColor: '#FC572C',
+              backgroundColor: colorApp.button.primary,
             }}
           >
             <Text
@@ -910,6 +966,51 @@ const FormReklame = ({ navigation, route }) => {
           </View>
         </View>
       </Dialog>
+      <BottomSheet
+        isVisible={openBottom}
+        onBackdropPress={() => {
+          setOpenBottom(false);
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            flex: 1,
+            padding: 16,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              setOpenBottom(false);
+              pickImage();
+            }}
+            style={[
+              style.btnBottom,
+              {
+                backgroundColor: '#fb9c3e',
+              },
+            ]}
+          >
+            <Text style={style.textBtn}>Ambil dari Kamera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              style.btnBottom,
+              {
+                backgroundColor: '#669beb',
+              },
+            ]}
+            onPress={() => {
+              setOpenBottom(false);
+              pickGalery();
+            }}
+          >
+            <Text style={style.textBtn}>Ambil dari Galeri</Text>
+          </TouchableOpacity>
+        </View>
+      </BottomSheet>
     </View>
   );
 };
@@ -942,6 +1043,19 @@ const style = StyleSheet.create({
     fontWeight: '800',
     color: 'black',
     marginBottom: 8,
+  },
+  btnBottom: {
+    marginBottom: 16,
+    height: 55,
+    justifyContent: 'center',
+    flexDirection: 'column',
+    borderRadius: 8,
+  },
+  textBtn: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: '600',
+    textAlign: 'center',
   },
 });
 
