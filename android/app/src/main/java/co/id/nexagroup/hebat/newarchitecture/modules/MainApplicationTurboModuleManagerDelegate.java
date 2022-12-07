@@ -1,4 +1,4 @@
-package co.id.gmedia.bapenda.newarchitecture.modules;
+package co.id.nexagroup.hebat.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

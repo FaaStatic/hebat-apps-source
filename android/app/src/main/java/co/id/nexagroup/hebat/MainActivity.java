@@ -1,4 +1,4 @@
-package co.id.gmedia.bapenda;
+package co.id.nexagroup.hebat;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

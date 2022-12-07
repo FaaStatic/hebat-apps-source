@@ -1,4 +1,4 @@
-package co.id.gmedia.bapenda.newarchitecture.components;
+package co.id.nexagroup.hebat.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

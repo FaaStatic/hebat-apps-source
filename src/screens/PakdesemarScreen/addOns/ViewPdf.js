@@ -90,7 +90,7 @@ const ViewPdf = ({ navigation, route }) => {
         <Gap height={60} />
         <PDFView
           fadeInDuration={250.0}
-          style={{ flex: 1, marginTop: 50 }}
+          style={{ flex: 1, marginTop: 30 }}
           resource={resources[resourceType]}
           resourceType={resourceType}
           onLoad={() => console.log(`PDF rendered from ${resourceType}`)}
