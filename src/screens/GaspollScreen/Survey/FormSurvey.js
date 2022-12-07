@@ -11,16 +11,16 @@ import {
   ActivityIndicator,
   LayoutAnimation,
   UIManager,
-  InteractionManager
+  InteractionManager,
 } from 'react-native';
-import { Image, Dialog, CheckBox } from '@rneui/themed';
+import { Image, Dialog, CheckBox,BottomSheet } from '@rneui/themed';
 import MapView, { Marker } from 'react-native-maps';
 import SignatureScreen from 'react-native-signature-canvas';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Geolocation from 'react-native-geolocation-service';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Api } from '../../../util/ApiManager';
-import { launchCamera } from 'react-native-image-picker';
+import { launchCamera,launchImageLibrary } from 'react-native-image-picker';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import { colorApp, stringApp } from '../../../util/globalvar';
@@ -84,35 +84,120 @@ export default function FormSurvey({ navigation, route }) {
   const [ttd, setTtd] = useState('');
   const [openDialog4, setOpenDialog4] = useState(false);
   const [businessType, setBusinessType] = useState('');
+  const [openBottom,setOpenBottom] = useState(false);
+
 
   const signatureRef = useRef();
   const mapsLayout = useRef();
 
-  useFocusEffect(useCallback(()=>{
-    const task = InteractionManager.runAfterInteractions(()=>{
-      clearData();
-      loadData();
-    });
-    return()=> task.cancel();
-  },[]));
+  useFocusEffect(
+    useCallback(() => {
+      const task = InteractionManager.runAfterInteractions(() => {
+        if (status === "History") {
+          clearData();
+          getCategory();
+          loadMerchant();
+        } else {
+          setLoadingField(true);
+          clearData();
+          getCategoryLoad(modelData.kategori);
+          loadDataSurveyDaftar();
+        }
+      });
+      return () => task.cancel();
+    }, [])
+  );
 
+  const loadMerchant = async () => {
+    const params = {
+      id: modelData.id,
+    };
+    await Api.post('Survey/view_merchant_by_id', params)
+      .then((res) => {
+        var body = res.data;
+        var message = body.metadata.message;
+        var status = body.metadata.status;
+        var response = body.response;
+        console.log('==================hasil==================');
+        console.log(response);
+        console.log('====================================');
+        if (status === 200) {
+          setNamaUsaha(response.nama_usaha);
+          setAlamatUsaha(response.alamat);
+          setKota(response.kota);
+          setNik(response.nik_pemilik);
+          setKecamatan(response.kecamatan);
+          setMerchantPhone(response.telp_usaha);
+          setKelurahan(response.kelurahan);
+          setOwner(response.pemilik);
+          setOwnerAdress(response.alamat_pemilik);
+          setOwnerPhone(response.no_telp_pemilik);
+          setFileList(modelData.image);
+          switch(response.bidang_usaha){
+            case "Badan Usaha":
+              checkBadanUsahaFunc();
+              break;
+            case "Badan Pribadi":
+              checkBadanPribadiFunc();
+              break;
+            default:
+              checkBadanPribadiFunc();
+              break;
+          }
+          response.img.map((item) => {
+             
+            RNFetchBlob.config({
+              fileCache: true,
+            })
+              .fetch('GET', item.image) // the file is now downloaded at local storage
+              .then((resp) => {
+                imagePath = resp.path(); // to get the file path
+                return resp.readFile('base64'); // to get the base64 string
+              })
+              .then((base64) => {
+                setSavingFileData((current) => [...current, base64]);
+                return fs.unlink(item.image); // to remove the file from local storage
+              });
+          });
 
+          listData.map((item) => {
+           
+            if (item.label === response.klasifikasi_usaha) {
+              setValueCategory(item.value);
+            }
+          });
+        
+          setMapState({
+            latitude: Number(response.latitude),
+            longitude: Number(response.longitude),
+            latitudeDelta: limitlatitudeDelta,
+            longitudeDelta: limitLongitudeDelta,
+          });
+          setLoadingField(false);
+        } else {
+          MessageUtil.errorMessage(message);
+          setLoadingField(false);
 
-  const loadData = () => {
+        }
+      })
+      .catch((err) => {
+        console.log('====================================');
+        console.log(`${err}`);
+        console.log('====================================');
+      });
+  };
+
+  const loadDataSurveyDaftar = () => {
     setNamaUsaha(modelData.nama);
     setAlamatUsaha(modelData.alamat);
-    setKota(modelData.nama_kota);
-    setKecamatan(modelData.nama_kecamatan);
-    setKelurahan(modelData.nama_kelurahan);
     setOwner(modelData.pemilik);
     setOwnerAdress(modelData.alamat_pemilik);
     setOwnerPhone(modelData.no_telp);
     setFileList(modelData.image);
-    modelData.image.map((item) => {
-      console.log('====================================');
-      console.log(item);
-      console.log('====================================');
+  
 
+    modelData.image.map((item) => {
+             
       RNFetchBlob.config({
         fileCache: true,
       })
@@ -126,23 +211,9 @@ export default function FormSurvey({ navigation, route }) {
           return fs.unlink(item.image); // to remove the file from local storage
         });
     });
-    listData.map((item) => {
-      console.log('====================================');
-      console.log(item);
-      console.log('====================================');
-      if (item.kategori === modelData.kategori) {
-        setValueCategory(item.id);
-      }
-    });
-    var loc = {
-      latitude: Number(modelData.latitude),
-      longitude: Number(modelData.longitude),
-      latitudeDelta: limitlatitudeDelta,
-      longitudeDelta: limitLongitudeDelta,
-    };
-    setMapState(loc);
-    getCategory(modelData.kategori);
-  };
+    setLoadingField(false);
+  }
+
 
   const layoutAnimConfig = {
     duration: 300,
@@ -200,14 +271,29 @@ export default function FormSurvey({ navigation, route }) {
     tempData = [];
   };
 
-  const getCategory = async (data) => {
+  const getCategory = async () => {
     Api.get('Survey/kategori')
       .then((res) => {
         var body = res.data;
         var response = body.response;
         var status = body.metadata.status;
         if (status == 200) {
-          convertResponse(response, data);
+          convertResponse(response);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getCategoryLoad = async (data) => {
+    Api.get('Survey/kategori')
+      .then((res) => {
+        var body = res.data;
+        var response = body.response;
+        var status = body.metadata.status;
+        if (status == 200) {
+          convertResponse(response,data);
         }
       })
       .catch((err) => {
@@ -241,7 +327,7 @@ export default function FormSurvey({ navigation, route }) {
     }
   };
 
-  const convertResponse = async (data, kategori) => {
+  const convertResponse = async (data, kategori = null) => {
     var i = 0;
     var temp = [];
 
@@ -250,8 +336,11 @@ export default function FormSurvey({ navigation, route }) {
         label: data[i].kategori,
         value: data[i].id,
       };
-      if (kategori === data[i].kategori) {
-        setValueCategory(data[i].id);
+
+      if(kategori !== null){
+        if(data[i].kategori === kategori){
+          setValueCategory(data[i].id)
+        }
       }
       temp.push(dataSet);
       i++;
@@ -294,6 +383,51 @@ export default function FormSurvey({ navigation, route }) {
             setFileList(item);
             setSavingFileData((current) => [...current, response.assets[0].base64]);
           }
+          console.log('====================================');
+          console.log(savingFileData);
+          console.log('====================================');
+          console.log(fileList);
+        }
+      });
+    }
+  };
+
+  const pickGalery = async () => {
+    let options = {
+      mediaType: 'photo',
+      maxWidth: 800,
+      maxHeight: 800,
+      cameraType: 'back',
+      includeBase64: true,
+      quality: 0.7,
+      storageOptions: {
+        skipBackup: true,
+        path: 'Pictures',
+      },
+      saveToPhotos: true,
+    };
+    let cameraPermission = await PermissionUtil.requestCameraPermission();
+    let saveStorage = await PermissionUtil.requestExternalWritePermission();
+    if (cameraPermission && saveStorage) {
+     launchImageLibrary(options, (response) => {
+        if (response.didCancel) {
+          console.log('Canceled By User');
+        } else {
+          var number = Math.floor(Math.random() * 100) + 1;
+          var item = [
+            {
+              id: number,
+              image: response.assets[0].base64,
+            },
+          ];
+          if (fileList.length > 0) {
+            setFileList(fileList.concat(item));
+            setSavingFileData((current) => [...current, response.assets[0].base64]);
+          } else {
+            setFileList(item);
+            setSavingFileData((current) => [...current, response.assets[0].base64]);
+          }
+
           console.log('====================================');
           console.log(savingFileData);
           console.log('====================================');
@@ -540,6 +674,35 @@ export default function FormSurvey({ navigation, route }) {
       });
   };
 
+
+  const previewForm = () => {
+    const dataMove = {
+      nama_usaha : namaUsaha,
+      alamat : alamatUsaha,
+      kota : kota,
+      kelurahan : kelurahan,
+      kecamatan : kecamatan,
+      idKota : selectCityId,
+      idKecamatan : selectDistrictId,
+      idKelurahan : selectVillageId,
+      nik_pemilik : nik,
+      pemilik : owner,
+      alamat_pemilik : ownerAdress,
+      no_telp_pemilik : ownerPhone,
+      telp_usaha : merchantPhone,
+      bidang_usaha : businessType,
+      klasifikasi_usaha : valueCategory,
+      image : fileList,
+      savingImg : savingFileData,
+      latitude : mapState.latitude,
+      longitude :mapState.longitude
+    }
+      navigation.navigate('PreviewSurvey', {
+        modelData : dataMove
+      });
+  }
+ 
+
   return (
     <View
       style={{
@@ -547,7 +710,7 @@ export default function FormSurvey({ navigation, route }) {
         flex: 1,
       }}
     >
-      <HeaderWithoutHistory Title={'Input Data Survey'} back={() => navigation.goBack()} />
+      <HeaderWithoutHistory Title={status === "History" ? "Preview Survey" : "Form Survey"} back={() => navigation.goBack()} />
       {loadingField ? (
         <View
           style={{
@@ -703,10 +866,13 @@ export default function FormSurvey({ navigation, route }) {
               }}
             >
               <CheckBox
+              disabled={status === 'History' ? true : false}
                 title={'Badan Usaha'}
                 checked={checkBadanUsaha}
                 checkedIcon="dot-circle-o"
                 uncheckedIcon="circle-o"
+                checkedColor={colorApp.button.primary}
+                uncheckedColor={colorApp.button.primary}
                 style={{
                   marginEnd: 8,
                 }}
@@ -715,8 +881,11 @@ export default function FormSurvey({ navigation, route }) {
                 }}
               />
               <CheckBox
+               disabled={status === 'History' ? true : false}
                 title={'Badan Pribadi'}
                 checked={checkBadanPribadi}
+                checkedColor={colorApp.button.primary}
+                uncheckedColor={colorApp.button.primary}
                 checkedIcon="dot-circle-o"
                 uncheckedIcon="circle-o"
                 onPress={() => {
@@ -790,7 +959,16 @@ export default function FormSurvey({ navigation, route }) {
                 value={valueCategory}
                 items={listData}
                 setOpen={setOpen}
+                placeholder={'Pilih Kategori Klasifikasi Usaha'}
                 setValue={setValueCategory}
+                containerStyle={{
+                  backgroundColor:'white'
+                }}
+                dropDownContainerStyle={{
+                  elevation:2,
+                  backgroundColor:'white'
+                }}
+                dropDownDirection={'TOP'}
                 listMode={'SCROLLVIEW'}
               />
             ) : (
@@ -804,7 +982,7 @@ export default function FormSurvey({ navigation, route }) {
                   },
                 ]}
               >
-                Please wait ...
+               Tunggu Sebentar....
               </Text>
             )}
             <Text style={style.textInput}>Keterangan</Text>
@@ -849,8 +1027,8 @@ export default function FormSurvey({ navigation, route }) {
             }}
           >
             <MapView
-            provider={MapView.PROVIDER_GOOGLE}
-            ref={mapsLayout}
+              provider={MapView.PROVIDER_GOOGLE}
+              ref={mapsLayout}
               style={{
                 flex: 1,
               }}
@@ -861,8 +1039,8 @@ export default function FormSurvey({ navigation, route }) {
                 longitudeDelta: limitLongitudeDelta,
               }}
               region={{
-                latitude: latitude,
-                longitude: longitude,
+                latitude: mapState.latitude,
+                longitude:  mapState.longitude,
                 latitudeDelta: limitlatitudeDelta,
                 longitudeDelta: limitLongitudeDelta,
               }}
@@ -951,7 +1129,7 @@ export default function FormSurvey({ navigation, route }) {
                 alignSelf: 'center',
               }}
             >
-              Latitude : {mapState.latitude}
+              Latitude : {mapState.latitude.toFixed(4)}
             </Text>
             <Text
               style={{
@@ -962,7 +1140,7 @@ export default function FormSurvey({ navigation, route }) {
                 alignSelf: 'center',
               }}
             >
-              Longitude : {mapState.longitude}
+              Longitude : {mapState.longitude.toFixed(4)}
             </Text>
           </View>
 
@@ -977,7 +1155,7 @@ export default function FormSurvey({ navigation, route }) {
                 },
               ]}
             >
-              Upload Photo
+              Unggah Gambar
             </Text>
           )}
           {status === null && (
@@ -992,7 +1170,7 @@ export default function FormSurvey({ navigation, route }) {
                 },
               ]}
             >
-              Please Press Button Below to Upload Photo
+              Mohon Tekan Tombol Dibawah Ini Untuk Unggah Gambar
             </Text>
           )}
 
@@ -1004,7 +1182,9 @@ export default function FormSurvey({ navigation, route }) {
                   <>
                     {status === null && (
                       <TouchableOpacity
-                        onPress={pickImage}
+                        onPress={()=>{
+                          setOpenBottom(true);
+                        }}
                         style={{
                           width: 150,
                           height: 150,
@@ -1080,7 +1260,9 @@ export default function FormSurvey({ navigation, route }) {
             <>
               {status === null && (
                 <TouchableOpacity
-                  onPress={pickImage}
+                onPress={()=>{
+                  setOpenBottom(true);
+                }}
                   style={{
                     width: 150,
                     height: 150,
@@ -1133,7 +1315,11 @@ export default function FormSurvey({ navigation, route }) {
                   Simpan
                 </Text>
               </TouchableOpacity>
+              
               <TouchableOpacity
+              onPress={()=>{
+                previewForm();
+              }}
                 style={{
                   backgroundColor: '#669beb',
                   width: 100,
@@ -1458,7 +1644,7 @@ export default function FormSurvey({ navigation, route }) {
                   style.styleInput,
                   {
                     fontWeight: '700',
-                    color: '#FC572C',
+                    color: colorApp.button.primary,
                   },
                 ]}
               >
@@ -1468,6 +1654,50 @@ export default function FormSurvey({ navigation, route }) {
           </View>
         </View>
       </Dialog>
+      <BottomSheet  isVisible={openBottom} onBackdropPress={()=>{
+  setOpenBottom(false);
+}}>
+ <View
+          style={{
+            backgroundColor: 'white',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            flex: 1,
+            padding: 16,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              setOpenBottom(false);
+             pickImage()
+            }}
+            style={[
+              style.btnBottom,
+              {
+                backgroundColor: '#fb9c3e',
+              },
+            ]}
+          >
+            <Text style={style.textBtn}>Ambil dari Kamera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              style.btnBottom,
+              {
+                backgroundColor: '#669beb',
+              },
+            ]}
+            onPress={() => {
+              setOpenBottom(false);
+             pickGalery();
+            }}
+          >
+            <Text style={style.textBtn}>Ambil dari Galeri</Text>
+          </TouchableOpacity>
+         
+        </View>
+
+</BottomSheet>
     </View>
   );
 }
@@ -1494,6 +1724,7 @@ const style = StyleSheet.create({
     backgroundColor: '#dadce0',
     borderRadius: 8,
     marginTop: 4,
+    height:50,
   },
   gap: {
     color: 'grey',
@@ -1512,5 +1743,18 @@ const style = StyleSheet.create({
     color: 'black',
     paddingTop: 8,
     paddingBottom: 8,
+  },
+  btnBottom: {
+    marginBottom: 16,
+    height: 55,
+    justifyContent: 'center',
+    flexDirection: 'column',
+    borderRadius: 8,
+  },
+  textBtn: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: '600',
+    textAlign: 'center',
   },
 });

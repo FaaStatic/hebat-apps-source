@@ -51,6 +51,8 @@ import DetailRiwayatStatusBayarPBB from '../screens/PakdesemarScreen/submenu/det
 import TugasList from '../screens/GaspollScreen/PetugasAdmin/AdminKomponen/TugasList';
 import DataPetugasList from '../screens/GaspollScreen/PetugasAdmin/AdminKomponen/DataPetugasList ';
 import RiwayatAbsensi from '../screens/GaspollScreen/Riwayat/RiwayatAbsensi';
+import PreviewSurvey from '../screens/GaspollScreen/Survey/PreviewSurvey';
+
 
 
 
@@ -172,6 +174,14 @@ export default function RouteManager() {
         <initStack.Screen
           name="FormSurvey"
           component={FormSurvey}
+          initialParams={{
+            modelData: null,
+            status: null,
+          }}
+        />
+           <initStack.Screen
+          name="PreviewSurvey"
+          component={PreviewSurvey}
           initialParams={{
             modelData: null,
             status: null,

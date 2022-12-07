@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity, StyleSheet, ScrollView, Platform } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { View, TextInput, Text, TouchableOpacity, StyleSheet, ScrollView, Platform,InteractionManager } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { HeaderWithoutHistory } from '../../Komponen/HeaderWithoutHistory';
 import Gaplist from '../../Komponen/GapList';
@@ -9,6 +9,8 @@ import { colorApp, stringApp } from '../../../util/globalvar';
 import { Api } from '../../../util/ApiManager';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { MessageUtil } from '../../../util/MessageUtil';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 export default function PutusanPendaftaran({ navigation, route }) {
   const { modelData } = route.params;
@@ -30,16 +32,13 @@ export default function PutusanPendaftaran({ navigation, route }) {
     longitudeDelta: 0.0421,
   });
 
-  useEffect(() => {
-    const subscribe = navigation.addListener('focus', () => {
+  useFocusEffect(useCallback(()=>{
+    const task = InteractionManager.runAfterInteractions(()=>{
       getLocation();
       loadData();
     });
-
-    return () => {
-      subscribe;
-    };
-  }, [navigation]);
+    return()=> task.cancel();
+  },[]));
 
   const loadData = () => {
     setIdMerchant(modelData.id);
@@ -116,9 +115,11 @@ export default function PutusanPendaftaran({ navigation, route }) {
         if (status === 200) {
           console.log('====================================');
           console.log(response);
+          console.log(modelData);
           console.log('====================================');
           navigation.navigate('FormSurvey', {
             modelData: modelData,
+            status : null
           });
         } else {
           MessageUtil.warningMessage(message);
@@ -478,6 +479,9 @@ export default function PutusanPendaftaran({ navigation, route }) {
             </TouchableOpacity>
 
             <TouchableOpacity
+            onPress={()=>{
+              kirimSurveyMenunggu();
+            }}
               style={{
                 margin: 8,
               }}

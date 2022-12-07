@@ -9,7 +9,7 @@ import {
   Dimensions,
   FlatList,
   InteractionManager,
-  Platform
+  Platform,
 } from 'react-native';
 import CurrencyInput from 'react-native-currency-input';
 import { Header } from '../../Komponen/Header';
@@ -57,22 +57,20 @@ export default function FormPotensi({ navigation, route }) {
   const [selectVillageId, setSelectVillageId] = useState('');
   const [selectKtegoriId, setSelectKategoriId] = useState('');
 
-
-  useFocusEffect(useCallback(()=>{
-    const task = InteractionManager.runAfterInteractions(()=>{
-      if (id_potensi === null) {
-        getSesi();
-        getForm();
-      } else {
-        getSesi();
-        getDetail();
-      }
-    });
-    return()=> task.cancel();
-  },[]));
-
-
-  
+  useFocusEffect(
+    useCallback(() => {
+      const task = InteractionManager.runAfterInteractions(() => {
+        if (id_potensi === null) {
+          getSesi();
+          getForm();
+        } else {
+          getSesi();
+          getDetail();
+        }
+      });
+      return () => task.cancel();
+    }, [])
+  );
 
   const getSesi = () => {
     var sesi = SessionManager.GetAsObject(stringApp.session);
@@ -91,7 +89,6 @@ export default function FormPotensi({ navigation, route }) {
         var message = body.metadata.message;
         var response = body.response;
         if (status === 200) {
-        
           setResponseItem(response);
           setNpwpd(response.npwpdwp === '' ? '...' : response.npwpdwp);
           setNamaUsaha(response.nama);
@@ -322,22 +319,50 @@ export default function FormPotensi({ navigation, route }) {
     );
   }, []);
 
-  const continueAddMerchant = () => {
+  const continueAddMerchant = async () => {
     var sesi = SessionManager.GetAsObject(stringApp.session);
-    const param = {
-      id_merchant: id,
-      id_user_potensi: sesi.id,
-      id_kategori: responseItem.id_kategori,
-      pendapatan: pendapatan,
-      pajak: pajak,
-      idp: '',
-      id_potensi: '',
-      flag_sumber: '',
-      flag: '',
+  
+    const paramUri = {
+      id: id,
+      user_login: sesi.id,
+      kelurahan: selectVillageId,
+      kecamatan: selectDistrictId,
+      kota: selectCityId,
+      nik_pemilik: nik,
+      pemilik: owner,
+      alamat_pemilik: ownerAdress,
+      telp_usaha: ownerPhone,
     };
-    navigation.navigate('FormKelengkapan', {
-      modelData: param,
-    });
+
+    await Api.post('Survey/edit_merchant_for_survey',paramUri).then(res =>{
+      var body = res.data;
+      var message = body.metadata.message;
+      var status = body.metadata.status;
+      var response = body.response;
+      if(status === 200){
+        const param = {
+          id_merchant: id,
+          id_user_potensi: sesi.id,
+          id_kategori: responseItem.id_kategori,
+          pendapatan: pendapatan,
+          pajak: pajak,
+          idp: '',
+          id_potensi: '',
+          flag_sumber: '',
+          flag: '',
+        };
+        navigation.navigate('FormKelengkapan', {
+          modelData: param,
+        });
+      }else{
+        MessageUtil.errorMessage(message);
+      }
+    }).catch(err => {
+      console.log('====================================');
+      console.log(`${err}`);
+      console.log('====================================');
+    })
+   
   };
 
   const continueEditMerchant = () => {
@@ -485,7 +510,9 @@ export default function FormPotensi({ navigation, route }) {
             }}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Alamat Pemilik Usaha</Text>
+        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>
+          Alamat Pemilik Usaha
+        </Text>
         <View style={Style.backgroundTextInput}>
           <TextInput
             style={Style.textInput}
@@ -495,7 +522,9 @@ export default function FormPotensi({ navigation, route }) {
             }}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Telpon Pemilik Usaha</Text>
+        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>
+          Telpon Pemilik Usaha
+        </Text>
         <View style={Style.backgroundTextInput}>
           <TextInput
             style={Style.textInput}
@@ -692,9 +721,9 @@ const Style = StyleSheet.create({
     marginTop: 8,
     marginBottom: 8,
     paddingTop: 4,
-    paddingBottom:4,
-    paddingStart:8,
-    height:50,
+    paddingBottom: 4,
+    paddingStart: 8,
+    height: 50,
     borderRadius: 8,
     backgroundColor: '#dadce0',
   },

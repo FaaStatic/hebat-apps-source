@@ -553,7 +553,12 @@ export default function Pendataan({ navigation, route }) {
               latitudeDelta: limitlatitudeDelta,
               longitudeDelta: limitLongitudeDelta,
             }}
-          
+            region={{
+              latitude: mapState.latitude,
+              longitude: mapState.longitude,
+              latitudeDelta: limitlatitudeDelta,
+              longitudeDelta: limitLongitudeDelta,
+            }}
            
             onRegionChangeComplete={(region) => {
               latitude = region.latitude;
@@ -947,6 +952,7 @@ const style = StyleSheet.create({
     backgroundColor: '#dadce0',
     borderRadius: 8,
     marginTop: 4,
+    height:50,
   },
   gap: {
     color: 'grey',
@@ -960,7 +966,6 @@ const style = StyleSheet.create({
     marginStart: 8,
     marginEnd: 8,
     flex: 1,
-    height:45,
     fontSize: 14,
     fontWeight: '400',
     color: 'black',
