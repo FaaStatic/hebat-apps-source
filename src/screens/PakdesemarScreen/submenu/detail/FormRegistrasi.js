@@ -11,8 +11,8 @@ import FormPageDua from './includeform/FormPageDua';
 import FormPageEmpat from './includeform/FormPageEmpat';
 import FormPageSatu from './includeform/FormPageSatu';
 import FormPageTiga from './includeform/FormPageTiga';
-const APPBAR_HEIGHT = 140;
-const APPBAR_HEIGHT_2 = 105;
+const APPBAR_HEIGHT = Platform.isPad == true ? 180 : 140;
+const APPBAR_HEIGHT_2 = Platform.isPad == true ? 135 : 105;
 export default FormRegistrasi = ({ navigation, route }) => {
   const { data } = route.params;
   const [loading, setLoading] = useState(false);

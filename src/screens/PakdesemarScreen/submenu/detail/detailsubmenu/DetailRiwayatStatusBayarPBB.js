@@ -1,4 +1,4 @@
-import { StatusBar, ScrollView, View, StyleSheet, Text, Platform } from 'react-native'
+import { StatusBar, ScrollView, View, StyleSheet, Text, Platform, Dimensions } from 'react-native'
 import React from 'react'
 import moment from 'moment';
 import 'moment/locale/id';
@@ -6,6 +6,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { colorApp, fontsCustom } from '../../../../../util/globalvar';
 import { Gap, HeaderSubMenu } from '../../../components';
 import { stylesheet } from '../../../assets';
+const height = Dimensions.get('window').height;
 const APPBAR_HEIGHT = Platform.isPad == true ? height / 7 : 110;
 export default DetailRiwayatStatusBayarPBB = ({ navigation, route }) => {
     const { data } = route.params;

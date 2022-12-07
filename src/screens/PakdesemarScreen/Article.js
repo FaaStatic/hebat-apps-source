@@ -76,7 +76,7 @@ export default Article = ({ navigation, route }) => {
                 <Image source={{ uri: image }} style={styles.imgCardViewNews} resizeMode="cover" />
               </LinearGradient>
             </View>
-            <View style={{ width: '54%', marginEnd: 5, justifyContent: 'center' }}>
+            <View style={{ width: Platform.isPad == true ? '80%' : '54%', marginEnd: 5, justifyContent: 'center' }}>
               <Text
                 style={{
                   marginHorizontal: 10,
@@ -188,7 +188,7 @@ export default Article = ({ navigation, route }) => {
               <Gap height={10} />
               <Text style={styles.title}>Artikel Lainnya</Text>
               <Gap height={10} />
-              <View style={{ alignItems: 'center' }}>
+              <View style={{ alignItems: Platform.isPad == true ? 'flex-start' : 'center' }}>
                 {loading && (
                   <><View style={{ flexDirection: 'row' }}>
                     <Skeleton
@@ -202,14 +202,14 @@ export default Article = ({ navigation, route }) => {
                       <Skeleton
                         LinearGradientComponent={LinearGradient}
                         animation="wave"
-                        width={160}
+                        width={Platform.isPad == true ? 500 : 160}
                         height={20}
                         variant="rectangular" />
                       <Gap height={10} />
                       <Skeleton
                         LinearGradientComponent={LinearGradient}
                         animation="wave"
-                        width={160}
+                        width={Platform.isPad == true ? 500 : 160}
                         height={30}
                         variant="rectangular" />
                     </View>
@@ -225,14 +225,14 @@ export default Article = ({ navigation, route }) => {
                         <Skeleton
                           LinearGradientComponent={LinearGradient}
                           animation="wave"
-                          width={160}
+                          width={Platform.isPad == true ? 500 : 160}
                           height={20}
                           variant="rectangular" />
                         <Gap height={10} />
                         <Skeleton
                           LinearGradientComponent={LinearGradient}
                           animation="wave"
-                          width={160}
+                          width={Platform.isPad == true ? 500 : 160}
                           height={30}
                           variant="rectangular" />
                       </View>
@@ -318,6 +318,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     opacity: 0.8,
     margin: 20,
-    marginTop: Platform.OS == 'android' ? height / 7 : height / 10
+    marginTop: Platform.isPad ? height / 10 : height / 8
   },
 });
