@@ -39,6 +39,7 @@ target 'bapendaapps' do
   pod 'react-native-maps', path: '../node_modules/react-native-maps'
   pod 'Google-Maps-iOS-Utils'
   pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+  pod 'RNPDF', :path => '../node_modules/react-native-view-pdf'
 
   target 'bapendaappsTests' do
     inherit! :complete

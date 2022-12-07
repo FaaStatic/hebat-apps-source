@@ -9,9 +9,8 @@ import {
 import { colorApp, fontsCustom } from '../../../../util/globalvar';
 import { Button } from './../index';
 const height = Dimensions.get('window').height;
-
 const HeaderSubMenu = ({ absolute, gapCustom, title, onPress, icon, type, color, background }) => {
-  const APPBAR_HEIGHT = gapCustom == undefined ? 140 : 100;
+  const APPBAR_HEIGHT = Platform.OS == 'android' ? gapCustom == undefined ? 140 : 100 : gapCustom == undefined ? height / 5 : height / 9;
   return (
     <>
       <View

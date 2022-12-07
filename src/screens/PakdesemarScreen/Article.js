@@ -8,8 +8,9 @@ import {
   FlatList,
   TouchableOpacity,
   ScrollView,
-  Dimensions,
   SafeAreaView,
+  Dimensions,
+  Platform,
 } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/id';
@@ -17,15 +18,10 @@ import { colorApp, fontsCustom } from '../../util/globalvar';
 import LinearGradient from 'react-native-linear-gradient';
 import { stylesheet } from './assets';
 import { Gap, HeaderPrimary } from './components';
-import RenderHTML from 'react-native-render-html';
 import ServiceHelper from './addOns/ServiceHelper';
 import { MessageUtil } from '../../util/MessageUtil';
-const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const cols = 2;
-const marginHorizontal = 10;
-const widthGrid = Dimensions.get('window').width / cols - marginHorizontal * (cols + 1.5);
-
+const width = Dimensions.get('window').width;
 export default Article = ({ navigation, route }) => {
   const [article, setArticle] = useState([
     {
@@ -70,7 +66,7 @@ export default Article = ({ navigation, route }) => {
       <TouchableOpacity onPress={() => detailArticle(item)}>
         <View style={styles.cardViewNews}>
           <View style={{ flexDirection: 'row' }}>
-            <View style={{ width: '45%', margin: 5 }}>
+            <View style={{ margin: 5 }}>
               <LinearGradient
                 colors={[colorApp.gradientSatu, colorApp.gradientDua]}
                 start={{ x: 0, y: 0 }}
@@ -80,19 +76,23 @@ export default Article = ({ navigation, route }) => {
                 <Image source={{ uri: image }} style={styles.imgCardViewNews} resizeMode="cover" />
               </LinearGradient>
             </View>
-            <View style={{ width: '50%', marginEnd: 5, justifyContent: 'center' }}>
+            <View style={{ width: '54%', marginEnd: 5, justifyContent: 'center' }}>
               <Text
-                style={{ fontSize: 8, color: colorApp.black, fontFamily: fontsCustom.primary[400] }}
+                style={{
+                  marginHorizontal: 10,
+                  fontSize: 8, color: colorApp.black, fontFamily: fontsCustom.primary[400]
+                }}
               >
                 {moment(article[0].tgl_new).format('dddd, hh MMMM YYYY')}
               </Text>
               <Text
                 style={{
-                  fontSize: 20,
+                  fontSize: 16,
+                  marginHorizontal: 10,
                   color: colorApp.black,
                   fontFamily: fontsCustom.primary[700],
                 }}
-                numberOfLines={1}
+                numberOfLines={3}
               >
                 {item.judul_news}
               </Text>
@@ -126,7 +126,7 @@ export default Article = ({ navigation, route }) => {
                   LinearGradientComponent={LinearGradient}
                   animation="wave"
                   width={'100%'}
-                  height={120}
+                  height={200}
                   variant="rectangular"
                 />
               ) : (
@@ -164,23 +164,23 @@ export default Article = ({ navigation, route }) => {
                           <Gap height={5} />
                           <Text
                             style={{
-                              fontSize: 20,
+                              fontSize: 18,
                               color: colorApp.black,
                               fontFamily: fontsCustom.primary[700],
                             }}
-                            numberOfLines={1}
+                            numberOfLines={3}
                           >
                             {article[0].judul_news}
                           </Text>
                         </View>
-                        {/* <View
+                      </View>
+                      {/* <View
                           style={{ height: 60, flex: 1, maxHeight: 60 }}>
                           <RenderHTML
                           contentWidth={width}
                           source={{ html: article[0].deskripsi.substring(0, 1000) }}
                         /> */}
-                        {/* </View> */}
-                      </View>
+                      {/* </View> */}
                     </View>
                   </LinearGradient>
                 </TouchableOpacity>
@@ -190,23 +190,53 @@ export default Article = ({ navigation, route }) => {
               <Gap height={10} />
               <View style={{ alignItems: 'center' }}>
                 {loading && (
-                  <View style={{ flexDirection: 'row' }}>
+                  <><View style={{ flexDirection: 'row' }}>
                     <Skeleton
                       LinearGradientComponent={LinearGradient}
                       animation="wave"
                       width={160}
-                      height={120}
-                      variant="rectangular"
-                    />
+                      height={100}
+                      variant="rectangular" />
                     <Gap width={10} />
-                    <Skeleton
-                      LinearGradientComponent={LinearGradient}
-                      animation="wave"
-                      width={160}
-                      height={120}
-                      variant="rectangular"
-                    />
-                  </View>
+                    <View style={{ justifyContent: 'center' }}>
+                      <Skeleton
+                        LinearGradientComponent={LinearGradient}
+                        animation="wave"
+                        width={160}
+                        height={20}
+                        variant="rectangular" />
+                      <Gap height={10} />
+                      <Skeleton
+                        LinearGradientComponent={LinearGradient}
+                        animation="wave"
+                        width={160}
+                        height={30}
+                        variant="rectangular" />
+                    </View>
+                  </View><Gap height={10} /><View style={{ flexDirection: 'row' }}>
+                      <Skeleton
+                        LinearGradientComponent={LinearGradient}
+                        animation="wave"
+                        width={160}
+                        height={100}
+                        variant="rectangular" />
+                      <Gap width={10} />
+                      <View style={{ justifyContent: 'center' }}>
+                        <Skeleton
+                          LinearGradientComponent={LinearGradient}
+                          animation="wave"
+                          width={160}
+                          height={20}
+                          variant="rectangular" />
+                        <Gap height={10} />
+                        <Skeleton
+                          LinearGradientComponent={LinearGradient}
+                          animation="wave"
+                          width={160}
+                          height={30}
+                          variant="rectangular" />
+                      </View>
+                    </View></>
                 )}
                 <FlatList
                   showsVerticalScrollIndicator={false}
@@ -272,21 +302,22 @@ const styles = StyleSheet.create({
     borderRadius: 19,
   },
   imgCardViewNewsSingle: {
-    height: 240,
+    height: 260,
     width: '100%',
     borderRadius: 19,
     opacity: 0.18,
   },
   coverTitleSigle: {
     flex: 1,
+    alignSelf: 'center',
     justifyContent: 'center',
-    height: 90,
+    height: 135,
     width: '89%',
     backgroundColor: colorApp.primary,
     position: 'absolute',
     borderRadius: 15,
     opacity: 0.8,
     margin: 20,
-    marginTop: '42%'
+    marginTop: Platform.OS == 'android' ? height / 7 : height / 10
   },
 });

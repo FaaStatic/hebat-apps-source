@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StatusBar } from 'react-native';
+import { View, StatusBar, Platform, Dimensions } from 'react-native';
 import { colorApp } from '../../util/globalvar';
 import { MessageUtil } from '../../util/MessageUtil';
 import ServiceHelper from './addOns/ServiceHelper';
@@ -13,7 +13,8 @@ import Persyaratan from './submenu/Persyaratan';
 import Registrasi from './submenu/Registrasi';
 import SegeraHadir from './submenu/SegeraHadir';
 import StatusBayar from './submenu/StatusBayar';
-const APPBAR_HEIGHT = 110;
+const height = Dimensions.get('window').height;
+const APPBAR_HEIGHT = Platform.isPad == true ? height / 7 : 110;
 export default MainSubMenu = ({ navigation, route }) => {
   const { data } = route.params;
   const [loading, setLoading] = useState(false);

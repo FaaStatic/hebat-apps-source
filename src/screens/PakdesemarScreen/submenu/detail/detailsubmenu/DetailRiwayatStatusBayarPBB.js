@@ -6,7 +6,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { colorApp, fontsCustom } from '../../../../../util/globalvar';
 import { Gap, HeaderSubMenu } from '../../../components';
 import { stylesheet } from '../../../assets';
-const APPBAR_HEIGHT = 110;
+const APPBAR_HEIGHT = Platform.isPad == true ? height / 7 : 110;
 export default DetailRiwayatStatusBayarPBB = ({ navigation, route }) => {
     const { data } = route.params;
     const formatDate = (tgl) => {

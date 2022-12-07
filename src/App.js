@@ -13,7 +13,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = () => {
   useEffect(() => {
-    if(Platform.OS === 'ios'){
+    if (Platform.OS === 'ios') {
       PushNotificationIOS.requestPermissions();
     }
     if (!firebase.apps.length) {
@@ -46,7 +46,7 @@ const App = () => {
       <Provider store={Store}>
         <StatusBar animated={true} />
         <SafeAreaProvider>
-        <View style={style.container}>
+          <View style={style.container}>
             <RouteManager />
           </View>
         </SafeAreaProvider>
@@ -66,7 +66,6 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-   
   },
 });
 
