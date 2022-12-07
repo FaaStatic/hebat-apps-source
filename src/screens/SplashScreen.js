@@ -1,5 +1,5 @@
 import react, { useEffect, useState } from 'react';
-import { View, Dimensions, Image, StyleSheet } from 'react-native';
+import { View, Dimensions, Image, StyleSheet, Platform } from 'react-native';
 import { BackgroundLocationServices } from '../util/BackgroundLocationServices';
 import { SessionManager } from '../util/SessionUtil/SessionManager';
 import LinearGradient from 'react-native-linear-gradient';
@@ -70,7 +70,7 @@ export default function SplashScreen({ navigation, route }) {
             position: 'absolute',
             resizeMode: 'contain',
             width: width,
-            marginTop: height / 3.3,
+            marginTop: Platform.isPad == true ? height / 3 : height / 3.3,
           }}
         />
         <View style={{ flex: 0.2, bottom: 0 }}>

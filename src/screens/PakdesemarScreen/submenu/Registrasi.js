@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Image, Text, ScrollView } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Text, ScrollView, Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { colorApp, fontsCustom } from '../../../util/globalvar';
 import { Gap } from '../components';
@@ -25,7 +25,7 @@ export default Registrasi = ({ data, onPressMenu }) => {
                 >
                   <View>
                     <View style={{ flexDirection: 'row' }}>
-                      <View style={{ position: 'absolute', marginStart: '50%', opacity: 0.5 }}>
+                      <View style={{ position: 'absolute', marginStart: Platform.isPad == true ? '70%' : Platform.OS == 'android' ? '50%' : '45%', opacity: 0.5 }}>
                         <Image
                           source={item.image}
                           style={{

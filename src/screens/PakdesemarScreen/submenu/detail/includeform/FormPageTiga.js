@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Platform,
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { colorApp } from '../../../../../util/globalvar';
@@ -280,21 +281,21 @@ export default FormPageTiga = ({ data, active, onPressButton }) => {
 };
 
 const styles = StyleSheet.create({
-  map: {
-    height: 200,
-    width: '100%',
-    marginBottom: 20,
-  },
   touchableOpacityStyle: {
     flex: 1,
     position: 'absolute',
     marginTop: '3%',
     marginStart: 10,
   },
+  map: {
+    height: Platform.isPad == true ? 350 : 200,
+    width: '100%',
+    marginBottom: 20,
+  },
   touchableOpacityStyleMarker: {
     flex: 1,
     position: 'absolute',
-    marginTop: 50,
+    marginTop: Platform.isPad == true ? 130 : 50,
     alignSelf: 'center',
   },
   group: {

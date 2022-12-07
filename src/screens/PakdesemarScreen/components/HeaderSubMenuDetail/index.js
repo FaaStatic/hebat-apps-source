@@ -4,7 +4,6 @@ import { colorApp, fontsCustom } from '../../../../util/globalvar';
 import { Button } from '../index';
 const APPBAR_HEIGHT = Platform.OS == 'android' ? 200 : 250;
 const height = Dimensions.get('window').height;
-
 const HeaderSubMenuDetail = ({
   imageNoUri,
   logo,
