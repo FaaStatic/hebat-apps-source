@@ -12,7 +12,8 @@ import {
   Platform,
   ActivityIndicator,
   ScrollView,
-  InteractionManager
+  InteractionManager,
+  Linking
 } from 'react-native';
 import { Button, CustomModal, Gap, HeaderPrimary, Input } from './PakdesemarScreen/components';
 import LinearGradient from 'react-native-linear-gradient';
@@ -34,7 +35,7 @@ export default function Login({ navigation, route }) {
   const [loading, setLoading] = useState(false);
   const [first, setFirst] = useState(false);
   const [isSecure, setIsSecure] = useState(true);
-
+  const supportedURL = "https://register.nexa.net.id/bapenda/";
 
   useFocusEffect(useCallback(()=>{
     const task = InteractionManager.runAfterInteractions(()=>{
@@ -44,6 +45,14 @@ export default function Login({ navigation, route }) {
     return()=> task.cancel();
   },[]));
 
+  const openUrlRegister = async () => {
+    var stat = await Linking.canOpenURL(supportedURL);
+    if(stat){
+      await Linking.openURL(supportedURL);
+    }else{
+      MessageUtil.errorMessage("Ada Masalah!");
+    }
+  }
 
   const sessionCheck = () => {
     setFirst(true);
@@ -129,6 +138,7 @@ export default function Login({ navigation, route }) {
                   <View style={{ height: ViewPortHeight / 5 }} />
                   <Input
                     label="Username"
+                    placeholder={"Username"}
                     icon="user"
                     type="label"
                     onChangeText={(val) => setUsername(val)}
@@ -139,10 +149,12 @@ export default function Login({ navigation, route }) {
                   <Gap height={30} />
                   <Input
                     label="Password"
+                    placeholder={"Password"}
                     type="label"
                     keyboardType="password"
                     onChangeText={(val) => setPassword(val)}
                     isSecure={isSecure}
+                  
                     onPress={() => setIsSecure(!isSecure)}
                     borderColor={colorApp.primary}
                     backgroundColor={colorApp.primary}
@@ -171,6 +183,30 @@ export default function Login({ navigation, route }) {
                     />
                   </View>
                   <Gap height={40} />
+                </View>
+                <View style={{
+                  flexDirection:'row',
+                  justifyContent:'center',
+                  alignSelf:'center',
+                }}>
+                  <Text style={{
+                      color: colorApp.black,
+                      fontFamily: fontsCustom.primary[400],
+                      fontSize: 12,
+                  }}>Belum Memiliki Akun ? </Text>
+                  <TouchableOpacity 
+                  onPress={()=>{openUrlRegister()}}
+                  style={{
+                    padding:0,
+                    
+                    flexDirection:'column',
+                    justifyContent:'flex-end',
+                    paddingBottom:1,
+                  }}>
+                    <Text style={{
+                      color: colorApp.button.primary, fontSize: 12, 
+                    }}>Daftar Disini!</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             </ScrollView>

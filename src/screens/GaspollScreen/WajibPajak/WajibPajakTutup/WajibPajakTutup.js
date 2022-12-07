@@ -4,14 +4,14 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Modal,
   ActivityIndicator,
   LayoutAnimation,
   UIManager,
   Dimensions,
-  InteractionManager
+  InteractionManager,
+  StyleSheet
 } from 'react-native';
-import { Image, Input, Dialog } from '@rneui/themed';
+import { Image, Input, Dialog,BottomSheet } from '@rneui/themed';
 import MapView, { Marker } from 'react-native-maps';
 import { Header } from '../../../Komponen/Header';
 import { colorApp, stringApp } from '../../../../util/globalvar';
@@ -21,7 +21,7 @@ import { Api } from '../../../../util/ApiManager';
 import { MessageUtil } from '../../../../util/MessageUtil';
 import GapList from '../../../Komponen/GapList';
 import { ScrollView } from 'react-native';
-import { launchCamera } from 'react-native-image-picker';
+import { launchCamera,launchImageLibrary } from 'react-native-image-picker';
 import { PermissionUtil } from '../../../../util/PermissionUtil';
 import SignatureScreen from 'react-native-signature-canvas';
 import { SessionManager } from '../../../../util/SessionUtil/SessionManager';
@@ -52,6 +52,7 @@ const WajibPajakTutup = ({ navigation, route }) => {
   const [reason, setReason] = useState('');
   const [fileList, setFileList] = useState([]);
   const [savingFileData, setSavingFileData] = useState([]);
+  const [openBottom,setOpenBottom] = useState(false);
 
   
   useFocusEffect(useCallback(()=>{
@@ -247,6 +248,56 @@ const WajibPajakTutup = ({ navigation, route }) => {
     let saveStorage = await PermissionUtil.requestExternalWritePermission();
     if (cameraPermission && saveStorage) {
       launchCamera(options, (response) => {
+        if (response.didCancel) {
+          console.log('Canceled By User');
+          setLoadingPicture(false);
+        } else {
+          var number = Math.floor(Math.random() * 100) + 1;
+          var item = [
+            {
+              id: number,
+              image: response.assets[0].base64,
+            },
+          ];
+          if (fileList.length > 0) {
+            setFileList(fileList.concat(item));
+            setSavingFileData((current) => [...current, response.assets[0].base64]);
+          } else {
+            setFileList(item);
+            setSavingFileData((current) => [...current, response.assets[0].base64]);
+          }
+
+          console.log('====================================');
+          console.log(savingFileData);
+          console.log('====================================');
+          console.log(fileList);
+          setTimeout(() => {
+            setLoadingPicture(false);
+            console.log(fileList);
+          }, 1000);
+        }
+      });
+    }
+  };
+  const pickLibrary = async () => {
+    setLoadingPicture(true);
+    let options = {
+      mediaType: 'photo',
+      maxWidth: 800,
+      maxHeight: 800,
+      cameraType: 'back',
+      includeBase64: true,
+      quality: 0.7,
+      storageOptions: {
+        skipBackup: true,
+        path: 'Pictures',
+      },
+      saveToPhotos: true,
+    };
+    let cameraPermission = await PermissionUtil.requestCameraPermission();
+    let saveStorage = await PermissionUtil.requestExternalWritePermission();
+    if (cameraPermission && saveStorage) {
+      launchImageLibrary(options, (response) => {
         if (response.didCancel) {
           console.log('Canceled By User');
           setLoadingPicture(false);
@@ -517,6 +568,7 @@ const WajibPajakTutup = ({ navigation, route }) => {
             />
             <ScrollView
               nestedScrollEnabled={true}
+              showsVerticalScrollIndicator={false}
               contentContainerStyle={{
                 paddingStart: 8,
                 paddingEnd: 8,
@@ -587,7 +639,7 @@ const WajibPajakTutup = ({ navigation, route }) => {
                   marginStart: 16,
                 }}
               >
-                Upload Foto
+               Unggah Gambar
               </Text>
               <Text
                 style={{
@@ -606,7 +658,9 @@ const WajibPajakTutup = ({ navigation, route }) => {
                   ListHeaderComponent={() => {
                     return (
                       <TouchableOpacity
-                        onPress={pickImage}
+                        onPress={()=>{
+                          setOpenBottom(true);
+                        }}
                         style={{
                           width: 150,
                           height: 150,
@@ -678,7 +732,9 @@ const WajibPajakTutup = ({ navigation, route }) => {
                 />
               ) : (
                 <TouchableOpacity
-                  onPress={pickImage}
+                onPress={()=>{
+                  setOpenBottom(true);
+                }}
                   style={{
                     width: 150,
                     height: 150,
@@ -761,10 +817,12 @@ const WajibPajakTutup = ({ navigation, route }) => {
                     addCloseMerchant();
                   }}
                   style={{
-                    backgroundColor: colorApp.primaryGaspoll,
+                    backgroundColor: colorApp.button.primary,
                     padding: 8,
                     borderRadius: 8,
                     marginBottom: 16,
+                    marginEnd:8,
+                    marginStart:8,
                     justifyContent: 'center',
                     flexDirection: 'column',
                   }}
@@ -780,6 +838,51 @@ const WajibPajakTutup = ({ navigation, route }) => {
                     Ya, Wajib pajak telah berhenti beroperasi
                   </Text>
                 </TouchableOpacity>
+                <BottomSheet
+        isVisible={openBottom}
+        onBackdropPress={() => {
+          setOpenBottom(false);
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            flex: 1,
+            padding: 16,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              setOpenBottom(false);
+              pickImage();
+            }}
+            style={[
+              style.btnBottom,
+              {
+                backgroundColor: '#fb9c3e',
+              },
+            ]}
+          >
+            <Text style={style.textBtn}>Ambil dari Kamera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              style.btnBottom,
+              {
+                backgroundColor: '#669beb',
+              },
+            ]}
+            onPress={() => {
+              setOpenBottom(false);
+              pickLibrary();
+            }}
+          >
+            <Text style={style.textBtn}>Ambil dari Galeri</Text>
+          </TouchableOpacity>
+        </View>
+      </BottomSheet>
               </View>
             </ScrollView>
           </>
@@ -900,6 +1003,9 @@ const WajibPajakTutup = ({ navigation, route }) => {
               size={24}
             />
           </TouchableOpacity>
+
+    
+        
         </Dialog>
         <Dialog
           isVisible={loadingPicture}
@@ -918,8 +1024,25 @@ const WajibPajakTutup = ({ navigation, route }) => {
           />
         </Dialog>
       </Dialog>
+      
     </View>
   );
 };
+
+const style = StyleSheet.create({
+  btnBottom: {
+    marginBottom: 16,
+    height: 55,
+    justifyContent: 'center',
+    flexDirection: 'column',
+    borderRadius: 8,
+  },
+  textBtn: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+});
 
 export default WajibPajakTutup;

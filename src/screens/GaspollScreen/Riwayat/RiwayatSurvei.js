@@ -88,7 +88,8 @@ export default function RiwayatSurvey({ navigation, route }) {
       const configOption = Platform.select({
         ios: {
           fileCache: true,
-          path: `${fs.dirs.DocumentDir}/surat_pernyataan.pdf`,
+          notification:true,
+          path: fs.dirs.DocumentDir+"/surat_pernyataan.pdf",
           appendExt: 'pdf',
         },
         android: {
@@ -120,19 +121,20 @@ export default function RiwayatSurvey({ navigation, route }) {
         })
         .then(async (res) => {
           if (Platform.OS === 'ios') {
-            RNFetchBlob.fs.writeFile(configOption.path, res.data, 'base64');
-            RNFetchBlob.ios.previewDocument(configOption.path);
             setDialogOpen(false);
+            setTimeout(()=>{
+              RNFetchBlob.ios.openDocument(res.data);
+            },1000);
             setTimeout(() => {
               MessageUtil.successMessage('File Successfully Downloaded!');
               clearTimeout();
-            }, 1000);
+            }, 3000);
           } else {
             setDialogOpen(false);
             setTimeout(() => {
               MessageUtil.successMessage('File Successfully Downloaded!');
               clearTimeout();
-            }, 1000);
+            }, 3000);
           }
         })
         .catch((err) => {
@@ -347,6 +349,7 @@ export default function RiwayatSurvey({ navigation, route }) {
         <DateTimePicker
           testID="dateTimePicker"
           display='spinner'
+          themeVariant='light'
           value={status === 'start' ? changeDateStartTemp : changeDateEndTemp}
           mode={'date'}
           onChange={(event, selectedDate) => {
@@ -356,6 +359,10 @@ export default function RiwayatSurvey({ navigation, route }) {
           }}
         />
         <TouchableOpacity
+        onPress={()=>{
+          status === 'start' ? dispatching(setShowIos()) :             dispatching(setEndShowIos());
+          ;
+        }}
           style={{
             margin: 16,
             backgroundColor: colorApp.button.primary,
@@ -505,7 +512,7 @@ export default function RiwayatSurvey({ navigation, route }) {
       }}
     >
       <HeaderDate
-        title={'Riwayat Survey'}
+        title={'Riwayat Pendataan'}
         back={() => {
           backScreen();
         }}
@@ -597,6 +604,7 @@ export default function RiwayatSurvey({ navigation, route }) {
         >
           <TouchableOpacity
             onPress={() => {
+              setOpenBottom(false);
               viewData();
             }}
             style={[
@@ -606,7 +614,7 @@ export default function RiwayatSurvey({ navigation, route }) {
               },
             ]}
           >
-            <Text style={style.textBtn}>View Data</Text>
+            <Text style={style.textBtn}>Lihat Data</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -619,10 +627,11 @@ export default function RiwayatSurvey({ navigation, route }) {
               downloadFile();
             }}
           >
-            <Text style={style.textBtn}>Download Letter</Text>
+            <Text style={style.textBtn}>Unduh Surat</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
+              setOpenBottom(false);
               navigation.navigate('DaftarPotensi', {
                 id_merchant: tempItem.id,
               });
@@ -658,7 +667,7 @@ export default function RiwayatSurvey({ navigation, route }) {
               color: 'black',
             }}
           >
-            Download in Progress, Please Wait...
+            Pengunduhan dalam Proses, Mohon Ditunggu...
           </Text>
           <View
             style={{

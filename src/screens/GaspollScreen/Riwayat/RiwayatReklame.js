@@ -330,6 +330,7 @@ const RiwayatReklame = ({ navigation, route }) => {
         <DateTimePicker
           testID="dateTimePicker"
           display='spinner'
+          themeVariant='light'
           value={status === 'start' ? startDate : endDate}
           mode={'date'}
           onChange={(event, selectedDate) => {

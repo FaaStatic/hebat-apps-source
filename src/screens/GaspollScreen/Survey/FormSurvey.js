@@ -29,6 +29,7 @@ import { HeaderWithoutHistory } from '../../Komponen/HeaderWithoutHistory';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
 import GapList from '../../Komponen/GapList';
 import { useFocusEffect } from '@react-navigation/native';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const { height: viewHeight, width: viewWidth } = Dimensions.get('window');
 
@@ -224,7 +225,7 @@ export default function FormSurvey({ navigation, route }) {
           longitude = datapos.longitude;
           var params = {
             latitude: datapos.latitude,
-            longitude: datapos.latitude,
+            longitude: datapos.longitude,
             latitudeDelta: limitlatitudeDelta,
             longitudeDelta: limitLongitudeDelta,
           };
