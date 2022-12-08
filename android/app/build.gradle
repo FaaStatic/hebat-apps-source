@@ -262,7 +262,7 @@ android {
     flavorDimensions "default"
     productFlavors {
         production {
-            applicationId "co.id.gmedia.bapenda"
+            applicationId "co.id.nexagroup.hebat"
             resValue "string", "app_name", "Hebat!"
             copy {
                 from 'src/production/'
@@ -271,7 +271,7 @@ android {
             }
         }
         development {
-            applicationId "co.id.gmedia.bapenda"
+            applicationId "co.id.nexagroup.hebat"
             resValue "string", "app_name", "Hebat! Dev"
             copy {
                 from 'src/development/'
