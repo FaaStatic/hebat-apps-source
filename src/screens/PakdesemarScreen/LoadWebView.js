@@ -13,7 +13,7 @@ const LoadWebView = ({ navigation, route }) => {
   const backButtonHandler = () => {
     console.log(currentUrl);
     if (webViewRef.current) {
-      if (currentUrl == 'https://esumpah.semarangkota.go.id/pemakais/sign_in' || currentUrl == 'https://esptpd.semarangkota.go.id/') {
+      if (currentUrl == 'https://esumpah.semarangkota.go.id/pemakais/sign_in' || currentUrl == 'https://esptpd.semarangkota.go.id/' || currentUrl == 'https://bimaqris.bankjateng.co.id/' || currentUrl == 'https://eretribusi.semarangkota.go.id/') {
         navigation.goBack()
       }
       webViewRef.current.goBack();

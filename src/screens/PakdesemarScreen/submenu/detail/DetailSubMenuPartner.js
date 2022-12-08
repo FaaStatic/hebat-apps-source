@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StatusBar, Text, Alert, Platform, Linking, Dimensions } from 'react-native';
-// import { AppInstalledChecker } from 'react-native-check-app-install';
+import { View, StatusBar, Text, Platform, Linking, Dimensions } from 'react-native';
 import { colorApp } from '../../../../util/globalvar';
 import { stylesheet } from '../../assets';
 import { Gap } from '../../components';
@@ -9,6 +8,7 @@ import SegeraHadir from '../SegeraHadir';
 import Partner from './detailsubmenu/Partner';
 import { MessageUtil } from '../../../../util/MessageUtil';
 import ServiceHelper from '../../addOns/ServiceHelper';
+// var SendIntentAndroid = require("react-native-send-intent");
 const height = Dimensions.get('window').height;
 const APPBAR_HEIGHT = Platform.isPad == true ? height / 6 : 150;
 export default DetailSubMenuPartner = ({ navigation, route }) => {
@@ -36,28 +36,57 @@ export default DetailSubMenuPartner = ({ navigation, route }) => {
   };
   const onPressBankPartner = (link) => {
     if (Platform.OS === 'ios') {
-      Linking.openURL(link.link_app_ios);
+      if (link.link_app_ios == null) {
+        MessageUtil.warningMessage('Metode belum di atur, silakan hubungi admin!')
+      } else {
+        MessageUtil.warningMessage(`Redirect Aplikasi ${link.name}`)
+        setTimeout(() => {
+          const to = link.link_app_ios
+          Linking.openURL(to)
+        }, 1500);
+      }
     } else {
-      Linking.openURL(link.link_app_android);
-      // Android
-      // AppInstalledChecker.checkURLScheme('kekancan')
-      //   .then((isInstalled) => {
-      //     console.log(isInstalled);
-      //     if (isInstalled == false) {
-      //       MessageUtil.warningMessage('Aplikasi Belum Terinstal di HP anda!');
-      //       setTimeout(() => {
-      //     }, 2000);
-      //   } else {
-      //     console.log('Open Apps Destination');
-      //   }
+      if (link.link_app_android == null) {
+        MessageUtil.warningMessage('Metode belum di atur, silakan hubungi admin!')
+      } else {
+        MessageUtil.warningMessage(`Redirect Aplikasi ${link.name}`)
+        setTimeout(() => {
+          const to = `http://play.google.com/store/apps/details?id=${link.link_app_android}`
+          Linking.openURL(to)
+        }, 1500);
+      }
+      // SendIntentAndroid.isAppInstalled('co.id.nexagroup.hebat').then(isInstalled => {
+      // if (isInstalled == false) {
+      //   MessageUtil.warningMessage('Aplikasi belum terinstal di hp anda!')
+      //   setTimeout(() => {
+      //     const to = `http://play.google.com/store/apps/details?id=${link.link_app_android}`
+      //     Linking.openURL(to)
+      //   }, 1500);
+      // } else {
+      // }
       // })
-      // .catch
-      // Linking.openURL(`https://play.google.com/store/apps/details?id=${link.link_app_android}`)
-      // ();
+      // SendIntentAndroid.isAppInstalled(link.link_app_android).then((isInstalled) => {
+      //   if (isInstalled) {
+      //     SendIntentAndroid.openApp(link.link_app_android).then((wasOpened) => {
+      //       if (wasOpened) {
+      //         console.log("App opened");
+      //       }
+      //       else {
+      //         console.log("Error opening app or it was not opened");
+      //       }
+      //     });
+      //   } else {
+      //   MessageUtil.warningMessage('Aplikasi belum terinstal di hp anda!')
+      // setTimeout(() => {
+      //   const to = `http://play.google.com/store/apps/details?id=${link.link_app_android}`
+      //   Linking.openURL(to)
+      // }, 1500);
+      // }
+      // });
     }
   };
   const onPressBankPartnerQris = (link) => {
-    Alert.alert('Hebat!', `Masih dalam pengembangan!`);
+    navigation.navigate('LoadWebView', { url: 'https://bimaqris.bankjateng.co.id' });
   };
   return (
     <>

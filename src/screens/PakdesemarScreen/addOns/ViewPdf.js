@@ -18,7 +18,7 @@ const ViewPdf = ({ navigation, route }) => {
     let date = new Date();
     const { config, fs } = RNFetchBlob;
     const downloads = fs.dirs.DownloadDir;
-    const documents = fs.dirs.DocumentDir;
+    const document = fs.dirs.DocumentDir;
     var fileExtension = resources.url.split('.').pop();
     var filePath =
       downloads +
@@ -27,7 +27,7 @@ const ViewPdf = ({ navigation, route }) => {
       '.' +
       fileExtension;
     var filePathIos =
-      documents +
+      document +
       '/pakdesemar_' +
       Math.floor(date.getTime() + date.getSeconds() / 2) +
       '.' +
@@ -35,8 +35,8 @@ const ViewPdf = ({ navigation, route }) => {
     const configOption = Platform.select({
       ios: {
         fileCache: true,
+        notification: true,
         path: filePathIos,
-        appendExt: 'pdf',
       },
       android: {
         fileCache: true,
@@ -51,7 +51,13 @@ const ViewPdf = ({ navigation, route }) => {
       .fetch('GET', resources.url)
       .then((res) => {
         setLoading(false);
-        MessageUtil.successMessage('File berhasil di download, mohon periksa ' + filePath);
+        if (Platform.OS == 'ios') {
+          setTimeout(() => {
+            RNFetchBlob.ios.openDocument(res.data);
+          }, 300);
+        } else {
+          MessageUtil.successMessage('File berhasil di download, mohon periksa ' + filePath);
+        }
       });
   };
   const resourceType = 'url';
@@ -84,7 +90,7 @@ const ViewPdf = ({ navigation, route }) => {
             icon="download"
             positionIconStart={true}
             backgroundColorInInput={colorApp.button.primary}
-            textIcon="Dwonload"
+            textIcon="Download"
           />
         </View>
         <Gap height={60} />

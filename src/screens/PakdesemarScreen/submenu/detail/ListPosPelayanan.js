@@ -29,7 +29,7 @@ export default ListPosPelayanan = ({ data, onPressMenu }) => {
             <Gap height={7} />
             <Text
               style={{
-                fontSize: 8,
+                fontSize: 10,
                 fontFamily: fontsCustom.primary[400],
                 color: colorApp.black,
                 textAlign: 'justify',

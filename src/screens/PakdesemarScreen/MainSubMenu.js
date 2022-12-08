@@ -137,9 +137,6 @@ export default MainSubMenu = ({ navigation, route }) => {
               data={menuStatusBayar}
               onPressMenu={(data) => onPressMenuStatusBayar(data)}
             />
-          ) : data.nama == 'STS Online' ? (
-            <SegeraHadir />
-            /* <Pencetakan data={menuPercetakan} onPresMenu={(data) => onPressMenuPercetakan(data)} /> */
           ) : data.nama == 'Pembayaran' ? (
             <MetodePembayaran
               data={listPartner}
