@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StatusBar, Text, Alert, Platform, Linking, Dimensions } from 'react-native';
-import { AppInstalledChecker } from 'react-native-check-app-install';
+// import { AppInstalledChecker } from 'react-native-check-app-install';
 import { colorApp } from '../../../../util/globalvar';
 import { stylesheet } from '../../assets';
 import { Gap } from '../../components';
@@ -36,29 +36,29 @@ export default DetailSubMenuPartner = ({ navigation, route }) => {
   };
   const onPressBankPartner = (link) => {
     if (Platform.OS === 'ios') {
-      Alert.alert('HEBAT!', 'OnProgress!!')
-      // AppInstalledChecker
-      //   .checkURLScheme('kekancanku')
+      Linking.openURL(link.link_app_ios);
+    } else {
+      Linking.openURL(link.link_app_android);
+      // Android
+      // AppInstalledChecker.checkURLScheme('kekancan')
       //   .then((isInstalled) => {
-      //     Linking.openURL(`${link.link_app_ios}://app`)
-      //   })
-      //   .catch(Linking.openURL('kekancanku://app'))
-    } else { // Android
-      AppInstalledChecker
-        .isAppInstalled('Kekancanku')
-        .then((isInstalled) => {
-          if (isInstalled == false) {
-            Linking.openURL(`https://play.google.com/store/apps/details?id=${link.link_app_android}`)
-          } else {
-            Linking.openURL('kekancangroup://app')
-          }
-        })
-        .catch(Linking.openURL(`https://play.google.com/store/apps/details?id=${link.link_app_android}`))
+      //     console.log(isInstalled);
+      //     if (isInstalled == false) {
+      //       MessageUtil.warningMessage('Aplikasi Belum Terinstal di HP anda!');
+      //       setTimeout(() => {
+      //     }, 2000);
+      //   } else {
+      //     console.log('Open Apps Destination');
+      //   }
+      // })
+      // .catch
+      // Linking.openURL(`https://play.google.com/store/apps/details?id=${link.link_app_android}`)
+      // ();
     }
   };
   const onPressBankPartnerQris = (link) => {
-    Alert.alert('App', `Link Qris ${link} !!`);
-  }
+    Alert.alert('Hebat!', `Masih dalam pengembangan!`);
+  };
   return (
     <>
       <StatusBar backgroundColor={colorApp.header.primary} />

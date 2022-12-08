@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     elevation: 6,
     borderTopEndRadius: 15,
     borderTopStartRadius: 15,
-    paddingTop: Platform.isPad == true ? 20 : 0,
-    paddingBottom: Platform.OS == 'android' ? 12 : 25
+    paddingTop: Platform.isPad == true ? 20 : 15,
+    paddingBottom: Platform.OS == 'android' ? 12 : 25,
   },
 });

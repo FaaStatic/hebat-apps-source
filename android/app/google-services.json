@@ -37,6 +37,49 @@
             {
               "client_id": "461986255627-1d3n53qks16q8168pd1uupvo4rrrb306.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "461986255627-e6d6l5ifi9728sbk413kkqf4l45moh00.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.id.gmedia.bapendaIOS"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461986255627:android:a4e7b4388921d565fbc80e",
+        "android_client_info": {
+          "package_name": "co.id.nexagroup.hebat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "461986255627-1d3n53qks16q8168pd1uupvo4rrrb306.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPJQpphmWeUosBI7Wzpf5oZf93XXMwe9A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461986255627-1d3n53qks16q8168pd1uupvo4rrrb306.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "461986255627-e6d6l5ifi9728sbk413kkqf4l45moh00.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.id.gmedia.bapendaIOS"
+              }
             }
           ]
         }

@@ -1,4 +1,4 @@
-package co.id.gmedia.bapenda;
+package co.id.nexagroup.hebat;
 
 import android.app.Application;
 import android.content.Context;
@@ -9,7 +9,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
-import co.id.gmedia.bapenda.newarchitecture.MainApplicationReactNativeHost;
+import co.id.nexagroup.hebat.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 

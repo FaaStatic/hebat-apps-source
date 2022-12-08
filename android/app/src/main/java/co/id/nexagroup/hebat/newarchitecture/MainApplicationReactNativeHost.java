@@ -1,4 +1,4 @@
-package co.id.gmedia.bapenda.newarchitecture;
+package co.id.nexagroup.hebat.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import co.id.gmedia.bapenda.BuildConfig;
-import co.id.gmedia.bapenda.newarchitecture.components.MainComponentsRegistry;
-import co.id.gmedia.bapenda.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import co.id.nexagroup.hebat.BuildConfig;
+import co.id.nexagroup.hebat.newarchitecture.components.MainComponentsRegistry;
+import co.id.nexagroup.hebat.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
