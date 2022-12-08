@@ -11,13 +11,16 @@ import {
   StatusBar,
   ActivityIndicator,
   Platform,
+  Dimensions,
   TouchableOpacity,
 } from 'react-native';
+import Lottie from 'lottie-react-native';
 import HeaderDate from '../../Komponen/HeaderDate';
 import { Api } from '../../../util/ApiManager';
 import { MessageUtil } from '../../../util/MessageUtil';
-import { colorApp } from '../../../util/globalvar';
+import { colorApp,fontsCustom } from '../../../util/globalvar';
 import GapList from '../../Komponen/GapList';
+const { height: ViewHeight, width: ViewWidth } = Dimensions.get('window');
 
 const RiwayatAbsensi = ({ navigation, route }) => {
   const [startDate, setStartDate] = useState(new Date());
@@ -199,19 +202,33 @@ const RiwayatAbsensi = ({ navigation, route }) => {
           dateClose();
         }}
       />
+      {responseItem.length === 0 ? <View style={{
+            flex:1,
+            height:ViewHeight,
+            marginTop:ViewHeight/10
+          }}>
+            <Lottie 
+      source={require('../../../../assets/images/empty_animation.json')} autoPlay loop style={{
+        position:'relative',
+      }}/>
+            </View> :  <>
       <View
         style={{
           backgroundColor: colorApp.backgroundView,
           flexDirection: 'row',
-          justifyContent: 'space-around',
-          height: Platform.OS === 'ios' ? 30 : StatusBar.currentHeight + 15,
-          padding: 4,
+          justifyContent: 'space-evenly',
+          height: Platform.OS === 'ios' ? 35 : StatusBar.currentHeight + 15,
+          
+          paddingTop:8,
+          paddingBottom:4,
         }}
       >
         <Text
           style={{
             color: 'black',
             fontSize: 14,
+            marginStart:24,
+            width:100,
             textAlignVertical: 'center',
           }}
         >
@@ -220,7 +237,10 @@ const RiwayatAbsensi = ({ navigation, route }) => {
         <Text
           style={{
             color: 'black',
+            width:100,
+
             fontSize: 14,
+            marginStart:24,
             textAlignVertical: 'center',
           }}
         >
@@ -230,6 +250,9 @@ const RiwayatAbsensi = ({ navigation, route }) => {
           style={{
             color: 'black',
             fontSize: 14,
+            width:100,
+
+            marginStart:24,
             textAlignVertical: 'center',
           }}
         >
@@ -241,6 +264,7 @@ const RiwayatAbsensi = ({ navigation, route }) => {
         keyExtractor={(index) => index}
         contentContainerStyle={{
           paddingTop: 16,
+         
           paddingBottom: 16,
         }}
         ItemSeparatorComponent={<GapList />}
@@ -249,9 +273,9 @@ const RiwayatAbsensi = ({ navigation, route }) => {
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'space-around',
+                justifyContent: 'space-evenly',
                 height: StatusBar.currentHeight,
-                padding: 4,
+                
               }}
             >
               <Text
@@ -259,6 +283,8 @@ const RiwayatAbsensi = ({ navigation, route }) => {
                   color: colorApp.gradientSatu,
                   fontSize: 14,
                   textAlignVertical: 'center',
+                  width:100,
+                  marginStart:24,
                 }}
               >
                 {moment(item.timestamp).format('YYYY/MM/DD')}
@@ -267,16 +293,23 @@ const RiwayatAbsensi = ({ navigation, route }) => {
                 style={{
                   color: 'black',
                   fontSize: 14,
+                  marginStart:24,
+
                   textAlignVertical: 'center',
+                  width:100,
+
                 }}
               >
-                {moment(item.timestamp).format('hh:mm:ss')}
+                {moment(item.timestamp).format('HH:mm:ss')}
               </Text>
               <Text
                 style={{
                   color: 'black',
                   fontSize: 14,
+                  marginStart:24,
                   textAlignVertical: 'center',
+                  width:100,
+
                 }}
               >
                 {item.status}
@@ -285,6 +318,9 @@ const RiwayatAbsensi = ({ navigation, route }) => {
           );
         }}
       />
+      </>}
+     
+    
 
       <Dialog
         isVisible={openIosDate}

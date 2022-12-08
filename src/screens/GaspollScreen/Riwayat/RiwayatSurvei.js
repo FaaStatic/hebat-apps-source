@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, {  useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { MessageUtil } from '../../../util/MessageUtil';
 import {
   View,
@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Dimensions,
-  InteractionManager
+  InteractionManager,
 } from 'react-native';
 import { BottomSheet, Image, Dialog, LinearProgress } from '@rneui/themed';
 import HeaderDate from '../../Komponen/HeaderDate';
@@ -26,7 +26,7 @@ import {
 } from '../../../statemanager/HeaderDateState/HeaderDateSlicer';
 import { Api } from '../../../util/ApiManager';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import RNFetchBlob from 'rn-fetch-blob';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { useFocusEffect } from '@react-navigation/native';
@@ -55,20 +55,21 @@ export default function RiwayatSurvey({ navigation, route }) {
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
 
-
-  useFocusEffect(useCallback(()=>{
-    const task = InteractionManager.runAfterInteractions(()=>{
-      PermissionUtil.requestExternalWritePermission();
-      count = 0;
-      userInteract = false;
-      firstLoad = true;
-      setLoadList(true);
-      setExtraData(true);
-      setDataResponse([]);
-      getListItem();
-    });
-    return()=> task.cancel();
-  },[]));
+  useFocusEffect(
+    useCallback(() => {
+      const task = InteractionManager.runAfterInteractions(() => {
+        PermissionUtil.requestExternalWritePermission();
+        count = 0;
+        userInteract = false;
+        firstLoad = true;
+        setLoadList(true);
+        setExtraData(true);
+        setDataResponse([]);
+        getListItem();
+      });
+      return () => task.cancel();
+    }, [])
+  );
 
   const openBottomSheet = (item) => {
     PermissionUtil.requestExternalWritePermission();
@@ -88,8 +89,8 @@ export default function RiwayatSurvey({ navigation, route }) {
       const configOption = Platform.select({
         ios: {
           fileCache: true,
-          notification:true,
-          path: fs.dirs.DocumentDir+"/surat_pernyataan.pdf",
+          notification: true,
+          path: fs.dirs.DocumentDir + '/surat_pernyataan.pdf',
           appendExt: 'pdf',
         },
         android: {
@@ -122,9 +123,9 @@ export default function RiwayatSurvey({ navigation, route }) {
         .then(async (res) => {
           if (Platform.OS === 'ios') {
             setDialogOpen(false);
-            setTimeout(()=>{
+            setTimeout(() => {
               RNFetchBlob.ios.openDocument(res.data);
-            },1000);
+            }, 1000);
             setTimeout(() => {
               MessageUtil.successMessage('File Successfully Downloaded!');
               clearTimeout();
@@ -143,7 +144,7 @@ export default function RiwayatSurvey({ navigation, route }) {
           console.log(err);
           console.log('====================================');
           setTimeout(() => {
-            MessageUtil.errorMessage(err);
+            MessageUtil.errorMessage('Error');
             clearTimeout();
           }, 1000);
         });
@@ -348,8 +349,8 @@ export default function RiwayatSurvey({ navigation, route }) {
       <View>
         <DateTimePicker
           testID="dateTimePicker"
-          display='spinner'
-          themeVariant='light'
+          display="spinner"
+          themeVariant="light"
           value={status === 'start' ? changeDateStartTemp : changeDateEndTemp}
           mode={'date'}
           onChange={(event, selectedDate) => {
@@ -359,10 +360,9 @@ export default function RiwayatSurvey({ navigation, route }) {
           }}
         />
         <TouchableOpacity
-        onPress={()=>{
-          status === 'start' ? dispatching(setShowIos()) :             dispatching(setEndShowIos());
-          ;
-        }}
+          onPress={() => {
+            status === 'start' ? dispatching(setShowIos()) : dispatching(setEndShowIos());
+          }}
           style={{
             margin: 16,
             backgroundColor: colorApp.button.primary,
@@ -420,25 +420,23 @@ export default function RiwayatSurvey({ navigation, route }) {
             />
           }
           style={{
-            width:75,
-            height:75,
+            width: 75,
+            height: 75,
           }}
           placeholderStyle={{
-          
             justifyContent: 'center',
             backgroundColor: 'white',
             flexDirection: 'column',
-            width:75,
-            height:75,
+            width: 75,
+            height: 75,
           }}
-         
           containerStyle={{
             backgroundColor: 'black',
             aspectRatio: 1,
-            width:75,
-            borderRadius:8,
-            height:75,
-         
+            width: 75,
+            borderRadius: 8,
+            height: 75,
+
             flexDirection: 'column',
             justifyContent: 'center',
           }}
@@ -505,7 +503,11 @@ export default function RiwayatSurvey({ navigation, route }) {
           width: '100%',
         }}
       >
-        <ActivityIndicator color={colorApp.button.primary} size={'small'} style={{ alignSelf: 'center' }} />
+        <ActivityIndicator
+          color={colorApp.button.primary}
+          size={'small'}
+          style={{ alignSelf: 'center' }}
+        />
       </View>;
     } else {
       return <></>;
@@ -655,65 +657,62 @@ export default function RiwayatSurvey({ navigation, route }) {
           </TouchableOpacity>
         </View>
       </BottomSheet>
-      <Dialog isVisible={dialogOpen}>
-        <View
+      <Dialog
+        overlayStyle={{
+          backgroundColor: 'white',
+          borderRadius: 8,
+          flexDirection: 'column',
+          padding: 24,
+          justifyContent: 'flex-start',
+        }}
+        isVisible={dialogOpen}
+      >
+        <Text
           style={{
-            backgroundColor: 'white',
-            height: viewHeight / 8,
-            flexDirection: 'column',
-            paddingTop: 8,
-            paddingBottom: 8,
-            paddingStart: 16,
-            paddingEnd: 16,
-            justifyContent: 'flex-start',
+            fontSize: 14,
+            fontFamily: fontsCustom.primary[700],
+            color: 'black',
           }}
         >
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '800',
-              color: 'black',
-            }}
-          >
-            Pengunduhan dalam Proses, Mohon Ditunggu...
-          </Text>
-          <View
-            style={{
-              marginTop: 8,
-              marginBottom: 8,
-              marginStart: 14,
-              marginVertical: 16,
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            }}
-          >
-            <LinearProgress
-              style={{ alignSelf: 'center' }}
-              value={downloadProgress}
-              color={'#FC572C'}
-              variant="determinate"
-            />
-            <Text
-              style={{
-                fontSize: 12,
-                color: 'gray',
-                marginStart: 36,
-                textAlign: 'center',
-                alignSelf: 'center',
-              }}
-            >{` ${downloadProgress}/100`}</Text>
-          </View>
-
+          Pengunduhan dalam Proses, Mohon Ditunggu...
+        </Text>
+        <View
+          style={{
+            marginTop: 8,
+            marginBottom: 8,
+            marginStart: 14,
+            marginVertical: 16,
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+          }}
+        >
+          <LinearProgress
+            style={{ alignSelf: 'center' }}
+            value={downloadProgress}
+            color={colorApp.button.primary}
+            variant="determinate"
+          />
           <Text
             style={{
               fontSize: 12,
-              fontWeight: '400',
               color: 'gray',
+              marginStart: 36,
+              textAlign: 'center',
+              alignSelf: 'center',
             }}
-          >
-            surat_pernyataan.pdf
-          </Text>
+          >{` ${downloadProgress}/100`}</Text>
         </View>
+
+        <Text
+          style={{
+            fontSize: 12,
+            fontFamily: fontsCustom.primary[400],
+            color: 'gray',
+            marginBottom: 8,
+          }}
+        >
+          surat_pernyataan.pdf
+        </Text>
       </Dialog>
     </View>
   );

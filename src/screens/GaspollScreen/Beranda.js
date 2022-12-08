@@ -12,7 +12,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import { Image } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
-import { colorApp, menuMain, stringApp } from '../../util/globalvar';
+import { colorApp, menuMain, stringApp, fontsCustom } from '../../util/globalvar';
 import { Api } from '../../util/ApiManager';
 import { SessionManager } from '../../util/SessionUtil/SessionManager';
 import { useFocusEffect } from '@react-navigation/native';
@@ -66,9 +66,9 @@ export default function Beranda({ navigation, route }) {
 
   return (
     <LinearGradient
-      colors={[colorApp.gradientSatu, colorApp.gradientSatu]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 0 }}
+      colors={[colorApp.gradientSatu, colorApp.gradientDua]}
+      start={{ x: -1, y: 0 }}
+      end={{ x: 0, y: 1}}
       style={style.container}
     >
       <View
@@ -100,6 +100,8 @@ export default function Beranda({ navigation, route }) {
               fontSize: 22,
               fontWeight: '700',
               color: 'black',
+              fontFamily:fontsCustom.primary[700],
+
             }}
           >
             Menu Mitra
@@ -113,9 +115,9 @@ export default function Beranda({ navigation, route }) {
           style={{
             justifyContent: 'center',
             flexDirection: 'column',
-            height: 30,
+            height: 35,
             marginEnd: 30,
-            width: 30,
+            width: 35,
             alignSelf: 'flex-end',
             backgroundColor: 'white',
             borderRadius: 8,
@@ -127,8 +129,9 @@ export default function Beranda({ navigation, route }) {
             style={{
               width: 20,
               height: 20,
-              alignSelf: 'center',
+            
             }}
+            resizeMode={'contain'}
           />
         </TouchableOpacity>
       </View>
@@ -139,22 +142,22 @@ export default function Beranda({ navigation, route }) {
           borderTopStartRadius: 45,
           borderTopEndRadius: 45,
           backgroundColor: 'white',
-          marginTop: 20,
+          marginTop: 16,
         }}
       >
-        <View
+        {/* <View
           style={{
             borderTopStartRadius: 45,
             borderTopEndRadius: 45,
             backgroundColor: 'white',
             height: 65,
           }}
-        />
+        /> */}
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           style={{
-
+            marginTop:50,
           }}
         ><View style={{
           width: Platform.isPad ? '40%' :'80%',
@@ -179,10 +182,11 @@ export default function Beranda({ navigation, route }) {
           <Text
             style={{
               color: 'black',
-              marginStart: 14,
+              marginStart: 24,
               fontSize: 14,
               marginTop: 14,
-              marginBottom: 16,
+              fontFamily:fontsCustom.primary[400],
+              marginBottom: 18,
             }}
           >
             Pilih fitur yang ingin kamu gunakan
@@ -202,7 +206,7 @@ export default function Beranda({ navigation, route }) {
                   backgroundColor: '#F2F2F2',
                   height: 46,
                   borderRadius: 20,
-                  marginBottom: 16,
+                  marginBottom: 20,
                 }}
               >
                 <Image
@@ -222,7 +226,7 @@ export default function Beranda({ navigation, route }) {
                   style={{
                     fontWeight: '700',
                     color: 'black',
-
+                    fontFamily:fontsCustom.primary[700],
                     fontSize: 14,
                     alignSelf: 'center',
                     marginStart: 30,
@@ -237,10 +241,12 @@ export default function Beranda({ navigation, route }) {
           <Text
             style={{
               color: 'black',
-              marginStart: 14,
+              marginStart: 24,
               fontSize: 14,
               marginTop: 14,
               marginBottom: 16,
+              fontFamily:fontsCustom.primary[400],
+
             }}
           >
             Menu Lainnya
@@ -281,6 +287,8 @@ export default function Beranda({ navigation, route }) {
                 color: 'black',
                 alignSelf: 'center',
                 marginStart: 30,
+                fontFamily:fontsCustom.primary[700],
+
               }}
             >
               Pengaturan

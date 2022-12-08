@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
 import Icon2 from 'react-native-vector-icons/dist/FontAwesome';
 import { useSelector } from 'react-redux';
-import { colorApp } from '../../util/globalvar';
+import { colorApp,fontsCustom } from '../../util/globalvar';
 
 const HeaderDate = ({
   title = '',
@@ -96,11 +96,13 @@ const HeaderDate = ({
             </View>
           ) : (
             <Text
+            numberOfLines={2}
+        ellipsizeMode='tail'
               style={[
                 style.textTitle,
                 {
                   marginStart: 16,
-                  fontWeight: '700',
+                  fontFamily: fontsCustom.primary[700],
                 },
               ]}
             >
@@ -191,11 +193,12 @@ const style = StyleSheet.create({
     height: Platform.OS === "ios" ? StatusBar.currentHeight+150 :StatusBar.currentHeight + 100,
   },
   textTitle: {
-    fontSize: 20,
+    fontSize: 18,
     color: 'white',
     paddingTop: 4,
     paddingBottom: 4,
-    fontWeight: '400',
+    fontWeight: '700',
+    width:200,
   },
   btnDate: {
     backgroundColor: 'white',

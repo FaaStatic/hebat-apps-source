@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, StatusBar, StyleSheet, Text, Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
-import { colorApp } from '../../util/globalvar';
+import { colorApp,fontsCustom } from '../../util/globalvar';
 
 export const Header = ({ Title, back, action = null }) => {
   return (
@@ -22,11 +22,15 @@ export const Header = ({ Title, back, action = null }) => {
         </TouchableOpacity>
 
         <Text
+        numberOfLines={2}
+        ellipsizeMode='tail'
           style={[
             style.textTitle,
             {
-              fontWeight:'700',
+              
+              fontFamily: fontsCustom.primary[700],
               marginStart: 16,
+          
             },
           ]}
         >
@@ -70,14 +74,16 @@ const style = StyleSheet.create({
     height: Platform.OS === "ios" ? StatusBar.currentHeight+100 :StatusBar.currentHeight + 30,
   },
   textTitle: {
-    fontSize: 20,
+    fontSize: 18,
     color: 'white',
-    fontWeight: '400',
+    fontWeight: '700',
+    width:175,
   },
   buttonRiwayat: {
     borderRadius: 8,
     height: StatusBar.currentHeight,
     width: 125,
+    alignItems:'center',
     marginEnd: 16,
     padding: Platform.OS === 'ios' ? 8 : 0,
     backgroundColor: 'transparent',

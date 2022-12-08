@@ -23,7 +23,7 @@ import { Api } from '../../../util/ApiManager';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { HeaderWithoutHistory } from '../../Komponen/HeaderWithoutHistory';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
@@ -821,22 +821,20 @@ export default function EditData({ navigation, route }) {
         </ScrollView>
       )}
 
-      <Dialog isVisible={modalConfirm} onBackdropPress={() => {}}>
-        <View
-          style={{
-            backgroundColor: 'white',
-            padding: 8,
-            height: viewHeight / 6,
-            flexDirection: 'column',
-            justifyContent: 'space-around',
-          }}
-        >
-          <Text style={{ color: 'black', fontSize: 16, fontWeight: '600' }}>
+      <Dialog overlayStyle={{
+         backgroundColor: 'white',
+         padding: 16,
+         borderRadius:8,
+         flexDirection: 'column',
+      }} isVisible={modalConfirm} onBackdropPress={() => {}}>
+    
+    <Text style={{textAlign:'center', color: 'black', fontSize: 16, fontFamily:fontsCustom.primary[400]}}>
             Anda yakin ingin mengubah data ini?
           </Text>
           <View
             style={{
-              marginTop: 16,
+              marginTop: 35,
+              marginBottom:16,
               flexDirection: 'row',
               justifyContent: 'flex-end',
             }}
@@ -849,10 +847,11 @@ export default function EditData({ navigation, route }) {
             >
               <Text
                 style={{
-                  fontSize: 16,
+                  fontSize: 14,
                   marginEnd: 16,
                   color: 'gray',
                   textAlign: 'center',
+                  fontFamily:fontsCustom.primary[700],
                 }}
               >
                Batal
@@ -862,20 +861,26 @@ export default function EditData({ navigation, route }) {
               onPress={() => {
                 editMerchant();
               }}
+              style={{
+                borderRadius:8,
+                backgroundColor:colorApp.button.primary,
+                padding:8,
+              }}
             >
               <Text
                 style={{
-                  fontSize: 16,
+                  fontSize: 14,
                   marginEnd: 16,
-                  color: 'black',
+                  color: 'white',
                   textAlign: 'center',
+                  fontFamily:fontsCustom.primary[700],
                 }}
               >
                 Iya, Ubah Data Ini
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+      
       </Dialog>
       <BottomSheet  isVisible={openBottom} onBackdropPress={()=>{
   setOpenBottom(false);

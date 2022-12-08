@@ -15,7 +15,7 @@ import { Api } from '../../../util/ApiManager';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import { colorApp, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
-
+import Lottie from 'lottie-react-native';
 var count = 0;
 const limit = 10;
 var loadFirst = false;
@@ -254,25 +254,46 @@ export default function Pendaftaran({ navigation, route }) {
           />
         </View>
       ) : (
-        <FlatList
-          data={responseItem}
-          renderItem={renderItem}
-          extraData={extraData}
-          keyExtractor={(item) => item.id}
-          ListFooterComponent={renderFooter}
-          onEndReached={loadMore}
-          ItemSeparatorComponent={() => {
-            return <GapList />;
-          }}
-          style={{
-            flexGrow: 1,
-            height: viewHeight,
-          }}
-          contentContainerStyle={{
-            padding: 16,
-          }}
-          showsVerticalScrollIndicator={false}
-        />
+        <>
+          {responseItem.length === 0 ? (
+            <View
+              style={{
+                flex: 1,
+                height: viewHeight,
+                marginTop: viewHeight / 10,
+              }}
+            >
+              <Lottie
+                source={require('../../../../assets/images/empty_animation.json')}
+                autoPlay
+                loop
+                style={{
+                  position: 'relative',
+                }}
+              />
+            </View>
+          ) : (
+            <FlatList
+              data={responseItem}
+              renderItem={renderItem}
+              extraData={extraData}
+              keyExtractor={(item) => item.id}
+              ListFooterComponent={renderFooter}
+              onEndReached={loadMore}
+              ItemSeparatorComponent={() => {
+                return <GapList />;
+              }}
+              style={{
+                flexGrow: 1,
+                height: viewHeight,
+              }}
+              contentContainerStyle={{
+                padding: 16,
+              }}
+              showsVerticalScrollIndicator={false}
+            />
+          )}
+        </>
       )}
 
       <BottomSheet

@@ -14,7 +14,7 @@ import {
 import { Image, Input, Dialog,BottomSheet } from '@rneui/themed';
 import MapView, { Marker } from 'react-native-maps';
 import { Header } from '../../../Komponen/Header';
-import { colorApp, stringApp } from '../../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../../util/globalvar';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
 import { Api } from '../../../../util/ApiManager';
@@ -896,21 +896,21 @@ const WajibPajakTutup = ({ navigation, route }) => {
             paddingBottom: 16,
             flexDirection: 'column',
             justifyContent: 'center',
-            height: ViewHeight / 2,
+            height: ViewHeight / 1.8,
           }}
           onBackdropPress={() => {
             setOpenDialog(false);
           }}
         >
           <Text
-            numberOfLines={2}
+            numberOfLines={3}
             style={{
               alignSelf: 'center',
               marginEnd: 24,
               marginStart: 24,
               fontSize: 12,
               marginBottom: 8,
-              fontWeight: '400',
+              fontFamily: fontsCustom.primary[400],
               color: 'black',
               textAlign: 'center',
             }}
@@ -932,10 +932,11 @@ const WajibPajakTutup = ({ navigation, route }) => {
           <Text
             style={{
               alignSelf: 'center',
-              color: '#00FFFF',
+              color: colorApp.btnColor2,
               textAlign: 'center',
               fontSize: 16,
-              fontWeight: '400',
+              marginBottom: 8,
+              fontFamily: fontsCustom.primary[400],
             }}
           >
             Tanda Tangan Disini
@@ -946,7 +947,7 @@ const WajibPajakTutup = ({ navigation, route }) => {
               color: 'black',
               textAlign: 'center',
               fontSize: 12,
-              fontWeight: '400',
+              fontFamily: fontsCustom.primary[400],
             }}
           >
             (Wajib Pajak)
@@ -967,7 +968,7 @@ const WajibPajakTutup = ({ navigation, route }) => {
               flexDirection: 'column',
               marginTop: 16,
               padding: 8,
-              backgroundColor: '#669beb',
+              backgroundColor: colorApp.button.primary,
             }}
           >
             <Text

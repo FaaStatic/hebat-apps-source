@@ -1,23 +1,31 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { Dialog, LinearProgress } from '@rneui/themed';
-import { View, TouchableOpacity, StyleSheet, Dimensions, Platform,Text,InteractionManager } from 'react-native';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  Platform,
+  Text,
+  InteractionManager,
+} from 'react-native';
+import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import MapView, { Marker } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/dist/Entypo';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
 import Icon3 from 'react-native-vector-icons/FontAwesome5';
+import Icon4 from 'react-native-vector-icons/dist/AntDesign';
 import Geolocation from 'react-native-geolocation-service';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import { useIsFocused } from '@react-navigation/native';
-import {MessageUtil} from '../../../util/MessageUtil';
+import { MessageUtil } from '../../../util/MessageUtil';
 import * as mime from 'react-native-mime-types';
 import polyfill from '@amityco/react-native-formdata-polyfill';
 import RNFetchBlob from 'rn-fetch-blob';
 import { useFocusEffect } from '@react-navigation/native';
-
 
 var latitude = -6.966667;
 var longitude = 110.416664;
@@ -39,22 +47,21 @@ const AbsenCheck = ({ navigation, route }) => {
     longitudeDelta: limitLongitudeDelta,
   });
   const [heading, setHeading] = useState(0);
-  const [openDialog,setOpenDialog] =useState(false);
-  const [openDownload,setOpenDownload] =useState(false);
-  const [valueUpload,setValueUpload] = useState(0);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openDownload, setOpenDownload] = useState(false);
+  const [valueUpload, setValueUpload] = useState(0);
 
   useFocusEffect(
-   useCallback(() => {
-    const task = InteractionManager.runAfterInteractions(() => {
-      getLocation();
-      PermissionUtil.requestCameraPermission();
-      PermissionUtil.requestExternalWritePermission();
+    useCallback(() => {
+      const task = InteractionManager.runAfterInteractions(() => {
+        getLocation();
+        PermissionUtil.requestCameraPermission();
+        PermissionUtil.requestExternalWritePermission();
         setCamera();
-    });
-    return()=> task.cancel();
+      });
+      return () => task.cancel();
     }, [])
   );
-  
 
   const setCamera = async () => {
     const cameraPermission = await Camera.getCameraPermissionStatus();
@@ -65,7 +72,6 @@ const AbsenCheck = ({ navigation, route }) => {
     if (locationPermission === true) {
       Geolocation.getCurrentPosition(
         async (pos) => {
-         
           var datapos = pos.coords;
           latitude = datapos.latitude;
           longitude = datapos.longitude;
@@ -206,7 +212,6 @@ const AbsenCheck = ({ navigation, route }) => {
           marginTop: ViewHeight / 1.6,
         }}
       >
-       
         <MapView
           provider={MapView.PROVIDER_GOOGLE}
           ref={mapsLayout}
@@ -216,11 +221,9 @@ const AbsenCheck = ({ navigation, route }) => {
             latitudeDelta: limitlatitudeDelta,
             longitudeDelta: limitLongitudeDelta,
           }}
-          
-         
           region={{
             latitude: latitude,
-            longitude:longitude,
+            longitude: longitude,
             latitudeDelta: limitlatitudeDelta,
             longitudeDelta: limitLongitudeDelta,
           }}
@@ -228,7 +231,6 @@ const AbsenCheck = ({ navigation, route }) => {
           style={{
             flex: 1,
           }}
-        
           showsTraffic={true}
           showsIndoors={true}
           onLayout={() => {
@@ -241,12 +243,15 @@ const AbsenCheck = ({ navigation, route }) => {
               head: 0,
               pitch: 100,
             });
-            mapsLayout.current.animateToRegion({
-              latitude: mapState.latitude,
-              longitude:mapState.longitude,
-              latitudeDelta: limitlatitudeDelta,
-              longitudeDelta: limitLongitudeDelta,
-            }, 2500);
+            mapsLayout.current.animateToRegion(
+              {
+                latitude: mapState.latitude,
+                longitude: mapState.longitude,
+                latitudeDelta: limitlatitudeDelta,
+                longitudeDelta: limitLongitudeDelta,
+              },
+              2500
+            );
           }}
         >
           <Marker.Animated
@@ -259,30 +264,60 @@ const AbsenCheck = ({ navigation, route }) => {
           />
         </MapView>
         <View>
-          <TouchableOpacity 
-          onPress={()=>{
-            getLocation();
-          }}
-          style={{
-            position:'absolute',
-            bottom:0,
-            left:0,
-            height:40,
-            width:40,
-            borderRadius:20,
-            backgroundColor:'white',
-            elevation:4,
-            flexDirection:'column',
-            justifyContent:'center',
-            marginBottom:ViewHeight/3.2,
-            marginLeft:16
-          }}>
-            <Icon2 name='my-location' size={24} color={'black'} style={{
-              alignSelf:'center'
-            }}/>
+          <TouchableOpacity
+            onPress={() => {
+              getLocation();
+            }}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              height: 40,
+              width: 40,
+              borderRadius: 20,
+              backgroundColor: 'white',
+              elevation: 4,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              marginBottom: ViewHeight / 3.2,
+              marginLeft: 16,
+            }}
+          >
+            <Icon2
+              name="my-location"
+              size={24}
+              color={'black'}
+              style={{
+                alignSelf: 'center',
+              }}
+            />
           </TouchableOpacity>
         </View>
       </View>
+      {Platform.OS === 'ios' && (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
+          style={{
+            paddingLeft: 16,
+            paddingRight: 16,
+            paddingTop: 8,
+            paddingBottom: 8,
+            width: 100,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            marginTop: Platform.OS === 'ios' ? 55 : 16,
+            marginStart: 16,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            borderRadius: 8,
+          }}
+        >
+          <Icon4 name="arrowleft" size={24} color={'white'} />
+        </TouchableOpacity>
+      )}
       <View
         style={{
           position: 'absolute',
@@ -329,83 +364,113 @@ const AbsenCheck = ({ navigation, route }) => {
           />
         </TouchableOpacity>
       </View>
-      <Dialog isVisible={openDialog} overlayStyle={{
-        backgroundColor:'white',
-        flexDirection:'column',
-        justifyContent:"space-evenly",
-        padding:24,
-        height:250,
-        width:250,
-        borderRadius:8,
-      }} >
-        <Icon3 name='check-circle' size={75} color={'green'} style={{
-          alignSelf:'center'
-        }}/>
-        <Text style={{
-          fontSize:24,
-          color:'green',
-          fontWeight:'600',
-          alignSelf:'center'
-        }}>Berhasil</Text>
-        <TouchableOpacity
-        onPress={()=>{
-          setOpenDialog(false);
-          navigation.goBack();
-         
+      <Dialog
+        isVisible={openDialog}
+        overlayStyle={{
+          backgroundColor: 'white',
+          flexDirection: 'column',
+          justifyContent: 'space-evenly',
+          padding: 24,
+          height: 250,
+          width: 250,
+          borderRadius: 8,
         }}
-        style={{
-          backgroundColor:'white',
-          borderColor:'green',
-          borderWidth:1,
-          borderRadius:8,
-          paddingTop:4,
-          paddingBottom:4,
-          flexDirection:'column',
-          justifyContent:'center'
-        }}>
-          <Text style={{
-            color:'green',
-            fontSize:16,
-            fontWeight:'600',
-            alignSelf:'center'
-          }}>OK</Text>
-        </TouchableOpacity>
-        
-      </Dialog>
-      <Dialog isVisible={openDownload}
-     overlayStyle={{
-      backgroundColor:'white',
-      flexDirection:'column',
-      padding:24,
-      borderRadius:8,
-      
-     }}
       >
-        <Text 
-        style={{
-          fontSize:16,
-          color:'black',
-          fontWeight:'800',
-          marginTop:16,
-          marginBottom:16,
-        }}>Uploading Progress, please wait ...</Text>
-        <View style={{
-          flexDirection:'row',
-          justifyContent:'space-between',
-          marginBottom:16,
-        }}>
-        <LinearProgress style={{
-          width:220,
-          alignSelf:'center'
-        }} animation={true} color={colorApp.primaryGaspoll} variant={'determinate'} value={valueUpload} />
-        <Text  style={{
-          fontSize:12,
-          color:'black',
-          fontWeight:'800',
-          marginStart:14,
-          marginTop:16,
-          marginBottom:16,
-        }} >{valueUpload} %</Text>
+        <Icon3
+          name="check-circle"
+          size={75}
+          color={'green'}
+          style={{
+            alignSelf: 'center',
+          }}
+        />
+        <Text
+          style={{
+            fontSize: 24,
+            color: 'green',
+            fontWeight: '600',
+            alignSelf: 'center',
+          }}
+        >
+          Berhasil
+        </Text>
+        <TouchableOpacity
+          onPress={() => {
+            setOpenDialog(false);
+            navigation.goBack();
+          }}
+          style={{
+            backgroundColor: 'white',
+            borderColor: 'green',
+            borderWidth: 1,
+            borderRadius: 8,
+            paddingTop: 4,
+            paddingBottom: 4,
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}
+        >
+          <Text
+            style={{
+              color: 'green',
+              fontSize: 16,
+              fontWeight: '600',
+              alignSelf: 'center',
+            }}
+          >
+            OK
+          </Text>
+        </TouchableOpacity>
+      </Dialog>
+      <Dialog
+        isVisible={openDownload}
+        overlayStyle={{
+          backgroundColor: 'white',
+          flexDirection: 'column',
+          padding: 16,
+          borderRadius: 8,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 14,
+            color: 'black',
+            fontFamily: fontsCustom.primary[700],
+            marginTop: 16,
+            marginBottom: 16,
+          }}
+        >
+          Proses pengunggahan, mohon ditunggu ...
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginBottom: 16,
+          }}
+        >
+          <LinearProgress
+            style={{
+              width: 220,
+              alignSelf: 'center',
+            }}
+            animation={true}
+            color={colorApp.button.primary}
+            variant={'determinate'}
+            value={valueUpload}
+          />
+          <Text
+            style={{
+              fontSize: 12,
+              color: 'black',
+              fontFamily: fontsCustom.primary[500],
+              marginStart: 14,
+              marginTop: 16,
+              marginBottom: 16,
+            }}
+          >
+            {valueUpload} %
+          </Text>
         </View>
       </Dialog>
     </View>

@@ -8,7 +8,7 @@ import {
   Dimensions,
   Platform,
   ActivityIndicator,
-  InteractionManager
+  InteractionManager,
 } from 'react-native';
 import HeaderDate from '../../Komponen/HeaderDate';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
@@ -22,6 +22,9 @@ import { Api } from '../../../util/ApiManager';
 import { MessageUtil } from '../../../util/MessageUtil';
 import GapList from '../../Komponen/GapList';
 import { useFocusEffect } from '@react-navigation/native';
+import Lottie from 'lottie-react-native';
+
+const { height: ViewHeight, width: ViewWidth } = Dimensions.get('window');
 
 const limit = 10;
 var count = 0;
@@ -42,17 +45,18 @@ const RiwayatReklame = ({ navigation, route }) => {
 
   const dispatch = useDispatch();
 
-
-  useFocusEffect(useCallback(()=>{
-    const task = InteractionManager.runAfterInteractions(()=>{
-      setItemListResponse([]);
-      setKeyword('');
-      count = 0;
-      firstLoad = true;
-      getListItem();
-    });
-    return()=> task.cancel();
-  },[]));
+  useFocusEffect(
+    useCallback(() => {
+      const task = InteractionManager.runAfterInteractions(() => {
+        setItemListResponse([]);
+        setKeyword('');
+        count = 0;
+        firstLoad = true;
+        getListItem();
+      });
+      return () => task.cancel();
+    }, [])
+  );
 
   const dateOpen = () => {
     if (Platform.OS === 'ios') {
@@ -91,7 +95,6 @@ const RiwayatReklame = ({ navigation, route }) => {
     if (firstLoad) {
       setLoadingScreen(true);
     }
-    
 
     const params = {
       id_user: sesi.id,
@@ -101,8 +104,8 @@ const RiwayatReklame = ({ navigation, route }) => {
       start: count,
       count: limit,
     };
-   
-    await Api.post('merchant/riwayat_reklame', params)
+
+    await Api.post('merchant/riwayat_reklame/', params)
       .then((res) => {
         var body = res.data;
         var status = body.metadata.status;
@@ -112,7 +115,7 @@ const RiwayatReklame = ({ navigation, route }) => {
         if (status === 200) {
           if (firstLoad) {
             setItemListResponse(response);
-            firstLoad=false;
+            firstLoad = false;
           } else {
             setItemListResponse(itemListResponse.concat(response));
           }
@@ -140,13 +143,13 @@ const RiwayatReklame = ({ navigation, route }) => {
           if (firstLoad) {
             firstLoad = false;
           }
-         MessageUtil.warningMessage(message);
+          MessageUtil.warningMessage(message);
         }
       })
       .catch((err) => {
-        MessageUtil.errorMessage(`${err}`);
+        MessageUtil.errorMessage(`Data tidak ada`);
         console.log('====================================');
-        console.log(err);
+        console.log(`${err}`);
         if (firstLoad) {
           firstLoad = false;
         }
@@ -317,7 +320,11 @@ const RiwayatReklame = ({ navigation, route }) => {
           width: '100%',
         }}
       >
-        <ActivityIndicator color={colorApp.button.primary} size={'small'} style={{ alignSelf: 'center' }} />
+        <ActivityIndicator
+          color={colorApp.button.primary}
+          size={'small'}
+          style={{ alignSelf: 'center' }}
+        />
       </View>;
     } else {
       return <></>;
@@ -329,8 +336,8 @@ const RiwayatReklame = ({ navigation, route }) => {
       <View>
         <DateTimePicker
           testID="dateTimePicker"
-          display='spinner'
-          themeVariant='light'
+          display="spinner"
+          themeVariant="light"
           value={status === 'start' ? startDate : endDate}
           mode={'date'}
           onChange={(event, selectedDate) => {
@@ -390,14 +397,35 @@ const RiwayatReklame = ({ navigation, route }) => {
           }}
         ></View>
       ) : (
-        <FlatList
-          data={itemListResponse}
-          extraData={extraData}
-          renderItem={renderList}
-          onEndReached={loadMore}
-          ItemSeparatorComponent={<GapList />}
-          ListFooterComponent={renderLoad}
-        />
+        <>
+          {itemListResponse.length === 0 ? (
+            <View
+              style={{
+                flex: 1,
+                height: ViewHeight,
+                marginTop: ViewHeight / 10,
+              }}
+            >
+              <Lottie
+                source={require('../../../../assets/images/empty_animation.json')}
+                autoPlay
+                loop
+                style={{
+                  position: 'relative',
+                }}
+              />
+            </View>
+          ) : (
+            <FlatList
+              data={itemListResponse}
+              extraData={extraData}
+              renderItem={renderList}
+              onEndReached={loadMore}
+              ItemSeparatorComponent={<GapList />}
+              ListFooterComponent={renderLoad}
+            />
+          )}
+        </>
       )}
 
       <Dialog

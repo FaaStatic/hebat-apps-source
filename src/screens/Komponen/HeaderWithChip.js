@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
-import { colorApp, positionLevel } from '../../util/globalvar';
+import { colorApp, positionLevel,fontsCustom } from '../../util/globalvar';
 
 var item = 0;
 export const HeaderWithChip = ({ Title, back, selectedItem = null }) => {
@@ -30,12 +30,14 @@ export const HeaderWithChip = ({ Title, back, selectedItem = null }) => {
         </TouchableOpacity>
 
         <Text
+           numberOfLines={2}
+           ellipsizeMode='tail'
           style={[
             style.textTitle,
             {
               marginStart: 16,
               alignSelf: 'center',
-              fontWeight:'700'
+              fontFamily: fontsCustom.primary[700],
             },
           ]}
         >
@@ -106,7 +108,8 @@ const style = StyleSheet.create({
   textTitle: {
     fontSize: 20,
     color: 'white',
-    fontWeight: '400',
+    fontWeight: '700',
+    width:200,
   },
   buttonRiwayat: {
     borderRadius: 8,

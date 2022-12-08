@@ -1,14 +1,16 @@
-import React, { useCallback,  useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
+  Dimensions,
   FlatList,
   StatusBar,
   ActivityIndicator,
-  InteractionManager
+  InteractionManager,
 } from 'react-native';
+import Lottie from 'lottie-react-native';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { Api } from '../../../util/ApiManager';
 import moment from 'moment/moment';
@@ -19,6 +21,7 @@ import GapList from '../../Komponen/GapList';
 import { Image } from '@rneui/themed';
 import { useFocusEffect } from '@react-navigation/native';
 
+const { height: ViewHeight, width: ViewWidth } = Dimensions.get('window');
 
 var dateNow = new Date();
 var count = 0;
@@ -33,16 +36,18 @@ const Monitoring = ({ navigation, route }) => {
   const [loadingScreen, setLoadingScreen] = useState(false);
   const [footerLoading, setFooterLoading] = useState(false);
 
-  useFocusEffect(useCallback(()=>{
-    const task = InteractionManager.runAfterInteractions(()=>{
-      setLoadingScreen(true);
-      count = 0;
-      firstLoad = true;
-      setResponseItem([]);
-      getListMonitoring();
-    });
-    return()=> task.cancel();
-  },[]));
+  useFocusEffect(
+    useCallback(() => {
+      const task = InteractionManager.runAfterInteractions(() => {
+        setLoadingScreen(true);
+        count = 0;
+        firstLoad = true;
+        setResponseItem([]);
+        getListMonitoring();
+      });
+      return () => task.cancel();
+    }, [])
+  );
 
   const renderItem = useCallback(({ item }) => {
     return (
@@ -202,7 +207,11 @@ const Monitoring = ({ navigation, route }) => {
           width: '100%',
         }}
       >
-        <ActivityIndicator color={colorApp.button.primary} size={'small'} style={{ alignSelf: 'center' }} />
+        <ActivityIndicator
+          color={colorApp.button.primary}
+          size={'small'}
+          style={{ alignSelf: 'center' }}
+        />
       </View>;
     } else {
       return <></>;
@@ -229,7 +238,8 @@ const Monitoring = ({ navigation, route }) => {
       <View
         style={{
           backgroundColor: '#F5F5F5',
-          height: Platform.OS === "ios" ? StatusBar.currentHeight +35 :StatusBar.currentHeight + 10,
+          height:
+            Platform.OS === 'ios' ? StatusBar.currentHeight + 35 : StatusBar.currentHeight + 10,
           flexDirection: 'column',
           padding: 8,
           justifyContent: 'flex-start',
@@ -261,18 +271,39 @@ const Monitoring = ({ navigation, route }) => {
           />
         </View>
       ) : (
-        <FlatList
-          data={responseItem}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          ItemSeparatorComponent={GapList}
-          extraData={extraData}
-          contentContainerStyle={{
-            padding: 4,
-          }}
-          ListFooterComponent={renderLoad}
-          onEndReached={loadMore}
-        />
+        <>
+          {responseItem.length === 0 ? (
+            <View
+              style={{
+                flex: 1,
+                height: ViewHeight,
+                marginTop: ViewHeight / 10,
+              }}
+            >
+              <Lottie
+                source={require('../../../../assets/images/empty_animation.json')}
+                autoPlay
+                loop
+                style={{
+                  position: 'relative',
+                }}
+              />
+            </View>
+          ) : (
+            <FlatList
+              data={responseItem}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+              ItemSeparatorComponent={GapList}
+              extraData={extraData}
+              contentContainerStyle={{
+                padding: 4,
+              }}
+              ListFooterComponent={renderLoad}
+              onEndReached={loadMore}
+            />
+          )}
+        </>
       )}
     </View>
   );

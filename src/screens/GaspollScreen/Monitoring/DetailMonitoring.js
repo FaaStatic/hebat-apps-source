@@ -19,7 +19,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { Image, CheckBox, Dialog, BottomSheet, LinearProgress } from '@rneui/themed';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Header } from '../../Komponen/Header';
-import { colorApp, menuMain, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, menuMain, stringApp } from '../../../util/globalvar';
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
@@ -993,6 +993,11 @@ const DetailMonitoring = ({ navigation, route }) => {
             </Text>
           </TouchableOpacity>
         )}
+        <View style={{
+          height:100,
+          backgroundColor:'white',
+          marginTop:16,marginBottom:16,
+        }}/>
       </Animated.ScrollView>
       <Dialog
         isVisible={modalConfirm}
@@ -1007,18 +1012,18 @@ const DetailMonitoring = ({ navigation, route }) => {
             paddingBottom: 16,
             flexDirection: 'column',
             justifyContent: 'center',
-            height: viewHeight / 2,
+            height: viewHeight / 1.8,
           }}
         >
           <Text
-            numberOfLines={2}
+            numberOfLines={3}
             style={{
               alignSelf: 'center',
               marginEnd: 24,
               marginStart: 24,
               fontSize: 12,
               marginBottom: 8,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
               color: 'black',
               textAlign: 'center',
             }}
@@ -1040,10 +1045,11 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               alignSelf: 'center',
-              color: '#00FFFF',
+              color: colorApp.btnColor2,
               textAlign: 'center',
               fontSize: 16,
-              fontWeight: '400',
+              marginBottom: 8,
+              fontFamily: fontsCustom.primary[400],
             }}
           >
             Tanda Tangan Disini
@@ -1054,7 +1060,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               color: 'black',
               textAlign: 'center',
               fontSize: 12,
-              fontWeight: '400',
+              fontFamily: fontsCustom.primary[400],
             }}
           >
             (Wajib Pajak)
@@ -1072,7 +1078,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               flexDirection: 'column',
               marginTop: 16,
               padding: 8,
-              backgroundColor: '#669beb',
+              backgroundColor: colorApp.button.primary,
             }}
           >
             <Text
@@ -1110,21 +1116,22 @@ const DetailMonitoring = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       </Dialog>
-      <Dialog isVisible={dialogOpen}>
-        <View
-          style={{
-            flexDirection: 'column',
-            padding: 4,
-
-            height: 125,
-          }}
-        >
+      <Dialog overlayStyle={{
+          flexDirection: 'column',
+          padding: 24,
+          backgroundColor:'white',
+          borderRadius:8,
+          justifyContent:'center',
+      }} isVisible={dialogOpen}>
+        
           <Text
             style={[
               style.styleInput,
               {
                 color: 'black',
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
+                textAlign:'center',
+                marginBottom:24,
               },
             ]}
           >
@@ -1134,7 +1141,7 @@ const DetailMonitoring = ({ navigation, route }) => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-around',
-              padding: 4,
+            
             }}
           >
             <TouchableOpacity
@@ -1144,18 +1151,17 @@ const DetailMonitoring = ({ navigation, route }) => {
               style={{
                 flexDirection: 'column',
                 justifyContent: 'center',
-                height: 45,
-                marginStart: 8,
-                marginEnd: 4,
-                padding: 4,
+                height: 35,
+                elevation:2,
+                padding: 8,
               }}
             >
               <Text
                 style={[
                   style.styleInput,
                   {
-                    fontWeight: '700',
                     color: 'gray',
+                    fontFamily:fontsCustom.primary[700],
                   },
                 ]}
               >
@@ -1167,20 +1173,20 @@ const DetailMonitoring = ({ navigation, route }) => {
                 saveData();
               }}
               style={{
-                height: 45,
-                marginStart: 4,
-                marginEnd: 8,
-                padding: 4,
+                height: 35,
+                backgroundColor:colorApp.button.primary,
+                padding: 8,
                 flexDirection: 'column',
                 justifyContent: 'center',
+                borderRadius:8,
               }}
             >
               <Text
                 style={[
                   style.styleInput,
                   {
-                    fontWeight: '700',
-                    color: '#FC572C',
+                    fontFamily:fontsCustom.primary[700],
+                    color: 'white',
                   },
                 ]}
               >
@@ -1188,25 +1194,20 @@ const DetailMonitoring = ({ navigation, route }) => {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+       
       </Dialog>
-      <Dialog isVisible={dialogDownload}>
-        <View
-          style={{
-            backgroundColor: 'white',
-            height: viewHeight / 8,
-            flexDirection: 'column',
-            paddingTop: 8,
-            paddingBottom: 8,
-            paddingStart: 16,
-            paddingEnd: 16,
-            justifyContent: 'flex-start',
-          }}
-        >
+      <Dialog overlayStyle={{
+         backgroundColor: 'white',
+         flexDirection: 'column',
+        padding:24,
+        borderRadius:8,
+         justifyContent: 'flex-start',
+      }} isVisible={dialogDownload}>
+      
           <Text
             style={{
-              fontSize: 16,
-              fontWeight: '800',
+              fontSize: 14,
+              fontFamily:fontsCustom.primary[700],
               color: 'black',
             }}
           >
@@ -1233,6 +1234,7 @@ const DetailMonitoring = ({ navigation, route }) => {
                 fontSize: 12,
                 color: 'gray',
                 marginStart: 36,
+                fontFamily:fontsCustom.primary[500],
                 textAlign: 'center',
                 alignSelf: 'center',
               }}
@@ -1242,19 +1244,22 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 12,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
               color: 'gray',
+              marginBottom:8,
             }}
           >
             berita acara monitoring.pdf
           </Text>
-        </View>
+     
       </Dialog>
       <BottomSheet isVisible={openBottom}>
         <View
           style={{
             backgroundColor: 'white',
             flexDirection: 'column',
+            borderTopStartRadius:8,
+            borderTopEndRadius:8,
             padding: 12,
           }}
         >
