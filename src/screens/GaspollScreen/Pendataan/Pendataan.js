@@ -25,7 +25,7 @@ import { Api } from '../../../util/ApiManager';
 import { launchCamera,launchImageLibrary } from 'react-native-image-picker';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import { colorApp, stringApp,fontsCustom } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -426,6 +426,8 @@ export default function Pendataan({ navigation, route }) {
           <Text style={style.textInput}>Nama Wajib Pajak</Text>
           <View style={style.textInputContainer}>
             <TextInput
+            numberOfLines={1}
+            maxLength={50}
               style={style.styleInput}
               value={merchantName}
               keyboardType={'default'}
@@ -656,7 +658,7 @@ export default function Pendataan({ navigation, route }) {
           style={[
             style.textInput,
             {
-              fontWeight: '800',
+              fontFamily:fontsCustom.primary[700],
               fontSize: 16,
               marginLeft: 24,
             },
@@ -665,13 +667,17 @@ export default function Pendataan({ navigation, route }) {
           Unggah Gambar
         </Text>
         <Text
+       
+        numberOfLines={2}
           style={[
             style.textInput,
             {
-              marginBottom: 8,
-              fontWeight: '500',
+              width:300,
+              marginBottom: 16,
+              fontFamily:fontsCustom.primary[400],
               fontSize: 14,
               marginLeft: 24,
+              
             },
           ]}
         >
@@ -941,8 +947,8 @@ const style = StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     color: 'black',
-    fontWeight: '700',
     width: '100%',
+    fontFamily:fontsCustom.primary[700],
   },
   textInputContainer: {
     padding: 4,
@@ -980,7 +986,7 @@ const style = StyleSheet.create({
   textBtn: {
     fontSize: 16,
     color: 'white',
-    fontWeight: '600',
+    fontFamily:fontsCustom.primary[700],
     textAlign: 'center',
   },
 });

@@ -14,7 +14,7 @@ const AdminScreen = ({ navigation, route }) => {
       }}
     >
       <HeaderWithoutHistory
-        Title={'Daftar Wajib Pajak'}
+        Title={'Wajib Pajak'}
         back={() => {
           navigation.goBack();
         }}

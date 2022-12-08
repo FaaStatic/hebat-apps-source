@@ -26,7 +26,9 @@ import { colorApp } from '../../../../util/globalvar';
 import { MessageUtil } from '../../../../util/MessageUtil';
 import GapList from '../../../Komponen/GapList';
 import { useSelector } from 'react-redux';
-const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+import Lottie from 'lottie-react-native';
+
+const { height: SCREEN_HEIGHT,width: SCREEN_WIDTH  } = Dimensions.get('window');
 
 const limit = 10;
 var count = 0;
@@ -348,7 +350,17 @@ const PajakContent = forwardRef((props, ref) => {
             />
           </View>
         ) : (
-          <FlatList
+          <>
+          {responseItem.length === 0 ? <View style={{
+            flex:1,
+            height:SCREEN_HEIGHT,
+            marginTop:SCREEN_HEIGHT/10
+          }}>
+            <Lottie 
+      source={require('../../../../../assets/images/empty_animation.json')} autoPlay loop style={{
+        position:'relative',
+      }}/>
+            </View> :     <FlatList
             data={responseItem}
             extraData={extraData}
             onEndReached={loadMore}
@@ -433,7 +445,10 @@ const PajakContent = forwardRef((props, ref) => {
                 </View>
               );
             }}
-          />
+          />}
+        
+          </>
+        
         )}
       </Animated.View>
     </GestureDetector>

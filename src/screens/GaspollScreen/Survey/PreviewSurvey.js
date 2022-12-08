@@ -38,7 +38,7 @@ var longitude = 0;
 const limitlatitudeDelta = 0.00089279988035873;
 const limitLongitudeDelta = 0.0012991949915885925;
 
-export default function PreviewSurvey({ navigation, route }) {
+const PreviewSurvey = ({ navigation, route }) => {
   const { modelData } = route.params;
   const fs = RNFetchBlob.fs;
   const [namaUsaha, setNamaUsaha] = useState('');
@@ -403,7 +403,7 @@ const loadData = () => {
     }, 1000);
   };
 
-  const updateData = async () => {
+  const simpanData = async () => {
     if (ttd.length === 0) {
       MessageUtil.errorMessage('tanda tangan diisi terlebih dahulu!');
       return;
@@ -1275,7 +1275,7 @@ const loadData = () => {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                updateData();
+                simpanData();
               }}
               style={{
                 height: 45,
@@ -1361,3 +1361,5 @@ const style = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export default PreviewSurvey;

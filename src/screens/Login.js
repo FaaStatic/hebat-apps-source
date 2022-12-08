@@ -156,19 +156,8 @@ export default function Login({ navigation, route }) {
                     backgroundColorInInput={colorApp.button.primary}
                   />
                   <Gap height={20} />
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text
-                      style={{
-                        color: colorApp.black,
-                        fontFamily: fontsCustom.primary[400],
-                        fontSize: 12,
-                      }}
-                    >
-                      Lupa Sandi ? klik{' '}
-                    </Text>
-                    <TouchableOpacity onPress={() => resetPassword()} style={{ flex: 1 }}>
-                      <Text style={{ color: colorApp.button.primary, fontSize: 12 }}>Disini</Text>
-                    </TouchableOpacity>
+                  <View style={{ flexDirection: 'row', justifyContent:'flex-end' }}>
+                   
                     <Button
                       height={35}
                       title="MASUK"

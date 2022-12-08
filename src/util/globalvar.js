@@ -73,32 +73,27 @@ const menuMain = [
     image: require('../../assets/images/ic_monitor.png'),
     nextPage: 'Monitoring',
   },
+
   {
     id: 4,
-    title: 'Reklame',
-    image: require('../../assets/images/ic_reklame.png'),
-    nextPage: 'Reklame',
-  },
-  {
-    id: 5,
     title: 'Wajib Pajak',
     image: require('../../assets/images/ic_merchant.png'),
     nextPage: 'WajibPajak',
   },
   {
-    id: 6,
+    id: 5,
     title: 'Admin',
     image: require('../../assets/images/ic_adminicon.png'),
     nextPage: 'AdminScreen',
   },
   {
-    id: 7,
+    id: 6,
     title: 'Absensi',
     image: require('../../assets/images/ic_absensi.png'),
     nextPage: 'Absensi',
   },
   {
-    id: 8,
+    id: 7,
     title: 'Riwayat Absensi',
     image: require('../../assets/images/ic_riwayatabsensi.png'),
     nextPage: 'RiwayatAbsensi',

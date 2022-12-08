@@ -677,6 +677,8 @@ export default function FormSurvey({ navigation, route }) {
 
   const previewForm = () => {
     const dataMove = {
+      id : modelData.id,
+      idp: modelData.idp,
       nama_usaha : namaUsaha,
       alamat : alamatUsaha,
       kota : kota,

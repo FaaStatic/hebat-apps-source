@@ -1,44 +1,52 @@
-import React, { useState, useEffect, useRef,useCallback } from 'react';
-import { View, Text, TouchableOpacity, FlatList, ActivityIndicator,InteractionManager,Dimensions } from 'react-native';
-import { BottomSheet, Image, Input,Dialog } from '@rneui/themed';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
+  InteractionManager,
+  Dimensions,
+} from 'react-native';
+import { BottomSheet, Image, Input, Dialog } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 import { HeaderWithChip } from '../../../Komponen/HeaderWithChip';
 import { MessageUtil } from '../../../../util/MessageUtil';
 import { Api } from '../../../../util/ApiManager';
-import { colorApp } from '../../../../util/globalvar';
+import { colorApp, fontsCustom } from '../../../../util/globalvar';
 import GapList from '../../../Komponen/GapList';
 import { useFocusEffect } from '@react-navigation/native';
 import moment from 'moment';
 import Icon2 from 'react-native-vector-icons/Entypo';
-import DateTimePicker,{ DateTimePickerAndroid } from '@react-native-community/datetimepicker';
-
+import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 var item = 0;
 const { height: ViewHeight } = Dimensions.get('window');
 
 const DataPetugasList = ({ navigation, route }) => {
-  const {type} = route.params;
+  const { type } = route.params;
   const [keyword, setKeyword] = useState('');
   const [responseItem, setResponseItem] = useState([]);
   const [loadingScreen, setLoadingScreen] = useState(false);
-  const [openDialog,setOpenDialog] = useState(false);
-  const [title,setTitle] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [title, setTitle] = useState('');
   const [confirmDialog, setConfirmDialog] = useState(false);
   const [itemSelectList, setItemSelectList] = useState(null);
   const [openIosDate, setOpenIosDate] = useState(false);
   const [datePick, setDatePick] = useState(new Date());
-  const [keterangan,setKeterangan] = useState('');
+  const [keterangan, setKeterangan] = useState('');
   const inputText = useRef();
   const inputRef = useRef();
   const inputRef2 = useRef();
 
-  useFocusEffect(useCallback(()=>{
-    const task = InteractionManager.runAfterInteractions(()=>{
-      getPetugas();
-    });
-    return()=> task.cancel();
-  },[]));
- 
+  useFocusEffect(
+    useCallback(() => {
+      const task = InteractionManager.runAfterInteractions(() => {
+        getPetugas();
+      });
+      return () => task.cancel();
+    }, [])
+  );
 
   const openDialogDate = () => {
     if (Platform.OS === 'ios') {
@@ -63,10 +71,10 @@ const DataPetugasList = ({ navigation, route }) => {
 
   const selectPetugas = (item) => {
     setItemSelectList(item);
-    setTimeout(()=>{
-        setOpenDialog(true);
-    },1000)
-  }
+    setTimeout(() => {
+      setOpenDialog(true);
+    }, 1000);
+  };
 
   const selectId = (itemId) => {
     item = itemId;
@@ -101,7 +109,7 @@ const DataPetugasList = ({ navigation, route }) => {
       .catch((err) => {
         console.log('====================================');
         console.log(err);
-        MessageUtil.errorMessage(err);
+        MessageUtil.errorMessage(`${err}`);
         console.log('====================================');
         setLoadingScreen(false);
       });
@@ -115,10 +123,10 @@ const DataPetugasList = ({ navigation, route }) => {
   const kirimTugas = async () => {
     setLoadingScreen(true);
     const params = {
-      "id_petugas":itemSelectList.id,
-      "title":title,
-      "date":datePick,
-      "keterangan" :keterangan
+      id_petugas: itemSelectList.id,
+      title: title,
+      date: datePick,
+      keterangan: keterangan,
     };
     await Api.post('Monitoring/hubungi_petugas', params)
       .then((res) => {
@@ -127,21 +135,27 @@ const DataPetugasList = ({ navigation, route }) => {
         var status = body.metadata.status;
         var message = body.metadata.message;
         if (status === 200) {
-          MessageUtil.successMessage(message);
           setTitle('');
           setKeterangan('');
           setLoadingScreen(false);
-          navigation.navigate('BerandaGaspoll');
+          setTimeout(() => {
+            MessageUtil.successMessage(message);
+            navigation.navigate('BerandaGaspoll');
+          }, 500);
         } else {
-          MessageUtil.successMessage(message);
-          setLoadingScreen(false);
+          setLoadScreen(false);
+          setTimeout(() => {
+            MessageUtil.errorMessage(message);
+          }, 500);
         }
       })
       .catch((err) => {
-        MessageUtil.errorMessage(err);
-        setLoadingScreen(false);
+        setLoadScreen(false);
+        setTimeout(() => {
+          MessageUtil.errorMessage("Error");
+        }, 500);
       });
-  }
+  };
 
   return (
     <View
@@ -186,7 +200,8 @@ const DataPetugasList = ({ navigation, route }) => {
           }}
         />
       </View>
-       { loadingScreen ? <View
+      {loadingScreen ? (
+        <View
           style={{
             flex: 1,
             flexDirection: 'column',
@@ -200,98 +215,105 @@ const DataPetugasList = ({ navigation, route }) => {
             }}
             color={colorApp.button.primary}
           />
-        </View> : <FlatList
-        data={responseItem}
-        ItemSeparatorComponent={<GapList />}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity
-            onPress={()=>{
-              if(type === "contact"){
-                  selectPetugas(item);
-              }else{
-                navigation.navigate("TugasList", {
-                  itemPetugas : item,
-                  type : type
-                })
-              }
-             
-            }}
-              style={{
-                flexDirection: 'row',
-                backgroundColor: 'white',
-                justifyContent: 'flex-start',
-                padding: 16,
-              }}
-            >
-              <Image
-                source={
-                  item.foto === null || item.foto === ''
-                    ? require('../../../.././../assets/images/store.png')
-                    : { uri: item.foto }
-                }
+        </View>
+      ) : (
+        <FlatList
+          data={responseItem}
+          ItemSeparatorComponent={<GapList />}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  if (type === 'contact') {
+                    selectPetugas(item);
+                  } else {
+                    navigation.navigate('TugasList', {
+                      itemPetugas: item,
+                      type: type,
+                    });
+                  }
+                }}
                 style={{
-                  height: 70,
-                  width: 70,
-                }}
-                containerStyle={{
-                  height: 70,
-                  width: 70,
-                  borderRadius: 8,
-                  flexDirection: 'column',
-                  justifyContent: 'center',
+                  flexDirection: 'row',
                   backgroundColor: 'white',
-                }}
-                placeholderStyle={{
-                  height: 70,
-                  width: 70,
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  backgroundColor: 'white',
-                }}
-                PlaceholderContent={
-                  <ActivityIndicator
-                    size={'large'}
-                    color={colorApp.button.primary}
-                    style={{
-                      alignSelf: 'center',
-                    }}
-                  />
-                }
-              />
-              <View
-                style={{
-                  flexDirection: 'column',
-                  marginStart: 16,
-                  justifyContent: 'space-evenly',
+                  justifyContent: 'flex-start',
+                  padding: 16,
                 }}
               >
-                <Text
+                <Image
+                  source={
+                    item.foto === null || item.foto === ''
+                      ? require('../../../.././../assets/images/store.png')
+                      : { uri: item.foto }
+                  }
                   style={{
-                    fontSize: 16,
-                    fontWeight: '700',
-                    color: 'black',
+                    height: 70,
+                    width: 70,
+                  }}
+                  containerStyle={{
+                    height: 70,
+                    width: 70,
+                    borderRadius: 8,
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    backgroundColor: 'white',
+                  }}
+                  placeholderStyle={{
+                    height: 70,
+                    width: 70,
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    backgroundColor: 'white',
+                  }}
+                  PlaceholderContent={
+                    <ActivityIndicator
+                      size={'large'}
+                      color={colorApp.button.primary}
+                      style={{
+                        alignSelf: 'center',
+                      }}
+                    />
+                  }
+                />
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    marginStart: 16,
+                    justifyContent: 'space-evenly',
                   }}
                 >
-                  {item.nama}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 14,
-                    fontWeight: '400',
-                    color: 'black',
-                  }}
-                >
-                  {item.email == null ? 'null' : item.email}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          );
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: '700',
+                      color: 'black',
+                    }}
+                  >
+                    {item.nama}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      fontWeight: '400',
+                      color: 'black',
+                    }}
+                  >
+                    {item.email == null ? 'null' : item.email}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+        />
+      )}
+      <BottomSheet
+        isVisible={openDialog}
+        onBackdropPress={() => {
+          setOpenDialog(false);
         }}
-      /> }
-      <BottomSheet isVisible={openDialog} onBackdropPress={()=>{setOpenDialog(false)}}>
-      <View
+      >
+        <View
           style={{
             flexDirection: 'column',
             padding: 16,
@@ -310,7 +332,7 @@ const DataPetugasList = ({ navigation, route }) => {
               fontWeight: '700',
             }}
           >
-           Hubungi Petugas
+            Hubungi Petugas
           </Text>
           <View
             style={{
@@ -351,7 +373,7 @@ const DataPetugasList = ({ navigation, route }) => {
                   color: 'black',
                 }}
               >
-                 {itemSelectList == null ? '...' : itemSelectList.nama}
+                {itemSelectList == null ? '...' : itemSelectList.nama}
               </Text>
               <Text
                 style={{
@@ -372,213 +394,216 @@ const DataPetugasList = ({ navigation, route }) => {
               marginBottom: 8,
             }}
           />
-          <View style={{
-            paddingEnd:16,
-            paddingStart:16,
-            flexDirection:'column',
-            justifyContent:'center'
-          }}>
-   <TouchableOpacity
-            onPress={() => {
-              openDialogDate();
-            }}
+          <View
             style={{
-              flexDirection: 'row',
-              backgroundColor: 'white',
-
-              borderColor: colorApp.primaryGaspoll,
-              borderRadius: 8,
-              borderWidth: 0.5,
+              paddingEnd: 16,
+              paddingStart: 16,
+              flexDirection: 'column',
               justifyContent: 'center',
-              padding: 16,
-              marginTop: 16,
-              marginBottom: 16,
             }}
           >
-            <Icon2
-              name="calendar"
-              size={24}
-              color={colorApp.button.primary}
-              style={{
-                alignSelf: 'center',
-                textAlignVertical: 'center',
-                marginEnd: 16,
+            <TouchableOpacity
+              onPress={() => {
+                openDialogDate();
               }}
-            />
+              style={{
+                flexDirection: 'row',
+                backgroundColor: 'white',
+
+                borderColor: colorApp.primaryGaspoll,
+                borderRadius: 8,
+                borderWidth: 0.5,
+                justifyContent: 'center',
+                padding: 16,
+                marginTop: 16,
+                marginBottom: 16,
+              }}
+            >
+              <Icon2
+                name="calendar"
+                size={24}
+                color={colorApp.button.primary}
+                style={{
+                  alignSelf: 'center',
+                  textAlignVertical: 'center',
+                  marginEnd: 16,
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: colorApp.button.primary,
+                  textAlignVertical: 'center',
+                }}
+              >
+                {moment(datePick).format('YYYY-MM-DD')}
+              </Text>
+            </TouchableOpacity>
             <Text
               style={{
                 fontSize: 14,
-                color: colorApp.button.primary,
-                textAlignVertical: 'center',
+                color: 'black',
+                fontWeight: '700',
               }}
             >
-              {moment(datePick).format('YYYY-MM-DD')}
+              Tambahkan Judul
             </Text>
-          </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 14,
-              color: 'black',
-              fontWeight: '700',
-            }}
-          >
-            Tambahkan Judul
-          </Text>
-          <Text
-            style={{
-              fontSize: 12,
-              color: 'grey',
-              fontWeight: '400',
-            }}
-          >
-            Tulis judul kegiatan
-          </Text>
-          <View
-            style={{
-              backgroundColor: '#f5f5f5',
-              borderRadius: 8,
-              height: 45,
-              marginTop: 8,
-              marginBottom: 16,
-            }}
-          >
-            <Input
-              ref={inputRef}
-              value={title}
-              onChangeText={(txt) => {
-                setTitle(txt);
+            <Text
+              style={{
+                fontSize: 12,
+                color: 'grey',
+                fontWeight: '400',
               }}
+            >
+              Tulis judul kegiatan
+            </Text>
+            <View
+              style={{
+                backgroundColor: '#f5f5f5',
+                borderRadius: 8,
+                height: 45,
+                marginTop: 8,
+                marginBottom: 16,
+              }}
+            >
+              <Input
+                ref={inputRef}
+                value={title}
+                onChangeText={(txt) => {
+                  setTitle(txt);
+                }}
+                inputContainerStyle={{
+                  borderBottomWidth: 0,
+                  padding: 0,
+                  margin: 0,
+                }}
+                inputStyle={{
+                  fontSize: 14,
+                }}
+              />
+            </View>
+
+            <Text
+              style={{
+                fontSize: 14,
+                color: 'black',
+                fontWeight: '700',
+              }}
+            >
+              Keterangan
+            </Text>
+            <Text
+              style={{
+                fontSize: 12,
+                color: 'grey',
+                fontWeight: '400',
+              }}
+            >
+              Tulis keterangan tugas
+            </Text>
+            <Input
+              ref={inputRef2}
+              value={keterangan}
+              onChangeText={(txt) => {
+                setKeterangan(txt);
+              }}
+              multiline={true}
+              textAlignVertical={'top'}
+              textAlign={'left'}
               inputContainerStyle={{
                 borderBottomWidth: 0,
+                backgroundColor: '#f5f5f5',
                 padding: 0,
                 margin: 0,
               }}
+              containerStyle={{
+                backgroundColor: '#f5f5f5',
+                borderRadius: 8,
+                marginTop: 8,
+                marginBottom: 16,
+              }}
               inputStyle={{
-                fontSize: 14,
-              }}
-            />
-          </View>
-
-          <Text
-            style={{
-              fontSize: 14,
-              color: 'black',
-              fontWeight: '700',
-            }}
-          >
-            Keterangan
-          </Text>
-          <Text
-            style={{
-              fontSize: 12,
-              color: 'grey',
-              fontWeight: '400',
-            }}
-          >
-            Tulis keterangan tugas
-          </Text>
-          <Input
-            ref={inputRef2}
-            value={keterangan}
-            onChangeText={(txt) => {
-              setKeterangan(txt);
-            }}
-            multiline={true}
-            textAlignVertical={'top'}
-            textAlign={'left'}
-            inputContainerStyle={{
-              borderBottomWidth: 0,
-              backgroundColor: '#f5f5f5',
-              padding: 0,
-              margin: 0,
-            }}
-            containerStyle={{
-              backgroundColor: '#f5f5f5',
-              borderRadius: 8,
-              marginTop: 8,
-              marginBottom: 16,
-            }}
-            inputStyle={{
-              fontSize: 12,
-              backgroundColor: '#f5f5f5',
-              height: ViewHeight / 5,
-            }}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              setOpenDialog(false);
-              setConfirmDialog(true);
-            }}
-            style={{
-              padding: 16,
-              flexDirection: 'column',
-              justifyContent: 'center',
-              borderRadius: 8,
-              backgroundColor: colorApp.button.primary,
-            }}
-          >
-            <Text
-              style={{
-                textAlign: 'center',
-                alignSelf: 'center',
-                fontSize: 16,
-                fontWeight: '600',
-                color: 'white',
-              }}
-            >Kirim Tugas
-             
-            </Text>
-          </TouchableOpacity>
-          </View>
-       
-        </View>
-      </BottomSheet>
-      <Dialog isVisible={openIosDate}>
-          <View>
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={datePick}
-              mode={'date'}
-              minimumDate={datePick}
-              onChange={(event, selectedDate) => {
-                if (event.type === 'set') {
-                  changeDatePick(selectedDate);
-                }
+                fontSize: 12,
+                backgroundColor: '#f5f5f5',
+                height: ViewHeight / 5,
               }}
             />
             <TouchableOpacity
               onPress={() => {
-                setOpenIosDate(false);
+                setOpenDialog(false);
+                setConfirmDialog(true);
               }}
               style={{
-                margin: 16,
-                backgroundColor: '#FC572C',
+                padding: 16,
+                flexDirection: 'column',
                 justifyContent: 'center',
-                padding: 8,
+                borderRadius: 8,
+                backgroundColor: colorApp.button.primary,
               }}
             >
               <Text
                 style={{
-                  alignSelf: 'center',
                   textAlign: 'center',
+                  alignSelf: 'center',
                   fontSize: 16,
+                  fontWeight: '600',
                   color: 'white',
                 }}
               >
-                Save
+                Kirim Tugas
               </Text>
             </TouchableOpacity>
           </View>
-        </Dialog>
-        <Dialog
+        </View>
+      </BottomSheet>
+      <Dialog isVisible={openIosDate}>
+        <View>
+          <DateTimePicker
+            themeVariant="light"
+            display="spinner"
+            testID="dateTimePicker"
+            value={datePick}
+            mode={'date'}
+            minimumDate={datePick}
+            onChange={(event, selectedDate) => {
+              if (event.type === 'set') {
+                changeDatePick(selectedDate);
+              }
+            }}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              setOpenIosDate(false);
+            }}
+            style={{
+              margin: 16,
+              backgroundColor: colorApp.button.primary,
+              justifyContent: 'center',
+              padding: 8,
+            }}
+          >
+            <Text
+              style={{
+                alignSelf: 'center',
+                textAlign: 'center',
+                fontSize: 16,
+                color: 'white',
+              }}
+            >
+              Save
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Dialog>
+      <Dialog
         overlayStyle={{
           borderRadius: 8,
           backgroundColor: 'white',
           padding: 16,
           flexDirection: 'column',
           justifyContent: 'center',
-          height:200,
-          width:300
+          height: 200,
+          width: 300,
         }}
         isVisible={confirmDialog}
       >
@@ -588,7 +613,7 @@ const DataPetugasList = ({ navigation, route }) => {
             fontSize: 16,
             color: 'black',
             textAlign: 'center',
-            fontWeight:'700',
+            fontFamily: fontsCustom.primary[500],
             marginBottom: 16,
           }}
         >
@@ -598,16 +623,19 @@ const DataPetugasList = ({ navigation, route }) => {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-around',
-            marginTop:16,
+            marginTop: 16,
           }}
         >
           <TouchableOpacity
-          onPress={()=>{setConfirmDialog(false)}}
+            onPress={() => {
+              setConfirmDialog(false);
+            }}
             style={{
-              width: 125,
+              width: 100,
               backgroundColor: 'white',
-              elevation:2,
-              borderRadius: 4,
+              elevation: 2,
+              borderRadius: 8,
+              elevation: 2,
               flexDirection: 'column',
               justifyContent: 'center',
             }}
@@ -617,7 +645,9 @@ const DataPetugasList = ({ navigation, route }) => {
                 alignSelf: 'center',
                 fontSize: 14,
                 padding: 4,
+                fontFamily: fontsCustom.primary[500],
                 color: 'black',
+                
                 textAlign: 'center',
               }}
             >
@@ -625,15 +655,17 @@ const DataPetugasList = ({ navigation, route }) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-          onPress={()=>{
-            kirimTugas();
-          }}
+            onPress={() => {
+              setConfirmDialog(false);
+              kirimTugas();
+              
+            }}
             style={{
-              width: 125,
-              backgroundColor: colorApp.primaryGaspoll,
-              borderRadius: 4,
-              padding: 4,
-              elevation:2,
+              width: 100,
+              backgroundColor: colorApp.button.primary,
+              borderRadius: 8,
+              padding: 8,
+              elevation: 2,
               flexDirection: 'column',
               justifyContent: 'center',
             }}
@@ -642,11 +674,12 @@ const DataPetugasList = ({ navigation, route }) => {
               style={{
                 alignSelf: 'center',
                 fontSize: 14,
+                fontFamily: fontsCustom.primary[500],
                 color: 'white',
                 textAlign: 'center',
               }}
             >
-             Kirim Data
+              Kirim Data
             </Text>
           </TouchableOpacity>
         </View>

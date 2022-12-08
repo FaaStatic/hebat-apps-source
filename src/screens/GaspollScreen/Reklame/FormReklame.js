@@ -24,7 +24,7 @@ import { PermissionUtil } from '../../../util/PermissionUtil';
 import { Image, CheckBox, Dialog, BottomSheet, LinearProgress } from '@rneui/themed';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Header } from '../../Komponen/Header';
-import { colorApp, menuMain, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, menuMain, stringApp } from '../../../util/globalvar';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
@@ -407,12 +407,16 @@ const FormReklame = ({ navigation, route }) => {
                 <Icon3 name="arrowleft" size={24} color={'white'} />
               </TouchableOpacity>
               <Text
+              numberOfLines={2}
+              ellipsizeMode='tail'
                 style={[
                   style.textTitle,
                   {
                     marginStart: 16,
                     marginTop: 8,
                     color: 'white',
+                    fontFamily: fontsCustom.primary[700],
+                    width:200,
                     alignSelf: 'center',
                   },
                 ]}
@@ -437,7 +441,6 @@ const FormReklame = ({ navigation, route }) => {
           style={{
             backgroundColor: '#f5f5f5',
             flexDirection: 'column',
-
             justifyContent: 'space-around',
             padding: 8,
           }}
@@ -1039,8 +1042,9 @@ const style = StyleSheet.create({
     color: 'black',
   },
   textTitle: {
-    fontSize: 16,
-    fontWeight: '800',
+    fontSize: 18,
+    fontWeight: '700',
+    
     color: 'black',
     marginBottom: 8,
   },

@@ -523,7 +523,7 @@ export default function FormPotensi({ navigation, route }) {
           />
         </View>
         <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>
-          Telpon Pemilik Usaha
+          Telepon Pemilik Usaha
         </Text>
         <View style={Style.backgroundTextInput}>
           <TextInput
@@ -533,7 +533,7 @@ export default function FormPotensi({ navigation, route }) {
             onChangeText={(txt) => setOwnerPhone(txt)}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>klasifikasi Usaha</Text>
+        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Klasifikasi Usaha</Text>
         <View style={Style.backgroundTextInput}>
           <TextInput style={Style.textInput} value={klasifikasiUsaha} editable={false} />
         </View>

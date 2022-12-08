@@ -18,7 +18,7 @@ import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/d
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon2 from 'react-native-vector-icons/Entypo';
-import { colorApp, stringApp } from '../../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../../util/globalvar';
 
 const limit = 10;
 var count = 0;
@@ -203,19 +203,26 @@ const TugasList = ({ navigation, route }) => {
           }}
         >
           <Text
+            numberOfLines={2}
+            ellipsizeMode='tail'
             style={{
               fontSize: 16,
               color: 'black',
               marginBottom: 8,
-              fontWeight: '700',
+              width:200,
+              fontFamily:fontsCustom.primary[700],
             }}
           >
             {item.nama}
           </Text>
           <Text
+           numberOfLines={2}
+           ellipsizeMode='tail'
             style={{
+              width:200,
               fontSize: 14,
               color: 'black',
+              fontFamily:fontsCustom.primary[400],
             }}
           >
             {item.alamat}
@@ -269,19 +276,26 @@ const TugasList = ({ navigation, route }) => {
         var status = body.metadata.status;
         var message = body.metadata.message;
         if (status === 200) {
-          MessageUtil.successMessage(message);
           setTitle('');
           setKeterangan('');
           setLoadScreen(false);
-          navigation.navigation('BerandaGaspoll');
+          setTimeout(() => {
+            MessageUtil.successMessage(message);
+            navigation.navigate('BerandaGaspoll');
+          }, 500);
         } else {
-          MessageUtil.successMessage(message);
           setLoadScreen(false);
+          setTimeout(() => {
+            MessageUtil.errorMessage(message);
+          }, 500);
         }
       })
       .catch((err) => {
-        MessageUtil.errorMessage(err);
+      
         setLoadScreen(false);
+        setTimeout(() => {
+          MessageUtil.errorMessage("Error");
+        }, 500);
       });
   };
 
@@ -302,19 +316,28 @@ const TugasList = ({ navigation, route }) => {
         var status = body.metadata.status;
         var message = body.metadata.message;
         if (status === 200) {
-          MessageUtil.successMessage(message);
           setTitle('');
           setKeterangan('');
           setLoadScreen(false);
-          navigation.navigation('BerandaGaspoll');
+          setTimeout(() => {
+            MessageUtil.successMessage(message);
+            navigation.navigate('BerandaGaspoll');
+          }, 500);
+        
         } else {
-          MessageUtil.successMessage(message);
+          
           setLoadScreen(false);
+          setTimeout(() => {
+            MessageUtil.errorMessage(message);
+          }, 500);
         }
       })
       .catch((err) => {
-        MessageUtil.errorMessage(err);
+        
         setLoadScreen(false);
+        setTimeout(() => {
+          MessageUtil.errorMessage("Error");
+        }, 500);
       });
   };
 
@@ -684,6 +707,8 @@ const TugasList = ({ navigation, route }) => {
         <Dialog isVisible={openIosDate}>
           <View>
             <DateTimePicker
+             themeVariant="light"
+             display="spinner"
               testID="dateTimePicker"
               value={datePick}
               mode={'date'}
@@ -700,7 +725,7 @@ const TugasList = ({ navigation, route }) => {
               }}
               style={{
                 margin: 16,
-                backgroundColor: '#FC572C',
+                backgroundColor: colorApp.button.primary,
                 justifyContent: 'center',
                 padding: 8,
               }}
@@ -737,7 +762,7 @@ const TugasList = ({ navigation, route }) => {
             fontSize: 16,
             color: 'black',
             textAlign: 'center',
-            fontWeight:'700',
+            fontFamily: fontsCustom.primary[500],
             marginBottom: 16,
           }}
         >
@@ -753,10 +778,11 @@ const TugasList = ({ navigation, route }) => {
           <TouchableOpacity
           onPress={()=>{setConfirmDialog(false)}}
             style={{
-              width: 125,
+              width: 100,
               backgroundColor: 'white',
-              elevation:2,
-              borderRadius: 4,
+              elevation: 2,
+              borderRadius: 8,
+              elevation: 2,
               flexDirection: 'column',
               justifyContent: 'center',
             }}
@@ -776,17 +802,19 @@ const TugasList = ({ navigation, route }) => {
           <TouchableOpacity
           onPress={()=>{
             if (type === 'monitoring') {
+              setConfirmDialog(false);
               kirimMonitor();
             } else if (type === 'survey') {
-              kirimSurvey();
+              setConfirmDialog(false);
+              kirimSurvey();           
             }
           }}
             style={{
-              width: 125,
-              backgroundColor: colorApp.primaryGaspoll,
-              borderRadius: 4,
-              padding: 4,
-              elevation:2,
+              width: 100,
+              backgroundColor: colorApp.button.primary,
+              borderRadius: 8,
+              padding: 8,
+              elevation: 2,
               flexDirection: 'column',
               justifyContent: 'center',
             }}

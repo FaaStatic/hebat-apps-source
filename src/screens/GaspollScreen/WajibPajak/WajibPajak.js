@@ -27,7 +27,7 @@ const WajibPajak = ({ navigation, route }) => {
           paddingBottom: 8,
           flexDirection: 'column',
           justifyContent: 'space-evenly',
-          height: ViewHeight / 3.5,
+          height: ViewHeight / 2.8,
           backgroundColor: 'white',
         }}
       >
@@ -101,6 +101,30 @@ const WajibPajak = ({ navigation, route }) => {
             }}
           >
             Update Wajib Pajak
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Reklame');
+          }}
+          style={{
+            flexDirection: 'column',
+            backgroundColor: colorApp.button.primary,
+            justifyContent: 'center',
+            padding: 16,
+            borderRadius: 8,
+          }}
+        >
+          <Text
+            style={{
+              alignSelf: 'center',
+              textAlign: 'center',
+              color: 'white',
+              fontSize: 16,
+              fontWeight: '600',
+            }}
+          >
+            Reklame
           </Text>
         </TouchableOpacity>
       </View>
