@@ -123,9 +123,9 @@ export default function EditData({ navigation, route }) {
         console.log(body);
 
         if (status === 200) {
-          //   console.log('====================================');
-          //   console.log(response);
-          //   console.log('====================================');
+            console.log('====================================');
+            console.log(response);
+            console.log('====================================');
           addEditData(response);
         }
       })
@@ -138,8 +138,9 @@ export default function EditData({ navigation, route }) {
   };
 
   const addEditData = (item) => {
-    setMerchantNama(item.nama);
+    setMerchantNama(item.nama_usaha);
     setOwner(item.pemilik);
+    setPhone(item.telp_usaha);
     setFileList(item.img);
     console.log(item.img);
     item.img.map((item) => {
@@ -159,8 +160,6 @@ export default function EditData({ navigation, route }) {
 
     longitude = parseFloat(item.longitude);
     latitude = parseFloat(item.latitude);
-    setPhone(item.no_telp);
-    getCategory(item.kategori);
     setAddress(item.alamat);
     setMapState({
       latitude: latitude,
@@ -168,7 +167,9 @@ export default function EditData({ navigation, route }) {
       latitudeDelta: limitlatitudeDelta,
       longitudeDelta: limitLongitudeDelta,
     });
+    getCategory(item.klasifikasi_usaha);
     setLoadingField(false);
+   
   };
 
   const clearData = () => {
@@ -177,7 +178,7 @@ export default function EditData({ navigation, route }) {
     setValueCategory(null);
     setAddress('');
     setPhone('');
-    latitude = -6.966667;
+    latitude = -6.966667;    
     longitude = 110.416664;
     setFileList([]);
     setListData([]);
@@ -945,7 +946,7 @@ const style = StyleSheet.create({
     backgroundColor: '#dadce0',
     borderRadius: 8,
     marginTop: 4,
-    height:45,
+    height:50,
   },
   gap: {
     color: 'grey',

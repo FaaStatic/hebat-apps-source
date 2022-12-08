@@ -29,7 +29,7 @@ const App = () => {
         stringApp.typeNotif,
         NotificationUtil.onRemoteNotification
       );
-      var handler = NotificationUtil.notificationHandler();
+     let handler = NotificationUtil.notificationHandler();
 
       return () => {
         PushNotificationIOS.removeEventListener(stringApp.typeNotif);

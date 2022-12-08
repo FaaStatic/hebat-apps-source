@@ -1,3 +1,4 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { Image } from '@rneui/themed';
 import React, { useEffect, useState, useCallback } from 'react';
 import {
@@ -7,6 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ActivityIndicator,
+  InteractionManager
 } from 'react-native';
 import { Api } from '../../../util/ApiManager';
 import { colorApp, stringApp } from '../../../util/globalvar';
@@ -14,6 +16,7 @@ import { MessageUtil } from '../../../util/MessageUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import GapList from '../../Komponen/GapList';
 import { Header } from '../../Komponen/Header';
+
 
 var loadFirst = true;
 var count = 0;
@@ -26,17 +29,18 @@ const Notification = ({ navigation, route }) => {
   const [emptyData, setEmptyData] = useState(false);
   const [loadingScreen, setLoadingScreen] = useState(false);
   const [loadingFooter, setLoadingFooter] = useState(false);
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+
+
+  useFocusEffect(useCallback(()=>{
+    const task = InteractionManager.runAfterInteractions(()=>{
       loadFirst = true;
       count = 0;
       setResponseItem([]);
       getListNotifikasi();
     });
-    return () => {
-      unsubscribe;
-    };
-  }, [navigation]);
+    return()=> task.cancel();
+  },[]));
+ 
 
   const loadMore = () => {
     if (loadFirst == false && hasNextPage == true && extraData == true && emptyData == false) {
@@ -69,7 +73,6 @@ const Notification = ({ navigation, route }) => {
           } else {
             setResponseItem(responseItem.concat(response));
           }
-
           if (response.length < limit) {
             setHasNextPage(false);
             setExtraData(false);
@@ -166,6 +169,7 @@ const Notification = ({ navigation, route }) => {
           style={{
             flexDirection: 'column',
             justifyContent: 'space-evenly',
+            width:250,
             marginStart: 8,
           }}
         >
@@ -173,6 +177,7 @@ const Notification = ({ navigation, route }) => {
             style={{
               fontSize: 12,
               color: 'red',
+              width:300,
             }}
           >
             {item.title}
@@ -273,6 +278,7 @@ const Notification = ({ navigation, route }) => {
         <FlatList
           data={responseItem}
           extraData={extraData}
+          showsVerticalScrollIndicator={false}
           renderItem={renderList}
           ListFooterComponent={renderFooter}
           onEndReached={loadMore}

@@ -46,12 +46,7 @@ export default function Login({ navigation, route }) {
   },[]));
 
   const openUrlRegister = async () => {
-    var stat = await Linking.canOpenURL(supportedURL);
-    if(stat){
-      await Linking.openURL(supportedURL);
-    }else{
-      MessageUtil.errorMessage("Ada Masalah!");
-    }
+    await Linking.openURL(supportedURL);
   }
 
   const sessionCheck = () => {

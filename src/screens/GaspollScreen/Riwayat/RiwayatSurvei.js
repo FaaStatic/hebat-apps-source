@@ -419,22 +419,30 @@ export default function RiwayatSurvey({ navigation, route }) {
               }}
             />
           }
+          style={{
+            width:75,
+            height:75,
+          }}
           placeholderStyle={{
-            flex: 1,
+          
             justifyContent: 'center',
             backgroundColor: 'white',
             flexDirection: 'column',
+            width:75,
+            height:75,
           }}
-          width={80}
-          height={80}
+         
           containerStyle={{
             backgroundColor: 'black',
             aspectRatio: 1,
-            flex: 1,
+            width:75,
+            borderRadius:8,
+            height:75,
+         
             flexDirection: 'column',
             justifyContent: 'center',
           }}
-          resizeMode={'contain'}
+          resizeMode={'cover'}
         />
         <View
           style={{

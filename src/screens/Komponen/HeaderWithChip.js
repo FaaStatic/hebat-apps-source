@@ -113,6 +113,8 @@ const style = StyleSheet.create({
     height: StatusBar.currentHeight,
     width: 125,
     marginEnd: 16,
+    padding: Platform.OS === 'ios' ? 8 : 0,
+
     backgroundColor: 'transparent',
     borderWidth: 0.5,
     borderColor: 'white',

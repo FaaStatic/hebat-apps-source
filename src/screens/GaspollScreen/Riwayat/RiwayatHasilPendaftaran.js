@@ -148,6 +148,7 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
     return (
       <TouchableOpacity
         onPress={() => {
+          
           selectItem(item);
         }}
         style={{
@@ -166,10 +167,13 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
               ? require('../../../../assets/images/store.png')
               : { uri: item.image[0].image }
           }
-          resizeMode={item.image.length === 0 ? 'contain' : 'cover'}
+          onError={({nativeEvent: {error}}) => {
+            console.log(error);
+        }}
+          resizeMode={item.image.length === 0 ? 'cover' : 'cover'}
           style={{
-            height: 120,
-            width: 120,
+            width: 100,
+            height: 100,
           }}
           PlaceholderContent={
             <ActivityIndicator
@@ -181,15 +185,14 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
             />
           }
           placeholderStyle={{
-            flex: 1,
+            width: 100,
+            height: 100,
             justifyContent: 'center',
             flexDirection: 'column',
           }}
           containerStyle={{
             width: 100,
-            height: 120,
-            flex:1,
-
+            height: 100,
             justifyContent: 'center',
             backgroundColor: 'white',
             flexDirection: 'column',
@@ -200,7 +203,7 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
           style={{
             flexDirection: 'column',
             justifyContent: 'center',
-            flex:2,
+            flex:3,
             marginStart: 10,
           }}
         >
@@ -291,7 +294,7 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
                 },
               ]}
             >
-              Terdaftar
+            {item.status}
             </Text>
           </View>
         </View>
@@ -504,6 +507,10 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
           ) : (
             <FlatList
               data={responseItem}
+              contentContainerStyle={{
+                paddingTop:16,
+               
+              }}
               keyExtractor={(item) => item.id}
               ItemSeparatorComponent={GapList}
               onEndReached={loadMore}
@@ -562,9 +569,13 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
         >
           <TouchableOpacity
             onPress={() => {
+              console.log('====================================');
+          console.log(dataItem);
+          console.log('====================================');
               setOpenBottom(false);
               navigation.navigate('FormSurvey', {
                 modelData: dataItem,
+                status: "History"
               });
             }}
             style={{
