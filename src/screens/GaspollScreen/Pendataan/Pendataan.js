@@ -1,4 +1,4 @@
-import React, {  useState, useRef,useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import {
   View,
   TextInput,
@@ -12,9 +12,9 @@ import {
   FlatList,
   ActivityIndicator,
   InteractionManager,
-  Platform
+  Platform,
 } from 'react-native';
-import { Image, Dialog,BottomSheet } from '@rneui/themed';
+import { Image, Dialog, BottomSheet } from '@rneui/themed';
 import { Header } from '../../Komponen/Header';
 import MapView, { Marker } from 'react-native-maps';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -22,10 +22,10 @@ import Geolocation from 'react-native-geolocation-service';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
 import { Api } from '../../../util/ApiManager';
-import { launchCamera,launchImageLibrary } from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { colorApp, stringApp,fontsCustom } from '../../../util/globalvar';
+import { colorApp, stringApp, fontsCustom } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -55,20 +55,21 @@ export default function Pendataan({ navigation, route }) {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
-  const [openBottom,setOpenBottom] = useState(false);
+  const [openBottom, setOpenBottom] = useState(false);
 
   const mapsLayout = useRef();
 
-  useFocusEffect(useCallback(()=>{
-    getLocation();
-    const task = InteractionManager.runAfterInteractions(()=>{
-      clearData();
-      getCategory();
+  useFocusEffect(
+    useCallback(() => {
       getLocation();
-    });
-    return()=> task.cancel();
-  },[]));
-
+      const task = InteractionManager.runAfterInteractions(() => {
+        clearData();
+        getCategory();
+        getLocation();
+      });
+      return () => task.cancel();
+    }, [])
+  );
 
   const layoutAnimConfig = {
     duration: 300,
@@ -123,8 +124,6 @@ export default function Pendataan({ navigation, route }) {
       ttd: '',
       image: savingFileData,
     };
-
-   
 
     await Api.post('Survey/add_merchant', paramsAdd)
       .then((res) => {
@@ -193,7 +192,8 @@ export default function Pendataan({ navigation, route }) {
       address.length == 0 &&
       phone.length == 0 &&
       valueCategory == null &&
-      fileList.length == 0
+      fileList.length == 0 && 
+      valueCategory === null
     ) {
       MessageUtil.errorMessage('Form tidak boleh kosong! Mohon diisi terlebih dahulu.');
       return;
@@ -207,7 +207,7 @@ export default function Pendataan({ navigation, route }) {
     const params = {
       name_merchant: merchantName,
     };
-  
+
     await Api.post('Survey/check_merchant', params)
       .then((res) => {
         var body = res.data;
@@ -346,7 +346,7 @@ export default function Pendataan({ navigation, route }) {
     let cameraPermission = await PermissionUtil.requestCameraPermission();
     let saveStorage = await PermissionUtil.requestExternalWritePermission();
     if (cameraPermission && saveStorage) {
-     launchImageLibrary(options, (response) => {
+      launchImageLibrary(options, (response) => {
         if (response.didCancel) {
           console.log('Canceled By User');
         } else {
@@ -426,8 +426,8 @@ export default function Pendataan({ navigation, route }) {
           <Text style={style.textInput}>Nama Wajib Pajak</Text>
           <View style={style.textInputContainer}>
             <TextInput
-            numberOfLines={1}
-            maxLength={50}
+              numberOfLines={1}
+              maxLength={50}
               style={style.styleInput}
               value={merchantName}
               keyboardType={'default'}
@@ -493,11 +493,11 @@ export default function Pendataan({ navigation, route }) {
               items={listData}
               setOpen={setOpen}
               containerStyle={{
-                backgroundColor:'white'
+                backgroundColor: 'white',
               }}
               dropDownContainerStyle={{
-                elevation:2,
-                backgroundColor:'white'
+                elevation: 2,
+                backgroundColor: 'white',
               }}
               dropDownDirection={'TOP'}
               setValue={setValueCategory}
@@ -511,7 +511,7 @@ export default function Pendataan({ navigation, route }) {
                   marginBottom: 16,
                   fontWeight: '500',
                   fontSize: 14,
-                  marginStart:16,
+                  marginStart: 16,
                 },
               ]}
             >
@@ -561,7 +561,6 @@ export default function Pendataan({ navigation, route }) {
               latitudeDelta: limitlatitudeDelta,
               longitudeDelta: limitLongitudeDelta,
             }}
-           
             onRegionChangeComplete={(region) => {
               latitude = region.latitude;
               longitude = region.longitude;
@@ -596,7 +595,6 @@ export default function Pendataan({ navigation, route }) {
               }}
               pinColor="blue"
               title="You are here"
-            
             />
           </MapView>
           <TouchableOpacity
@@ -658,7 +656,7 @@ export default function Pendataan({ navigation, route }) {
           style={[
             style.textInput,
             {
-              fontFamily:fontsCustom.primary[700],
+              fontFamily: fontsCustom.primary[700],
               fontSize: 16,
               marginLeft: 24,
             },
@@ -667,17 +665,15 @@ export default function Pendataan({ navigation, route }) {
           Unggah Gambar
         </Text>
         <Text
-       
-        numberOfLines={2}
+          numberOfLines={2}
           style={[
             style.textInput,
             {
-              width:300,
+              width: 300,
               marginBottom: 16,
-              fontFamily:fontsCustom.primary[400],
+              fontFamily: fontsCustom.primary[400],
               fontSize: 14,
               marginLeft: 24,
-              
             },
           ]}
         >
@@ -689,7 +685,7 @@ export default function Pendataan({ navigation, route }) {
             ListHeaderComponent={() => {
               return (
                 <TouchableOpacity
-                  onPress={()=>{
+                  onPress={() => {
                     setOpenBottom(true);
                   }}
                   style={{
@@ -770,9 +766,9 @@ export default function Pendataan({ navigation, route }) {
           />
         ) : (
           <TouchableOpacity
-          onPress={()=>{
-            setOpenBottom(true);
-          }}
+            onPress={() => {
+              setOpenBottom(true);
+            }}
             style={{
               width: 150,
               height: 150,
@@ -812,87 +808,100 @@ export default function Pendataan({ navigation, route }) {
         </TouchableOpacity>
       </ScrollView>
 
-      <Dialog isVisible={modalConfirm} onBackdropPress={() => {}}>
-        <View
-          style={{
-            backgroundColor: 'white',
-            padding:16,
-            height: loadDialog ? viewHeight / 3 : viewHeight / 6,
-            flexDirection: 'column',
-          }}
-        >
-          {loadDialog ? (
+      <Dialog
+        overlayStyle={{
+          backgroundColor: loadDialog ? 'transparent' : 'white',
+          padding: 16,
+          borderRadius:8,
+          elevation: loadDialog ? 0: 2,
+          flexDirection: 'column',
+        }}
+        isVisible={modalConfirm}
+        onBackdropPress={() => {}}
+      >
+        {loadDialog ? (
+          <View
+            style={{
+              flexDirection: 'column',
+              flex: 1,
+              justifyContent: 'center',
+            }}
+          >
+            <ActivityIndicator
+              color={colorApp.button.primary}
+              size={'large'}
+              style={{
+                alignSelf: 'center',
+              }}
+            />
+          </View>
+        ) : (
+          <View style={{
+            margin:8,
+          }}>
+            <Text style={{textAlign:'center', color: 'black', fontSize: 14, fontFamily:fontsCustom.primary[400]}}>
+              Data ini telah terdaftar dengan nama <Text ellipsizeMode='tail' style={{ color: 'black', fontSize: 14, fontFamily:fontsCustom.primary[500], width:100}} numberOfLines={1} >{responseExist.nama}</Text> dan alamat
+              <Text ellipsizeMode='tail' style={{ color: 'black', fontSize: 14, fontFamily:fontsCustom.primary[500]}} numberOfLines={1} > { responseExist.alamat}</Text> , anda yakin ingin menyimpannya ?
+            </Text>
             <View
               style={{
-                flexDirection: 'column',
-                flex: 1,
-                justifyContent: 'center',
+                marginTop:35,
+                marginBottom:16,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
               }}
             >
-              <ActivityIndicator
-                color={colorApp.button.primary}
-                size={'large'}
-                style={{
-                  alignSelf: 'center',
-                }}
-              />
-            </View>
-          ) : (
-            <View style={{ 
-             }}>
-              <Text style={{ color: 'black', fontSize: 15, fontWeight: '600' }}>
-                Data ini telah terdaftar dengan nama {responseExist.nama} dan alamat
-                {responseExist.alamat}, anda yakin ingin menyimpannya ?
-              </Text>
-              <View
-                style={{
-                  marginTop: 24,
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
+              <TouchableOpacity
+                style={{}}
+                onPress={() => {
+                  setModalConfirm(false);
                 }}
               >
-                <TouchableOpacity
-                  style={{}}
-                  onPress={() => {
-                    setModalConfirm(false);
+                <Text
+                  style={{
+                    fontSize: 14,
+                    padding:8,
+                    color: 'gray',
+                    textAlign: 'center',
+                    fontFamily:fontsCustom.primary[500],
+
                   }}
                 >
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      
-                      color: 'gray',
-                      textAlign: 'center',
-                    }}
-                  >
-                    Batal
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    addMerchant();
+                  Batal
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  addMerchant();
+                }}
+                style={{
+                  borderRadius:8,
+                  backgroundColor:colorApp.button.primary,
+                  padding:8,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily:fontsCustom.primary[700],
+                    color: 'white',
+                    textAlign: 'center',
                   }}
                 >
-                  <Text
-                    style={{
-                      fontSize: 16,
-                  
-                      color: colorApp.button.primary,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Iya, simpan data
-                  </Text>
-                </TouchableOpacity>
-              </View>
+                  Iya, simpan data
+                </Text>
+              </TouchableOpacity>
             </View>
-          )}
-        </View>
+          </View>
+        )}
       </Dialog>
-<BottomSheet  isVisible={openBottom} onBackdropPress={()=>{
-  setOpenBottom(false);
-}}>
- <View
+      <BottomSheet
+        isVisible={openBottom}
+        onBackdropPress={() => {
+          setOpenBottom(false);
+        }}
+      >
+        <View
           style={{
             backgroundColor: 'white',
             flexDirection: 'column',
@@ -904,7 +913,7 @@ export default function Pendataan({ navigation, route }) {
           <TouchableOpacity
             onPress={() => {
               setOpenBottom(false);
-             pickImage()
+              pickImage();
             }}
             style={[
               style.btnBottom,
@@ -924,15 +933,13 @@ export default function Pendataan({ navigation, route }) {
             ]}
             onPress={() => {
               setOpenBottom(false);
-             pickGalery();
+              pickGalery();
             }}
           >
             <Text style={style.textBtn}>Ambil dari Galeri</Text>
           </TouchableOpacity>
-         
         </View>
-
-</BottomSheet>
+      </BottomSheet>
     </View>
   );
 }
@@ -948,7 +955,7 @@ const style = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     width: '100%',
-    fontFamily:fontsCustom.primary[700],
+    fontFamily: fontsCustom.primary[700],
   },
   textInputContainer: {
     padding: 4,
@@ -958,7 +965,7 @@ const style = StyleSheet.create({
     backgroundColor: '#dadce0',
     borderRadius: 8,
     marginTop: 4,
-    height:50,
+    height: 50,
   },
   gap: {
     color: 'grey',
@@ -986,7 +993,7 @@ const style = StyleSheet.create({
   textBtn: {
     fontSize: 16,
     color: 'white',
-    fontFamily:fontsCustom.primary[700],
+    fontFamily: fontsCustom.primary[700],
     textAlign: 'center',
   },
 });

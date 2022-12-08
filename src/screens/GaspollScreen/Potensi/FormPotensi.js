@@ -348,7 +348,7 @@ export default function FormPotensi({ navigation, route }) {
           pajak: pajak,
           idp: '',
           id_potensi: '',
-          flag_sumber: '',
+          flag_sumber: 'survey',
           flag: '',
         };
         navigation.navigate('FormKelengkapan', {
@@ -495,6 +495,7 @@ export default function FormPotensi({ navigation, route }) {
           <TextInput
             style={Style.textInput}
             value={nik}
+            keyboardType={'number-pad'}
             onChangeText={(txt) => {
               setNik(txt);
             }}

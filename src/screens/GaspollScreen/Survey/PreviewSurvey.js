@@ -13,14 +13,14 @@ import {
   UIManager,
   InteractionManager,
 } from 'react-native';
-import { Image, Dialog, CheckBox,BottomSheet } from '@rneui/themed';
+import { Image, Dialog, CheckBox, BottomSheet } from '@rneui/themed';
 import MapView, { Marker } from 'react-native-maps';
 import SignatureScreen from 'react-native-signature-canvas';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Geolocation from 'react-native-geolocation-service';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Api } from '../../../util/ApiManager';
-import { launchCamera,launchImageLibrary } from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import { colorApp, stringApp } from '../../../util/globalvar';
@@ -84,8 +84,7 @@ const PreviewSurvey = ({ navigation, route }) => {
   const [ttd, setTtd] = useState('');
   const [openDialog4, setOpenDialog4] = useState(false);
   const [businessType, setBusinessType] = useState('');
-  const [openBottom,setOpenBottom] = useState(false);
-
+  const [openBottom, setOpenBottom] = useState(false);
 
   const signatureRef = useRef();
   const mapsLayout = useRef();
@@ -94,17 +93,17 @@ const PreviewSurvey = ({ navigation, route }) => {
     useCallback(() => {
       const task = InteractionManager.runAfterInteractions(() => {
         clearData();
-        getCategory(modelData.klasifikasi_usaha)
+        getCategory(modelData.klasifikasi_usaha);
         loadData();
       });
       return () => task.cancel();
     }, [])
   );
 
-const loadData = () => {
-  console.log('====================================');
-  console.log(modelData);
-  console.log('====================================');
+  const loadData = () => {
+    console.log('====================================');
+    console.log(modelData);
+    console.log('====================================');
     setNamaUsaha(modelData.nama_usaha);
     setAlamatUsaha(modelData.alamat);
     setKota(modelData.kota);
@@ -120,11 +119,11 @@ const loadData = () => {
     setOwnerPhone(modelData.no_telp_pemilik);
     setFileList(modelData.image);
     setSavingFileData(modelData.savingImg);
-    switch(modelData.bidang_usaha){
-      case "Badan Usaha":
+    switch (modelData.bidang_usaha) {
+      case 'Badan Usaha':
         checkBadanUsahaFunc();
         break;
-      case "Badan Pribadi":
+      case 'Badan Pribadi':
         checkBadanPribadiFunc();
         break;
       default:
@@ -132,16 +131,13 @@ const loadData = () => {
         break;
     }
 
-
     setMapState({
       latitude: Number(modelData.latitude),
       longitude: Number(modelData.longitude),
       latitudeDelta: limitlatitudeDelta,
       longitudeDelta: limitLongitudeDelta,
     });
-} 
-
-
+  };
 
   const layoutAnimConfig = {
     duration: 300,
@@ -158,8 +154,6 @@ const loadData = () => {
   if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
-
-  
 
   const checkBadanUsahaFunc = () => {
     setCheckBadanUsaha(true);
@@ -189,7 +183,7 @@ const loadData = () => {
         var response = body.response;
         var status = body.metadata.status;
         if (status == 200) {
-          convertResponse(response,data);
+          convertResponse(response, data);
         }
       })
       .catch((err) => {
@@ -206,7 +200,7 @@ const loadData = () => {
         label: data[i].kategori,
         value: data[i].id,
       };
-      if(kategori === data[i].id){
+      if (kategori === data[i].id) {
         setValueCategory(data[i].id);
       }
       temp.push(dataSet);
@@ -452,8 +446,6 @@ const loadData = () => {
       });
   };
 
- 
-
   return (
     <View
       style={{
@@ -461,7 +453,7 @@ const loadData = () => {
         flex: 1,
       }}
     >
-      <HeaderWithoutHistory Title={"Preview Form"} back={() => navigation.goBack()} />
+      <HeaderWithoutHistory Title={'Preview Form'} back={() => navigation.goBack()} />
       {loadingField ? (
         <View
           style={{
@@ -549,9 +541,7 @@ const loadData = () => {
             <Text style={style.textInput}>Kecamatan</Text>
             <TouchableOpacity
               onPress={() => {
-                
-                  //processDistrict();
-                
+                //processDistrict();
               }}
               style={style.textInputContainer}
             >
@@ -574,9 +564,7 @@ const loadData = () => {
             <Text style={style.textInput}>Kelurahan</Text>
             <TouchableOpacity
               onPress={() => {
-       
-                  //processVillage();
-                
+                //processVillage();
               }}
               style={style.textInputContainer}
             >
@@ -615,7 +603,7 @@ const loadData = () => {
               }}
             >
               <CheckBox
-              disabled={true}
+                disabled={true}
                 title={'Badan Usaha'}
                 checked={checkBadanUsaha}
                 checkedIcon="dot-circle-o"
@@ -630,8 +618,7 @@ const loadData = () => {
                 }}
               />
               <CheckBox
-                             disabled={true}
-
+                disabled={true}
                 title={'Badan Pribadi'}
                 checked={checkBadanPribadi}
                 checkedColor={colorApp.button.primary}
@@ -648,7 +635,7 @@ const loadData = () => {
             <Text style={style.textInput}>Nama Pemilik</Text>
             <View style={style.textInputContainer}>
               <TextInput
-              editable={false}
+                editable={false}
                 style={style.styleInput}
                 value={owner}
                 keyboardType={'default'}
@@ -715,13 +702,12 @@ const loadData = () => {
                 setOpen={false}
                 placeholder={'Pilih Kategori Klasifikasi Usaha'}
                 setValue={setValueCategory}
-                
                 containerStyle={{
-                  backgroundColor:'white'
+                  backgroundColor: 'white',
                 }}
                 dropDownContainerStyle={{
-                  elevation:2,
-                  backgroundColor:'white'
+                  elevation: 2,
+                  backgroundColor: 'white',
                 }}
                 dropDownDirection={'TOP'}
                 listMode={'SCROLLVIEW'}
@@ -770,7 +756,7 @@ const loadData = () => {
               },
             ]}
           >
-           Peta
+            Peta
           </Text>
           <View
             style={{
@@ -878,20 +864,19 @@ const loadData = () => {
             </Text>
           </View>
 
-         
-            <Text
-              style={[
-                style.textInput,
-                {
-                  fontWeight: '800',
-                  fontSize: 16,
-                  marginLeft: 24,
-                },
-              ]}
-            >
-              Unggah Gambar
-            </Text>
-         
+          <Text
+            style={[
+              style.textInput,
+              {
+                fontWeight: '800',
+                fontSize: 16,
+                marginLeft: 24,
+              },
+            ]}
+          >
+            Unggah Gambar
+          </Text>
+
           {/* {status === null && (
             <Text
               style={[
@@ -950,163 +935,159 @@ const loadData = () => {
               }}
             />
           ) : (
-            <>
-             
-            </>
+            <></>
           )}
-       
-            <View
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              marginTop: 8,
+              marginBottom: 24,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                setModalConfirm(true);
+              }}
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                marginTop: 8,
-                marginBottom: 24,
+                backgroundColor: '#669beb',
+                width: 100,
+                justifyContent: 'center',
+                borderRadius: 8,
+                height: 45,
+                elevation: 5,
               }}
             >
-              <TouchableOpacity
-                onPress={() => {
-                  setModalConfirm(true);
-                }}
+              <Text
                 style={{
-                  backgroundColor:'#669beb',
-                  width: 100,
-                  justifyContent: 'center',
-                  borderRadius: 8,
-                  height: 45,
-                  elevation: 5,
+                  color: 'white',
+                  fontSize: 14,
+                  textAlign: 'center',
+                  alignSelf: 'center',
                 }}
               >
-                <Text
-                  style={{
-                    color:  'white',
-                    fontSize: 14,
-                    textAlign: 'center',
-                    alignSelf: 'center',
-                  }}
-                >
-                  Simpan
-                </Text>
-              </TouchableOpacity>
-            </View>
-          
+                Simpan
+              </Text>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
       )}
 
       <Dialog
+        overlayStyle={{
+          backgroundColor: 'white',
+          paddingTop: 16,
+          paddingBottom: 16,
+          flexDirection: 'column',
+          justifyContent: 'center',
+          height: viewHeight / 1.8,
+        }}
         isVisible={modalConfirm}
         onBackdropPress={() => {
           setModalConfirm(false);
         }}
       >
-        <View
+        <Text
+          numberOfLines={3}
           style={{
-            backgroundColor: 'white',
-            paddingTop: 16,
-            paddingBottom: 16,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            height: viewHeight / 2,
+            alignSelf: 'center',
+            marginEnd: 24,
+            marginStart: 24,
+            fontSize: 12,
+            marginBottom: 16,
+            fontFamily: fontsCustom.primary[400],
+            color: 'black',
+            textAlign: 'center',
           }}
         >
-          <Text
-            numberOfLines={2}
-            style={{
-              alignSelf: 'center',
-              marginEnd: 24,
-              marginStart: 24,
-              fontSize: 12,
-              marginBottom: 8,
-              fontWeight: '400',
-              color: 'black',
-              textAlign: 'center',
-            }}
-          >
-            Untuk melengkapi data mohon dicantumkan tanda tangan wajib pajak
-          </Text>
-          <SignatureScreen
-            ref={signatureRef}
-            onOK={handleOK}
-            penColor={'black'}
-            webStyle={`
+          Untuk melengkapi data mohon dicantumkan tanda tangan wajib pajak
+        </Text>
+        <SignatureScreen
+          ref={signatureRef}
+          onOK={handleOK}
+          penColor={'black'}
+          webStyle={`
             .m-signature-pad{box-shadow: none; border: none; }
             .m-signature-pad--body{border-left: none; border-right:none; border-top:1px solid black; border-bottom:1px solid black;}
             .m-signature-pad--footer{display: none; margin: 0px;}
             body,html {
               height: 220px;}`}
-            descriptionText={'Tanda Tangan'}
+          descriptionText={'Tanda Tangan'}
+        />
+        <Text
+          style={{
+            alignSelf: 'center',
+            color: colorApp.btnColor2,
+            textAlign: 'center',
+            fontSize: 16,
+            marginBottom: 8,
+            fontFamily: fontsCustom.primary[400],
+          }}
+        >
+          Tanda Tangan Disini
+        </Text>
+        <Text
+          style={{
+            alignSelf: 'center',
+            color: 'black',
+            textAlign: 'center',
+            fontSize: 12,
+            fontFamily: fontsCustom.primary[400],
+          }}
+        >
+          (Wajib Pajak)
+        </Text>
+
+        <TouchableOpacity
+          onPress={() => {
+            saveSurvey();
+          }}
+          style={{
+            justifyContent: 'center',
+            marginEnd: 8,
+            marginStart: 8,
+            marginBottom: 8,
+            flexDirection: 'column',
+            marginTop: 16,
+            padding: 8,
+            borderRadius: 8,
+            backgroundColor: colorApp.button.primary,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              color: 'white',
+              fontWeight: '600',
+              alignSelf: 'center',
+            }}
+          >
+            Simpan
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            clearSignature();
+          }}
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            marginEnd: 8,
+            marginBottom: viewHeight / 5,
+          }}
+        >
+          <Icon2
+            name="undo"
+            style={{
+              margin: 8,
+            }}
+            color={'black'}
+            size={24}
           />
-          <Text
-            style={{
-              alignSelf: 'center',
-              color: '#00FFFF',
-              textAlign: 'center',
-              fontSize: 16,
-              fontWeight: '400',
-            }}
-          >
-            Tanda Tangan Disini
-          </Text>
-          <Text
-            style={{
-              alignSelf: 'center',
-              color: 'black',
-              textAlign: 'center',
-              fontSize: 12,
-              fontWeight: '400',
-            }}
-          >
-            (Wajib Pajak)
-          </Text>
-
-          <TouchableOpacity
-            onPress={() => {
-              saveSurvey();
-            }}
-            style={{
-              justifyContent: 'center',
-              marginEnd: 8,
-              marginStart: 8,
-              marginBottom: 8,
-              flexDirection: 'column',
-              marginTop: 16,
-              padding: 8,
-              backgroundColor: '#669beb',
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 18,
-                color: 'white',
-                fontWeight: '600',
-                alignSelf: 'center',
-              }}
-            >
-              Simpan
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              clearSignature();
-            }}
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              marginEnd: 8,
-              marginBottom: viewHeight / 5,
-            }}
-          >
-            <Icon2
-              name="undo"
-              style={{
-                margin: 8,
-              }}
-              color={'black'}
-              size={24}
-            />
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </Dialog>
       <Dialog
         isVisible={openDialog1}
@@ -1221,89 +1202,94 @@ const loadData = () => {
         </View>
       </Dialog>
 
-      <Dialog isVisible={openDialog4}>
+      <Dialog
+        overlayStyle={{
+          flexDirection: 'column',
+          padding: 24,
+          height: viewHeight / 4.5,
+        }}
+        isVisible={openDialog4}
+      >
+        <Text
+          style={[
+            style.styleInput,
+            {
+              color: 'black',
+              textAlign: 'center',
+              fontSize: 14,
+              fontFamily: fontsCustom.primary[700],
+            },
+          ]}
+        >
+          Apakah Anda yakin Ingin Menyimpan Data ini?
+        </Text>
         <View
           style={{
-            flexDirection: 'column',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
             padding: 4,
-
-            height: 125,
           }}
         >
-          <Text
-            style={[
-              style.styleInput,
-              {
-                color: 'black',
-                fontWeight: '700',
-              },
-            ]}
-          >
-            Apakah Anda yakin Ingin Menyimpan Data ini?
-          </Text>
-          <View
+          <TouchableOpacity
+            onPress={() => {
+              setOpenDialog4(false);
+            }}
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              height: 35,
+              marginBottom: 16,
+              marginStart: 8,
+              marginEnd: 4,
               padding: 4,
             }}
           >
-            <TouchableOpacity
-              onPress={() => {
-                setOpenDialog4(false);
-              }}
-              style={{
-                flexDirection: 'column',
-                justifyContent: 'center',
-                height: 45,
-                marginStart: 8,
-                marginEnd: 4,
-                padding: 4,
-              }}
+            <Text
+              style={[
+                style.styleInput,
+                {
+                  fontSize: 12,
+                  fontFamily: fontsCustom.primary[700],
+                  color: 'gray',
+                },
+              ]}
             >
-              <Text
-                style={[
-                  style.styleInput,
-                  {
-                    fontWeight: '700',
-                    color: 'gray',
-                  },
-                ]}
-              >
-                Batal
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                simpanData();
-              }}
-              style={{
-                height: 45,
-                marginStart: 4,
-                marginEnd: 8,
-                padding: 4,
-                flexDirection: 'column',
-                justifyContent: 'center',
-              }}
+              Batal
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              updateData();
+            }}
+            style={{
+              height: 35,
+              marginStart: 4,
+              marginEnd: 8,
+              backgroundColor: colorApp.button.primary,
+              borderRadius: 8,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text
+              style={[
+                style.styleInput,
+                {
+                  fontSize: 12,
+                  fontFamily: fontsCustom.primary[700],
+                  color: 'white',
+                },
+              ]}
             >
-              <Text
-                style={[
-                  style.styleInput,
-                  {
-                    fontWeight: '700',
-                    color: colorApp.button.primary,
-                  },
-                ]}
-              >
-                Simpan Data
-              </Text>
-            </TouchableOpacity>
-          </View>
+              Simpan Data
+            </Text>
+          </TouchableOpacity>
         </View>
       </Dialog>
     </View>
   );
-}
+};
 
 const style = StyleSheet.create({
   inner: {
@@ -1327,7 +1313,7 @@ const style = StyleSheet.create({
     backgroundColor: '#dadce0',
     borderRadius: 8,
     marginTop: 4,
-    height:50,
+    height: 50,
   },
   gap: {
     color: 'grey',

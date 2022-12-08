@@ -10,6 +10,7 @@ import {
   InteractionManager
 } from 'react-native';
 import moment from 'moment';
+import Lottie from 'lottie-react-native';
 import { Dialog, FAB } from '@rneui/themed';
 import HeaderDate from '../../Komponen/HeaderDate';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
@@ -381,8 +382,16 @@ export default function DaftarPotensi({ navigation, route }) {
         dateEnd={moment(dateEnd).format('YYYY-MM-DD')}
         searchText={setShowList}
       />
-
-      <FlatList
+  {responseItem.length === 0 ? <View style={{
+            flex:1,
+            height:ViewHeight,
+            marginTop:ViewHeight/10
+          }}>
+            <Lottie 
+      source={require('../../../../assets/images/empty_animation.json')} autoPlay loop style={{
+        position:'relative',
+      }}/>
+            </View> :  <FlatList
         data={responseItem}
         keyExtractor={(item) => item.id_potensi}
         contentContainerStyle={{
@@ -390,7 +399,8 @@ export default function DaftarPotensi({ navigation, route }) {
         }}
         showsVerticalScrollIndicator={false}
         renderItem={renderItem}
-      />
+      />}
+     
       <FAB
         visible={true}
         onPress={() => {

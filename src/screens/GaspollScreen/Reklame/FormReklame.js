@@ -869,31 +869,28 @@ const FormReklame = ({ navigation, route }) => {
           <View
             style={{
               height: 100,
+              marginTop:16,
+              marginBottom:16,
             }}
           />
         )}
       </Animated.ScrollView>
 
-      <Dialog isVisible={dialogOpen}>
-        <View
-          style={{
-            flexDirection: 'column',
-            paddingTop: 16,
-            PaddingBottom: 16,
-            height: 125,
-            borderRadius: 16,
-          }}
-        >
+      <Dialog overlayStyle={{
+          flexDirection: 'column',
+          padding:24,
+          borderRadius: 8,
+      }} isVisible={dialogOpen}>
           <Text
             style={[
               style.styleInput,
               {
-                fontSize: 16,
+                fontSize: 14,
                 width: 200,
                 textAlign: 'center',
                 alignSelf: 'center',
                 color: 'black',
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
               },
             ]}
           >
@@ -914,7 +911,7 @@ const FormReklame = ({ navigation, route }) => {
               style={{
                 flexDirection: 'column',
                 justifyContent: 'center',
-                height: 45,
+                height: 35,
                 marginStart: 8,
                 marginEnd: 4,
                 backgroundColor: 'grey',
@@ -927,7 +924,7 @@ const FormReklame = ({ navigation, route }) => {
                 style={[
                   style.styleInput,
                   {
-                    fontWeight: '700',
+                    fontFamily:fontsCustom.primary[700],
                     color: 'black',
                     textAlign: 'center',
                   },
@@ -941,7 +938,7 @@ const FormReklame = ({ navigation, route }) => {
                 simpanData();
               }}
               style={{
-                height: 45,
+                height: 35,
                 marginStart: 4,
                 marginEnd: 8,
                 padding: 4,
@@ -949,7 +946,7 @@ const FormReklame = ({ navigation, route }) => {
                 justifyContent: 'center',
                 width: viewWidth / 3.5,
 
-                backgroundColor: colorApp.primaryGaspoll,
+                backgroundColor: colorApp.button.primary,
                 borderRadius: 4,
               }}
             >
@@ -957,7 +954,7 @@ const FormReklame = ({ navigation, route }) => {
                 style={[
                   style.styleInput,
                   {
-                    fontWeight: '700',
+                    fontFamily:fontsCustom.primary[700],
                     color: 'white',
                     textAlign: 'center',
                   },
@@ -967,7 +964,7 @@ const FormReklame = ({ navigation, route }) => {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+      
       </Dialog>
       <BottomSheet
         isVisible={openBottom}

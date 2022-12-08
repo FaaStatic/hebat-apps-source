@@ -89,23 +89,8 @@ export default function Login({ navigation, route }) {
   const resetPassword = () => {
     Alert.alert('Hebat!', 'No Action!!');
   };
-  if(loading)
-  return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: 'white',
-        flexDirection: 'column',
-        justifyContent: 'center',
-      }}
-    >
-      <ActivityIndicator
-        style={{ alignSelf: 'center' }}
-        color={colorApp.button.primary}
-        size={'large'}
-      />
-    </View>
-  );
+
+ 
   return (
     <View style={style.container}>
       <KeyboardAvoidingView

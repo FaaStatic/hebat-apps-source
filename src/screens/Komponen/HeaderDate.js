@@ -193,11 +193,11 @@ const style = StyleSheet.create({
     height: Platform.OS === "ios" ? StatusBar.currentHeight+150 :StatusBar.currentHeight + 100,
   },
   textTitle: {
-    fontSize: 20,
+    fontSize: 18,
     color: 'white',
     paddingTop: 4,
     paddingBottom: 4,
-    fontWeight: '400',
+    fontWeight: '700',
     width:200,
   },
   btnDate: {

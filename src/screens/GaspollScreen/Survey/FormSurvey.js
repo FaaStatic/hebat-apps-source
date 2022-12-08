@@ -13,17 +13,17 @@ import {
   UIManager,
   InteractionManager,
 } from 'react-native';
-import { Image, Dialog, CheckBox,BottomSheet } from '@rneui/themed';
+import { Image, Dialog, CheckBox, BottomSheet } from '@rneui/themed';
 import MapView, { Marker } from 'react-native-maps';
 import SignatureScreen from 'react-native-signature-canvas';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Geolocation from 'react-native-geolocation-service';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Api } from '../../../util/ApiManager';
-import { launchCamera,launchImageLibrary } from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { HeaderWithoutHistory } from '../../Komponen/HeaderWithoutHistory';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
@@ -84,8 +84,7 @@ export default function FormSurvey({ navigation, route }) {
   const [ttd, setTtd] = useState('');
   const [openDialog4, setOpenDialog4] = useState(false);
   const [businessType, setBusinessType] = useState('');
-  const [openBottom,setOpenBottom] = useState(false);
-
+  const [openBottom, setOpenBottom] = useState(false);
 
   const signatureRef = useRef();
   const mapsLayout = useRef();
@@ -93,7 +92,7 @@ export default function FormSurvey({ navigation, route }) {
   useFocusEffect(
     useCallback(() => {
       const task = InteractionManager.runAfterInteractions(() => {
-        if (status === "History") {
+        if (status === 'History') {
           clearData();
           getCategory();
           loadMerchant();
@@ -133,11 +132,11 @@ export default function FormSurvey({ navigation, route }) {
           setOwnerAdress(response.alamat_pemilik);
           setOwnerPhone(response.no_telp_pemilik);
           setFileList(modelData.image);
-          switch(response.bidang_usaha){
-            case "Badan Usaha":
+          switch (response.bidang_usaha) {
+            case 'Badan Usaha':
               checkBadanUsahaFunc();
               break;
-            case "Badan Pribadi":
+            case 'Badan Pribadi':
               checkBadanPribadiFunc();
               break;
             default:
@@ -145,7 +144,6 @@ export default function FormSurvey({ navigation, route }) {
               break;
           }
           response.img.map((item) => {
-             
             RNFetchBlob.config({
               fileCache: true,
             })
@@ -161,12 +159,11 @@ export default function FormSurvey({ navigation, route }) {
           });
 
           listData.map((item) => {
-           
             if (item.label === response.klasifikasi_usaha) {
               setValueCategory(item.value);
             }
           });
-        
+
           setMapState({
             latitude: Number(response.latitude),
             longitude: Number(response.longitude),
@@ -177,7 +174,6 @@ export default function FormSurvey({ navigation, route }) {
         } else {
           MessageUtil.errorMessage(message);
           setLoadingField(false);
-
         }
       })
       .catch((err) => {
@@ -194,10 +190,8 @@ export default function FormSurvey({ navigation, route }) {
     setOwnerAdress(modelData.alamat_pemilik);
     setOwnerPhone(modelData.no_telp);
     setFileList(modelData.image);
-  
 
     modelData.image.map((item) => {
-             
       RNFetchBlob.config({
         fileCache: true,
       })
@@ -212,8 +206,7 @@ export default function FormSurvey({ navigation, route }) {
         });
     });
     setLoadingField(false);
-  }
-
+  };
 
   const layoutAnimConfig = {
     duration: 300,
@@ -293,7 +286,7 @@ export default function FormSurvey({ navigation, route }) {
         var response = body.response;
         var status = body.metadata.status;
         if (status == 200) {
-          convertResponse(response,data);
+          convertResponse(response, data);
         }
       })
       .catch((err) => {
@@ -337,9 +330,9 @@ export default function FormSurvey({ navigation, route }) {
         value: data[i].id,
       };
 
-      if(kategori !== null){
-        if(data[i].kategori === kategori){
-          setValueCategory(data[i].id)
+      if (kategori !== null) {
+        if (data[i].kategori === kategori) {
+          setValueCategory(data[i].id);
         }
       }
       temp.push(dataSet);
@@ -409,7 +402,7 @@ export default function FormSurvey({ navigation, route }) {
     let cameraPermission = await PermissionUtil.requestCameraPermission();
     let saveStorage = await PermissionUtil.requestExternalWritePermission();
     if (cameraPermission && saveStorage) {
-     launchImageLibrary(options, (response) => {
+      launchImageLibrary(options, (response) => {
         if (response.didCancel) {
           console.log('Canceled By User');
         } else {
@@ -674,36 +667,34 @@ export default function FormSurvey({ navigation, route }) {
       });
   };
 
-
   const previewForm = () => {
     const dataMove = {
-      id : modelData.id,
+      id: modelData.id,
       idp: modelData.idp,
-      nama_usaha : namaUsaha,
-      alamat : alamatUsaha,
-      kota : kota,
-      kelurahan : kelurahan,
-      kecamatan : kecamatan,
-      idKota : selectCityId,
-      idKecamatan : selectDistrictId,
-      idKelurahan : selectVillageId,
-      nik_pemilik : nik,
-      pemilik : owner,
-      alamat_pemilik : ownerAdress,
-      no_telp_pemilik : ownerPhone,
-      telp_usaha : merchantPhone,
-      bidang_usaha : businessType,
-      klasifikasi_usaha : valueCategory,
-      image : fileList,
-      savingImg : savingFileData,
-      latitude : mapState.latitude,
-      longitude :mapState.longitude
-    }
-      navigation.navigate('PreviewSurvey', {
-        modelData : dataMove
-      });
-  }
- 
+      nama_usaha: namaUsaha,
+      alamat: alamatUsaha,
+      kota: kota,
+      kelurahan: kelurahan,
+      kecamatan: kecamatan,
+      idKota: selectCityId,
+      idKecamatan: selectDistrictId,
+      idKelurahan: selectVillageId,
+      nik_pemilik: nik,
+      pemilik: owner,
+      alamat_pemilik: ownerAdress,
+      no_telp_pemilik: ownerPhone,
+      telp_usaha: merchantPhone,
+      bidang_usaha: businessType,
+      klasifikasi_usaha: valueCategory,
+      image: fileList,
+      savingImg: savingFileData,
+      latitude: mapState.latitude,
+      longitude: mapState.longitude,
+    };
+    navigation.navigate('PreviewSurvey', {
+      modelData: dataMove,
+    });
+  };
 
   return (
     <View
@@ -712,7 +703,10 @@ export default function FormSurvey({ navigation, route }) {
         flex: 1,
       }}
     >
-      <HeaderWithoutHistory Title={status === "History" ? "Preview Survey" : "Form Survey"} back={() => navigation.goBack()} />
+      <HeaderWithoutHistory
+        Title={status === 'History' ? 'Preview Survey' : 'Form Survey'}
+        back={() => navigation.goBack()}
+      />
       {loadingField ? (
         <View
           style={{
@@ -868,7 +862,7 @@ export default function FormSurvey({ navigation, route }) {
               }}
             >
               <CheckBox
-              disabled={status === 'History' ? true : false}
+                disabled={status === 'History' ? true : false}
                 title={'Badan Usaha'}
                 checked={checkBadanUsaha}
                 checkedIcon="dot-circle-o"
@@ -883,7 +877,7 @@ export default function FormSurvey({ navigation, route }) {
                 }}
               />
               <CheckBox
-               disabled={status === 'History' ? true : false}
+                disabled={status === 'History' ? true : false}
                 title={'Badan Pribadi'}
                 checked={checkBadanPribadi}
                 checkedColor={colorApp.button.primary}
@@ -964,11 +958,11 @@ export default function FormSurvey({ navigation, route }) {
                 placeholder={'Pilih Kategori Klasifikasi Usaha'}
                 setValue={setValueCategory}
                 containerStyle={{
-                  backgroundColor:'white'
+                  backgroundColor: 'white',
                 }}
                 dropDownContainerStyle={{
-                  elevation:2,
-                  backgroundColor:'white'
+                  elevation: 2,
+                  backgroundColor: 'white',
                 }}
                 dropDownDirection={'TOP'}
                 listMode={'SCROLLVIEW'}
@@ -984,7 +978,7 @@ export default function FormSurvey({ navigation, route }) {
                   },
                 ]}
               >
-               Tunggu Sebentar....
+                Tunggu Sebentar....
               </Text>
             )}
             <Text style={style.textInput}>Keterangan</Text>
@@ -1042,7 +1036,7 @@ export default function FormSurvey({ navigation, route }) {
               }}
               region={{
                 latitude: mapState.latitude,
-                longitude:  mapState.longitude,
+                longitude: mapState.longitude,
                 latitudeDelta: limitlatitudeDelta,
                 longitudeDelta: limitLongitudeDelta,
               }}
@@ -1184,7 +1178,7 @@ export default function FormSurvey({ navigation, route }) {
                   <>
                     {status === null && (
                       <TouchableOpacity
-                        onPress={()=>{
+                        onPress={() => {
                           setOpenBottom(true);
                         }}
                         style={{
@@ -1262,9 +1256,9 @@ export default function FormSurvey({ navigation, route }) {
             <>
               {status === null && (
                 <TouchableOpacity
-                onPress={()=>{
-                  setOpenBottom(true);
-                }}
+                  onPress={() => {
+                    setOpenBottom(true);
+                  }}
                   style={{
                     width: 150,
                     height: 150,
@@ -1317,11 +1311,11 @@ export default function FormSurvey({ navigation, route }) {
                   Simpan
                 </Text>
               </TouchableOpacity>
-              
+
               <TouchableOpacity
-              onPress={()=>{
-                previewForm();
-              }}
+                onPress={() => {
+                  previewForm();
+                }}
                 style={{
                   backgroundColor: '#669beb',
                   width: 100,
@@ -1348,120 +1342,119 @@ export default function FormSurvey({ navigation, route }) {
       )}
 
       <Dialog
+        overlayStyle={{
+          backgroundColor: 'white',
+          paddingTop: 16,
+          paddingBottom: 16,
+          flexDirection: 'column',
+          justifyContent: 'center',
+          height: viewHeight / 1.8,
+        }}
         isVisible={modalConfirm}
         onBackdropPress={() => {
           setModalConfirm(false);
         }}
       >
-        <View
+        <Text
+          numberOfLines={3}
           style={{
-            backgroundColor: 'white',
-            paddingTop: 16,
-            paddingBottom: 16,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            height: viewHeight / 2,
+            alignSelf: 'center',
+            marginEnd: 24,
+            marginStart: 24,
+            fontSize: 12,
+            marginBottom: 16,
+            fontFamily: fontsCustom.primary[400],
+            color: 'black',
+            textAlign: 'center',
           }}
         >
-          <Text
-            numberOfLines={2}
-            style={{
-              alignSelf: 'center',
-              marginEnd: 24,
-              marginStart: 24,
-              fontSize: 12,
-              marginBottom: 8,
-              fontWeight: '400',
-              color: 'black',
-              textAlign: 'center',
-            }}
-          >
-            Untuk melengkapi data mohon dicantumkan tanda tangan wajib pajak
-          </Text>
-          <SignatureScreen
-            ref={signatureRef}
-            onOK={handleOK}
-            penColor={'black'}
-            webStyle={`
+          Untuk melengkapi data mohon dicantumkan tanda tangan wajib pajak
+        </Text>
+        <SignatureScreen
+          ref={signatureRef}
+          onOK={handleOK}
+          penColor={'black'}
+          webStyle={`
             .m-signature-pad{box-shadow: none; border: none; }
             .m-signature-pad--body{border-left: none; border-right:none; border-top:1px solid black; border-bottom:1px solid black;}
             .m-signature-pad--footer{display: none; margin: 0px;}
             body,html {
               height: 220px;}`}
-            descriptionText={'Tanda Tangan'}
+          descriptionText={'Tanda Tangan'}
+        />
+        <Text
+          style={{
+            alignSelf: 'center',
+            color: colorApp.btnColor2,
+            textAlign: 'center',
+            fontSize: 16,
+            marginBottom: 8,
+            fontFamily: fontsCustom.primary[400],
+          }}
+        >
+          Tanda Tangan Disini
+        </Text>
+        <Text
+          style={{
+            alignSelf: 'center',
+            color: 'black',
+            textAlign: 'center',
+            fontSize: 12,
+            fontFamily: fontsCustom.primary[400],
+          }}
+        >
+          (Wajib Pajak)
+        </Text>
+
+        <TouchableOpacity
+          onPress={() => {
+            saveSurvey();
+          }}
+          style={{
+            justifyContent: 'center',
+            marginEnd: 8,
+            marginStart: 8,
+            marginBottom: 8,
+            flexDirection: 'column',
+            marginTop: 16,
+            padding: 8,
+            borderRadius: 8,
+            backgroundColor: colorApp.button.primary,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              color: 'white',
+              fontWeight: '600',
+              alignSelf: 'center',
+            }}
+          >
+            Simpan
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            clearSignature();
+          }}
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            marginEnd: 8,
+            marginBottom: viewHeight / 5,
+          }}
+        >
+          <Icon2
+            name="undo"
+            style={{
+              margin: 8,
+            }}
+            color={'black'}
+            size={24}
           />
-          <Text
-            style={{
-              alignSelf: 'center',
-              color: '#00FFFF',
-              textAlign: 'center',
-              fontSize: 16,
-              fontWeight: '400',
-            }}
-          >
-            Tanda Tangan Disini
-          </Text>
-          <Text
-            style={{
-              alignSelf: 'center',
-              color: 'black',
-              textAlign: 'center',
-              fontSize: 12,
-              fontWeight: '400',
-            }}
-          >
-            (Wajib Pajak)
-          </Text>
-
-          <TouchableOpacity
-            onPress={() => {
-              saveSurvey();
-            }}
-            style={{
-              justifyContent: 'center',
-              marginEnd: 8,
-              marginStart: 8,
-              marginBottom: 8,
-              flexDirection: 'column',
-              marginTop: 16,
-              padding: 8,
-              backgroundColor: '#669beb',
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 18,
-                color: 'white',
-                fontWeight: '600',
-                alignSelf: 'center',
-              }}
-            >
-              Simpan
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              clearSignature();
-            }}
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              marginEnd: 8,
-              marginBottom: viewHeight / 5,
-            }}
-          >
-            <Icon2
-              name="undo"
-              style={{
-                margin: 8,
-              }}
-              color={'black'}
-              size={24}
-            />
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </Dialog>
       <Dialog
         isVisible={openDialog1}
@@ -1576,90 +1569,98 @@ export default function FormSurvey({ navigation, route }) {
         </View>
       </Dialog>
 
-      <Dialog isVisible={openDialog4}>
+      <Dialog
+        overlayStyle={{
+          flexDirection: 'column',
+          padding: 24,
+          height: viewHeight / 4.5,
+        }}
+        isVisible={openDialog4}
+      >
+        <Text
+          style={[
+            style.styleInput,
+            {
+              color: 'black',
+              textAlign: 'center',
+              fontSize: 14,
+              fontFamily: fontsCustom.primary[700],
+            },
+          ]}
+        >
+          Apakah Anda yakin Ingin Menyimpan Data ini?
+        </Text>
         <View
           style={{
-            flexDirection: 'column',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
             padding: 4,
-
-            height: 125,
           }}
         >
-          <Text
-            style={[
-              style.styleInput,
-              {
-                color: 'black',
-                fontWeight: '700',
-              },
-            ]}
-          >
-            Apakah Anda yakin Ingin Menyimpan Data ini?
-          </Text>
-          <View
+          <TouchableOpacity
+            onPress={() => {
+              setOpenDialog4(false);
+            }}
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              height: 35,
+              marginBottom: 16,
+              marginStart: 8,
+              marginEnd: 4,
               padding: 4,
             }}
           >
-            <TouchableOpacity
-              onPress={() => {
-                setOpenDialog4(false);
-              }}
-              style={{
-                flexDirection: 'column',
-                justifyContent: 'center',
-                height: 45,
-                marginStart: 8,
-                marginEnd: 4,
-                padding: 4,
-              }}
+            <Text
+              style={[
+                style.styleInput,
+                {
+                  fontSize: 12,
+                  fontFamily: fontsCustom.primary[700],
+                  color: 'gray',
+                },
+              ]}
             >
-              <Text
-                style={[
-                  style.styleInput,
-                  {
-                    fontWeight: '700',
-                    color: 'gray',
-                  },
-                ]}
-              >
-                Batal
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                updateData();
-              }}
-              style={{
-                height: 45,
-                marginStart: 4,
-                marginEnd: 8,
-                padding: 4,
-                flexDirection: 'column',
-                justifyContent: 'center',
-              }}
+              Batal
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              updateData();
+            }}
+            style={{
+              height: 35,
+              marginStart: 4,
+              marginEnd: 8,
+              backgroundColor: colorApp.button.primary,
+              borderRadius: 8,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text
+              style={[
+                style.styleInput,
+                {
+                  fontSize: 12,
+                  fontFamily: fontsCustom.primary[700],
+                  color: 'white',
+                },
+              ]}
             >
-              <Text
-                style={[
-                  style.styleInput,
-                  {
-                    fontWeight: '700',
-                    color: colorApp.button.primary,
-                  },
-                ]}
-              >
-                Simpan Data
-              </Text>
-            </TouchableOpacity>
-          </View>
+              Simpan Data
+            </Text>
+          </TouchableOpacity>
         </View>
       </Dialog>
-      <BottomSheet  isVisible={openBottom} onBackdropPress={()=>{
-  setOpenBottom(false);
-}}>
- <View
+      <BottomSheet
+        isVisible={openBottom}
+        onBackdropPress={() => {
+          setOpenBottom(false);
+        }}
+      >
+        <View
           style={{
             backgroundColor: 'white',
             flexDirection: 'column',
@@ -1671,7 +1672,7 @@ export default function FormSurvey({ navigation, route }) {
           <TouchableOpacity
             onPress={() => {
               setOpenBottom(false);
-             pickImage()
+              pickImage();
             }}
             style={[
               style.btnBottom,
@@ -1691,15 +1692,13 @@ export default function FormSurvey({ navigation, route }) {
             ]}
             onPress={() => {
               setOpenBottom(false);
-             pickGalery();
+              pickGalery();
             }}
           >
             <Text style={style.textBtn}>Ambil dari Galeri</Text>
           </TouchableOpacity>
-         
         </View>
-
-</BottomSheet>
+      </BottomSheet>
     </View>
   );
 }
@@ -1726,7 +1725,7 @@ const style = StyleSheet.create({
     backgroundColor: '#dadce0',
     borderRadius: 8,
     marginTop: 4,
-    height:50,
+    height: 50,
   },
   gap: {
     color: 'grey',
@@ -1741,7 +1740,7 @@ const style = StyleSheet.create({
     marginEnd: 8,
     flex: 1,
     fontSize: 14,
-    fontWeight: '400',
+
     color: 'black',
     paddingTop: 8,
     paddingBottom: 8,

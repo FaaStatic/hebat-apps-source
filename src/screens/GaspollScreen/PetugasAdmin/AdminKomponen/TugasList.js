@@ -748,18 +748,16 @@ const TugasList = ({ navigation, route }) => {
         overlayStyle={{
           borderRadius: 8,
           backgroundColor: 'white',
-          padding: 16,
+          padding: 24,
           flexDirection: 'column',
           justifyContent: 'center',
-          height:200,
-          width:300
         }}
         isVisible={confirmDialog}
       >
         <Text
           style={{
             alignSelf: 'center',
-            fontSize: 16,
+            fontSize: 14,
             color: 'black',
             textAlign: 'center',
             fontFamily: fontsCustom.primary[500],
@@ -790,7 +788,7 @@ const TugasList = ({ navigation, route }) => {
             <Text
               style={{
                 alignSelf: 'center',
-                fontSize: 14,
+                fontSize: 12,
                 padding: 4,
                 color: 'black',
                 textAlign: 'center',
@@ -822,8 +820,9 @@ const TugasList = ({ navigation, route }) => {
             <Text
               style={{
                 alignSelf: 'center',
-                fontSize: 14,
+                fontSize: 12,
                 color: 'white',
+                fontFamily:fontsCustom.primary[700],
                 textAlign: 'center',
               }}
             >
