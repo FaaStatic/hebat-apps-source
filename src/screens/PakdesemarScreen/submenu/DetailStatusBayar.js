@@ -15,6 +15,12 @@ export default DetailStatusBayar = ({ navigation, route }) => {
   const { data } = route.params;
   const [nomor, setNomor] = useState('');
   const [convert, setConvert] = useState(true);
+  const [dot, setDot] = useState(true);
+  const [dot1, setDot1] = useState(true);
+  const [dot2, setDot2] = useState(true);
+  const [dot3, setDot3] = useState(true);
+  const [dot4, setDot4] = useState(true);
+  const [dot5, setDot5] = useState(true);
   const [loading, setLoading] = useState(false);
   const [detail, setDetail] = useState('');
   const prosesCekStatus = async (id) => {
@@ -86,13 +92,65 @@ export default DetailStatusBayar = ({ navigation, route }) => {
     }
   };
   const optionSetNomor = (val) => {
-    if (val.length !== 18) {
-      val.length <= 2 && setConvert(true)
-      setNomor(val)
+    if (val.length == 2) {
+      if (dot == true) {
+        setDot(false)
+        let nomor = `${val}.`
+        setNomor(nomor)
+      } else {
+        setNomor(val)
+        setDot(true)
+      }
+    } else if (val.length == 5) {
+      if (dot1 == true) {
+        setDot1(false)
+        let nomor = `${val}.`
+        setNomor(nomor)
+      } else {
+        setNomor(val)
+        setDot1(true)
+      }
+    } else if (val.length == 9) {
+      if (dot2 == true) {
+        setDot2(false)
+        let nomor = `${val}.`
+        setNomor(nomor)
+      } else {
+        setNomor(val)
+        setDot2(true)
+      }
+    } else if (val.length == 13) {
+      if (dot3 == true) {
+        setDot3(false)
+        let nomor = `${val}.`
+        setNomor(nomor)
+      } else {
+        setNomor(val)
+        setDot3(true)
+      }
+    } else if (val.length == 17) {
+      if (dot4 == true) {
+        setDot4(false)
+        let nomor = `${val}.`
+        setNomor(nomor)
+      } else {
+        setNomor(val)
+        setDot4(true)
+      }
+    } else if (val.length == 22) {
+      if (dot5 == true) {
+        setDot5(false)
+        let nomor = `${val}.`
+        setNomor(nomor)
+      } else {
+        setNomor(val)
+        setDot5(true)
+      }
+    } else if (val.length == 25) {
+      // MessageUtil.warningMessage('Batas maksimal karakter!')
+      console.log('no action, max karakter!!')
     } else {
-      let nomor = convert == true ? NomorNOPFormat(val) : val
-      setNomor(nomor)
-      setConvert(false)
+      setNomor(val)
     }
   }
   const onNavigateDetailRiwayat = (data) => {

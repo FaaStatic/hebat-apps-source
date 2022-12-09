@@ -62,6 +62,20 @@
 				<key>NSIncludesSubdomains</key>
 				<true/>
 			</dict>
+			<key>eretribusi.semarangkota.go.id</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>bimaqris.bankjateng.co.id</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 		</dict>
 	</dict>
 	<key>UIFileSharingEnabled</key>

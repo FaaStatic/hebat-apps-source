@@ -44,7 +44,7 @@ const menuPakdeSemar = [
   {
     logo: IcStsOnline,
     name: 'STS Online',
-    link: '',
+    link: 'https://eretribusi.semarangkota.go.id',
   },
   {
     logo: IcMainMenuSumpah,
