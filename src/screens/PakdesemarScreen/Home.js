@@ -71,7 +71,6 @@ export default function Home({ navigation, route }) {
           flex: 1,
           alignItems: 'center',
           paddingVertical: 8,
-          paddingHorizontal: 1,
         }}
         onPress={() => onPressMenu(item)}
       >
@@ -90,7 +89,7 @@ export default function Home({ navigation, route }) {
         <Gap height={4} />
         <Text
           style={{
-            fontSize: 10,
+            fontSize: 9,
             color: colorApp.black,
             textAlign: 'center',
             fontFamily: fontsCustom.primary[700],
