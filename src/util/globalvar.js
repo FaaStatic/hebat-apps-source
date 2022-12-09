@@ -42,6 +42,7 @@ const fontsCustom = {
   },
 };
 
+
 const firebaseConfig = {
   apiKey: 'AIzaSyBTnDJ5qVv8E7GwhnIkBsvZtgNQF_g9Y-k',
   authDomain: 'bapendaapps.firebaseapp.com',

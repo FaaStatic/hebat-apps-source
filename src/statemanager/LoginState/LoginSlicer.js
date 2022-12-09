@@ -45,7 +45,7 @@ export const loginProcess = (params, navigation) => async (dispatch) => {
           GeolocationUtil.accessLocation();
           BackgroundLocationServices.startBackgroundServices();
           setTimeout(() => {
-            navigation.replace('BerandaGaspoll');
+            navigation.replace('BerandaMitra');
             clearTimeout();
           }, 1000);
           console.log(SessionManager.GetAsObject(stringApp.session));

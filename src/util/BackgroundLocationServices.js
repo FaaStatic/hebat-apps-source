@@ -28,7 +28,7 @@ const options = {
     type: 'mipmap',
   },
   color: '#ffff',
-  linkingURI: '', // See Deep Linking for more info
+  linkingURI: 'hebatapp://mitra', // See Deep Linking for more info
   parameters: {
     delay: 300000,
   },

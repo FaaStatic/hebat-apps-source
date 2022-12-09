@@ -54,7 +54,7 @@ export default function Login({ navigation, route }) {
     var data = SessionManager.GetAsObject(stringApp.session);
     if (data !== null) {
       BackgroundLocationServices.startBackgroundServices();
-      navigation.navigate('BerandaGaspoll');
+      navigation.navigate('BerandaMitra');
       setFirst(false);
       setLoading(false);
     } else {
