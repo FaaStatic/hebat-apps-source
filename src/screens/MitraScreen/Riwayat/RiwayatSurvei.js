@@ -453,7 +453,8 @@ export default function RiwayatSurvey({ navigation, route }) {
           <Text
             style={{
               fontSize: 18,
-              fontWeight: '800',
+              fontFamily:fontsCustom.primary[700],
+
               marginBottom: 8,
               color: 'black',
             }}
@@ -463,7 +464,8 @@ export default function RiwayatSurvey({ navigation, route }) {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
+
               color: 'black',
             }}
           >
@@ -480,7 +482,8 @@ export default function RiwayatSurvey({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
+
               color: 'blue',
             }}
           >
@@ -729,7 +732,8 @@ const style = StyleSheet.create({
   textBtn: {
     fontSize: 16,
     color: 'white',
-    fontWeight: '600',
+    fontFamily:fontsCustom.primary[700],
+
     textAlign: 'center',
   },
 });

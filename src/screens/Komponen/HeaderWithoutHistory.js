@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, StatusBar, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, StatusBar, StyleSheet, Text, Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
 import { colorApp,fontsCustom } from '../../util/globalvar';
@@ -55,13 +55,13 @@ const style = StyleSheet.create({
   textTitle: {
     fontSize: 20,
     color: 'white',
-    fontWeight: '700',
-    width:200,
+    fontFamily:fontsCustom.primary[700],
+    width:250,
   },
   buttonRiwayat: {
     borderRadius: 8,
     height: StatusBar.currentHeight,
-    width: 125,
+    width: Platform.OS === "ios" ?  115 : 125,
     marginEnd: 16,
     padding: Platform.OS === 'ios' ? 8 : 0,
     backgroundColor: 'transparent',

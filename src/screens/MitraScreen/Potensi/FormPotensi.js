@@ -17,7 +17,7 @@ import Gaplist from '../../Komponen/GapList';
 import { Dialog } from '@rneui/themed';
 import { Api } from '../../../util/ApiManager';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -401,7 +401,8 @@ export default function FormPotensi({ navigation, route }) {
           paddingTop: 8,
         }}
       >
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>NPWPD</Text>
+        <Text style={{ fontSize: 16,fontFamily:fontsCustom.primary[700],
+ color: 'black' }}>NPWPD</Text>
         <View style={Style.backgroundTextInput}>
           <TextInput
             keyboardType="number-pad"
@@ -412,7 +413,8 @@ export default function FormPotensi({ navigation, route }) {
             }}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Nama Usaha</Text>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+ color: 'black' }}>Nama Usaha</Text>
         <View style={Style.backgroundTextInput}>
           <TextInput
             style={Style.textInput}
@@ -422,7 +424,8 @@ export default function FormPotensi({ navigation, route }) {
             }}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Alamat Usaha</Text>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+ color: 'black' }}>Alamat Usaha</Text>
         <View style={Style.backgroundTextInput}>
           <TextInput
             style={Style.textInput}
@@ -432,7 +435,8 @@ export default function FormPotensi({ navigation, route }) {
             }}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Kota</Text>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+ color: 'black' }}>Kota</Text>
         <TouchableOpacity
           style={Style.backgroundTextInput}
           onPress={() => {
@@ -442,7 +446,8 @@ export default function FormPotensi({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
+
               color: 'black',
               paddingTop: 8,
               paddingBottom: 8,
@@ -451,7 +456,8 @@ export default function FormPotensi({ navigation, route }) {
             {kota === '' ? '...' : kota}
           </Text>
         </TouchableOpacity>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Kecamatan</Text>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+color: 'black' }}>Kecamatan</Text>
         <TouchableOpacity
           style={Style.backgroundTextInput}
           onPress={() => {
@@ -461,7 +467,8 @@ export default function FormPotensi({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
+
               color: 'black',
               paddingTop: 8,
               paddingBottom: 8,
@@ -470,7 +477,8 @@ export default function FormPotensi({ navigation, route }) {
             {kecamatan === '' ? '...' : kecamatan}
           </Text>
         </TouchableOpacity>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Kelurahan</Text>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+ color: 'black' }}>Kelurahan</Text>
         <TouchableOpacity
           style={Style.backgroundTextInput}
           onPress={() => {
@@ -480,7 +488,8 @@ export default function FormPotensi({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
+
               color: 'black',
               paddingTop: 8,
               paddingBottom: 8,
@@ -490,7 +499,8 @@ export default function FormPotensi({ navigation, route }) {
           </Text>
         </TouchableOpacity>
         <Gaplist />
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>NIK Pemilik Usaha</Text>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+ color: 'black' }}>NIK Pemilik Usaha</Text>
         <View style={Style.backgroundTextInput}>
           <TextInput
             style={Style.textInput}
@@ -501,7 +511,8 @@ export default function FormPotensi({ navigation, route }) {
             }}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Nama Pemilik Usaha</Text>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+ color: 'black' }}>Nama Pemilik Usaha</Text>
         <View style={Style.backgroundTextInput}>
           <TextInput
             style={Style.textInput}
@@ -511,7 +522,8 @@ export default function FormPotensi({ navigation, route }) {
             }}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+ color: 'black' }}>
           Alamat Pemilik Usaha
         </Text>
         <View style={Style.backgroundTextInput}>
@@ -523,7 +535,8 @@ export default function FormPotensi({ navigation, route }) {
             }}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+ color: 'black' }}>
           Telepon Pemilik Usaha
         </Text>
         <View style={Style.backgroundTextInput}>
@@ -534,12 +547,14 @@ export default function FormPotensi({ navigation, route }) {
             onChangeText={(txt) => setOwnerPhone(txt)}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Klasifikasi Usaha</Text>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+color: 'black' }}>Klasifikasi Usaha</Text>
         <View style={Style.backgroundTextInput}>
           <TextInput style={Style.textInput} value={klasifikasiUsaha} editable={false} />
         </View>
         <Gaplist />
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+color: 'black' }}>
           Pendapatan Per Bulan (Rp)
         </Text>
         <View style={Style.backgroundTextInput}>
@@ -557,7 +572,8 @@ export default function FormPotensi({ navigation, route }) {
             style={Style.textInput}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+ color: 'black' }}>
           Pajak Per Bulan (Rp)
         </Text>
         <View style={Style.backgroundTextInput}>
@@ -575,7 +591,8 @@ export default function FormPotensi({ navigation, route }) {
             style={Style.textInput}
           />
         </View>
-        <Text style={{ fontSize: 16, fontWeight: '800', color: 'black' }}>Petugas</Text>
+        <Text style={{ fontSize: 16,             fontFamily:fontsCustom.primary[700],
+color: 'black' }}>Petugas</Text>
         <View style={Style.backgroundTextInput}>
           <TextInput value={sesiAkun} editable={false} style={Style.textInput} />
         </View>
@@ -615,7 +632,8 @@ export default function FormPotensi({ navigation, route }) {
               Style.textInput,
               {
                 alignSelf: 'center',
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
                 marginBottom: 8,
               },
             ]}
@@ -651,7 +669,8 @@ export default function FormPotensi({ navigation, route }) {
               Style.textInput,
               {
                 alignSelf: 'center',
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
                 marginBottom: 8,
               },
             ]}
@@ -687,7 +706,8 @@ export default function FormPotensi({ navigation, route }) {
               Style.textInput,
               {
                 alignSelf: 'center',
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
                 marginBottom: 8,
               },
             ]}
@@ -740,6 +760,7 @@ const Style = StyleSheet.create({
     alignSelf: 'center',
     color: 'white',
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily:fontsCustom.primary[700],
+
   },
 });

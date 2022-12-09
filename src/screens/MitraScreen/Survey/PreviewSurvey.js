@@ -23,7 +23,7 @@ import { Api } from '../../../util/ApiManager';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { HeaderWithoutHistory } from '../../Komponen/HeaderWithoutHistory';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
@@ -33,8 +33,8 @@ import RNFetchBlob from 'rn-fetch-blob';
 
 const { height: viewHeight, width: viewWidth } = Dimensions.get('window');
 
-var latitude = 0;
-var longitude = 0;
+var latitude = -6.966667;
+var longitude = 110.416664;
 const limitlatitudeDelta = 0.00089279988035873;
 const limitLongitudeDelta = 0.0012991949915885925;
 
@@ -61,10 +61,10 @@ const PreviewSurvey = ({ navigation, route }) => {
   const [savingFileData, setSavingFileData] = useState([]);
   const [loadingField, setLoadingField] = useState(false);
   const [mapState, setMapState] = useState({
-    latitude: Number(modelData.latitude),
-    longitude: Number(modelData.longitude),
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitude: -6.966667,
+    longitude: 110.416664,
+    latitudeDelta: limitlatitudeDelta,
+    longitudeDelta:limitLongitudeDelta,
   });
   const [checkBadanUsaha, setCheckBadanUsaha] = useState(false);
   const [checkBadanPribadi, setCheckBadanPribadi] = useState(false);
@@ -119,6 +119,7 @@ const PreviewSurvey = ({ navigation, route }) => {
     setOwnerPhone(modelData.no_telp_pemilik);
     setFileList(modelData.image);
     setSavingFileData(modelData.savingImg);
+ 
     switch (modelData.bidang_usaha) {
       case 'Badan Usaha':
         checkBadanUsahaFunc();
@@ -528,7 +529,8 @@ const PreviewSurvey = ({ navigation, route }) => {
                   {
                     fontSize: 14,
                     alignSelf: 'center',
-                    fontWeight: '400',
+                    fontFamily:fontsCustom.primary[400],
+
                     marginTop: 4,
                     marginBottom: 4,
                   },
@@ -551,7 +553,8 @@ const PreviewSurvey = ({ navigation, route }) => {
                   {
                     fontSize: 14,
                     alignSelf: 'center',
-                    fontWeight: '400',
+                    fontFamily:fontsCustom.primary[400],
+
                     marginTop: 4,
                     marginBottom: 4,
                   },
@@ -574,7 +577,8 @@ const PreviewSurvey = ({ navigation, route }) => {
                   {
                     fontSize: 14,
                     alignSelf: 'center',
-                    fontWeight: '400',
+                    fontFamily:fontsCustom.primary[400],
+
                     marginTop: 4,
                     marginBottom: 4,
                   },
@@ -686,7 +690,8 @@ const PreviewSurvey = ({ navigation, route }) => {
                 style.textInput,
                 {
                   marginBottom: 16,
-                  fontWeight: '800',
+                  fontFamily:fontsCustom.primary[700],
+
                   fontSize: 16,
                 },
               ]}
@@ -702,6 +707,9 @@ const PreviewSurvey = ({ navigation, route }) => {
                 setOpen={false}
                 placeholder={'Pilih Kategori Klasifikasi Usaha'}
                 setValue={setValueCategory}
+                placeholderStyle={{
+                  fontFamily:fontsCustom.primary[400],
+                }}
                 containerStyle={{
                   backgroundColor: 'white',
                 }}
@@ -718,7 +726,8 @@ const PreviewSurvey = ({ navigation, route }) => {
                   style.textInput,
                   {
                     marginBottom: 16,
-                    fontWeight: '500',
+                    fontFamily:fontsCustom.primary[500],
+
                     fontSize: 12,
                   },
                 ]}
@@ -750,7 +759,8 @@ const PreviewSurvey = ({ navigation, route }) => {
               style.textInput,
               {
                 marginBottom: 8,
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
                 fontSize: 16,
                 marginLeft: 24,
               },
@@ -845,7 +855,8 @@ const PreviewSurvey = ({ navigation, route }) => {
                 marginTop: 4,
                 fontSize: 12,
                 color: 'black',
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
+
                 alignSelf: 'center',
               }}
             >
@@ -856,7 +867,8 @@ const PreviewSurvey = ({ navigation, route }) => {
                 marginTop: 4,
                 fontSize: 12,
                 color: 'black',
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
+
                 alignSelf: 'center',
               }}
             >
@@ -868,7 +880,8 @@ const PreviewSurvey = ({ navigation, route }) => {
             style={[
               style.textInput,
               {
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
                 fontSize: 16,
                 marginLeft: 24,
               },
@@ -1059,7 +1072,8 @@ const PreviewSurvey = ({ navigation, route }) => {
             style={{
               fontSize: 18,
               color: 'white',
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
+
               alignSelf: 'center',
             }}
           >
@@ -1112,7 +1126,8 @@ const PreviewSurvey = ({ navigation, route }) => {
               style.textInput,
               {
                 alignSelf: 'center',
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
                 marginBottom: 8,
                 textAlign: 'center',
               },
@@ -1149,7 +1164,8 @@ const PreviewSurvey = ({ navigation, route }) => {
               style.textInput,
               {
                 alignSelf: 'center',
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
                 marginBottom: 8,
                 textAlign: 'center',
               },
@@ -1186,7 +1202,8 @@ const PreviewSurvey = ({ navigation, route }) => {
               style.textInput,
               {
                 alignSelf: 'center',
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
                 marginBottom: 8,
                 textAlign: 'center',
               },
@@ -1301,7 +1318,8 @@ const style = StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     color: 'black',
-    fontWeight: '700',
+    fontFamily:fontsCustom.primary[700],
+
     width: '100%',
     paddingTop: 4,
     paddingBottom: 4,
@@ -1328,7 +1346,8 @@ const style = StyleSheet.create({
     marginEnd: 8,
     flex: 1,
     fontSize: 14,
-    fontWeight: '400',
+    fontFamily:fontsCustom.primary[400],
+
     color: 'black',
     paddingTop: 8,
     paddingBottom: 8,
@@ -1343,7 +1362,7 @@ const style = StyleSheet.create({
   textBtn: {
     fontSize: 16,
     color: 'white',
-    fontWeight: '600',
+    fontFamily:fontsCustom.primary[700],
     textAlign: 'center',
   },
 });

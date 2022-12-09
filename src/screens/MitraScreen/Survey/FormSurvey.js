@@ -33,8 +33,8 @@ import RNFetchBlob from 'rn-fetch-blob';
 
 const { height: viewHeight, width: viewWidth } = Dimensions.get('window');
 
-var latitude = 0;
-var longitude = 0;
+var latitude = -6.966667;
+var longitude = 110.416664;
 const limitlatitudeDelta = 0.00089279988035873;
 const limitLongitudeDelta = 0.0012991949915885925;
 
@@ -61,11 +61,12 @@ export default function FormSurvey({ navigation, route }) {
   const [savingFileData, setSavingFileData] = useState([]);
   const [loadingField, setLoadingField] = useState(false);
   const [mapState, setMapState] = useState({
-    latitude: Number(modelData.latitude),
-    longitude: Number(modelData.longitude),
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitude: -6.966667,
+    longitude: 110.416664,
+    latitudeDelta: limitlatitudeDelta,
+    longitudeDelta:limitLongitudeDelta,
   });
+
   const [checkBadanUsaha, setCheckBadanUsaha] = useState(false);
   const [checkBadanPribadi, setCheckBadanPribadi] = useState(false);
   const [openDialog1, setOpenDialog1] = useState(false);
@@ -190,6 +191,12 @@ export default function FormSurvey({ navigation, route }) {
     setOwnerAdress(modelData.alamat_pemilik);
     setOwnerPhone(modelData.no_telp);
     setFileList(modelData.image);
+    setMapState({
+      latitude: Number(modelData.latitude),
+    longitude: Number(modelData.longitude),
+    latitudeDelta: limitlatitudeDelta,
+    longitudeDelta: limitLongitudeDelta,
+    });
 
     modelData.image.map((item) => {
       RNFetchBlob.config({
@@ -783,7 +790,7 @@ export default function FormSurvey({ navigation, route }) {
                   {
                     fontSize: 14,
                     alignSelf: 'center',
-                    fontWeight: '400',
+                    fontFamily:fontsCustom.primary[400],
                     marginTop: 4,
                     marginBottom: 4,
                   },
@@ -808,7 +815,8 @@ export default function FormSurvey({ navigation, route }) {
                   {
                     fontSize: 14,
                     alignSelf: 'center',
-                    fontWeight: '400',
+                    fontFamily:fontsCustom.primary[400],
+
                     marginTop: 4,
                     marginBottom: 4,
                   },
@@ -833,7 +841,8 @@ export default function FormSurvey({ navigation, route }) {
                   {
                     fontSize: 14,
                     alignSelf: 'center',
-                    fontWeight: '400',
+                    fontFamily:fontsCustom.primary[400],
+
                     marginTop: 4,
                     marginBottom: 4,
                   },
@@ -941,7 +950,8 @@ export default function FormSurvey({ navigation, route }) {
                 style.textInput,
                 {
                   marginBottom: 16,
-                  fontWeight: '800',
+                  fontFamily:fontsCustom.primary[700],
+
                   fontSize: 16,
                 },
               ]}
@@ -957,6 +967,9 @@ export default function FormSurvey({ navigation, route }) {
                 setOpen={setOpen}
                 placeholder={'Pilih Kategori Klasifikasi Usaha'}
                 setValue={setValueCategory}
+                placeholderStyle={{
+                  fontFamily:fontsCustom.primary[400],
+                }}
                 containerStyle={{
                   backgroundColor: 'white',
                 }}
@@ -973,7 +986,8 @@ export default function FormSurvey({ navigation, route }) {
                   style.textInput,
                   {
                     marginBottom: 16,
-                    fontWeight: '500',
+                    fontFamily:fontsCustom.primary[500],
+
                     fontSize: 12,
                   },
                 ]}
@@ -1004,7 +1018,8 @@ export default function FormSurvey({ navigation, route }) {
               style.textInput,
               {
                 marginBottom: 8,
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
                 fontSize: 16,
                 marginLeft: 24,
               },
@@ -1121,7 +1136,8 @@ export default function FormSurvey({ navigation, route }) {
                 marginTop: 4,
                 fontSize: 12,
                 color: 'black',
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
+
                 alignSelf: 'center',
               }}
             >
@@ -1132,7 +1148,8 @@ export default function FormSurvey({ navigation, route }) {
                 marginTop: 4,
                 fontSize: 12,
                 color: 'black',
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
+
                 alignSelf: 'center',
               }}
             >
@@ -1145,7 +1162,8 @@ export default function FormSurvey({ navigation, route }) {
               style={[
                 style.textInput,
                 {
-                  fontWeight: '800',
+                  fontFamily:fontsCustom.primary[700],
+
                   fontSize: 16,
                   marginLeft: 24,
                 },
@@ -1160,7 +1178,8 @@ export default function FormSurvey({ navigation, route }) {
                 style.textInput,
                 {
                   marginBottom: 8,
-                  fontWeight: '500',
+                  fontFamily:fontsCustom.primary[500],
+
                   fontSize: 14,
                   marginLeft: 24,
                 },
@@ -1426,7 +1445,8 @@ export default function FormSurvey({ navigation, route }) {
             style={{
               fontSize: 18,
               color: 'white',
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
+
               alignSelf: 'center',
             }}
           >
@@ -1479,7 +1499,8 @@ export default function FormSurvey({ navigation, route }) {
               style.textInput,
               {
                 alignSelf: 'center',
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
                 marginBottom: 8,
                 textAlign: 'center',
               },
@@ -1516,7 +1537,8 @@ export default function FormSurvey({ navigation, route }) {
               style.textInput,
               {
                 alignSelf: 'center',
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
                 marginBottom: 8,
                 textAlign: 'center',
               },
@@ -1553,7 +1575,8 @@ export default function FormSurvey({ navigation, route }) {
               style.textInput,
               {
                 alignSelf: 'center',
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
                 marginBottom: 8,
                 textAlign: 'center',
               },
@@ -1713,7 +1736,8 @@ const style = StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     color: 'black',
-    fontWeight: '700',
+    fontFamily:fontsCustom.primary[700],
+
     width: '100%',
     paddingTop: 4,
     paddingBottom: 4,
@@ -1755,7 +1779,8 @@ const style = StyleSheet.create({
   textBtn: {
     fontSize: 16,
     color: 'white',
-    fontWeight: '600',
+    fontFamily:fontsCustom.primary[700],
+
     textAlign: 'center',
   },
 });

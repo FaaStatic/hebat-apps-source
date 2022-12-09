@@ -18,7 +18,7 @@ import { Api } from '../../../util/ApiManager';
 import { MessageUtil } from '../../../util/MessageUtil';
 import LinearGradient from 'react-native-linear-gradient';
 import { useFocusEffect } from '@react-navigation/native';
-import { colorApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom } from '../../../util/globalvar';
 
 const { height: ViewHeight, width: ViewWidth } = Dimensions.get('window');
 export default function DaftarPotensi({ navigation, route }) {
@@ -273,7 +273,8 @@ export default function DaftarPotensi({ navigation, route }) {
             style={{
               alignSelf: 'center',
               fontSize: 16,
-              fontWeight: '800',
+              fontFamily:fontsCustom.primary[700],
+
               color: 'white',
             }}
           >
@@ -292,7 +293,8 @@ export default function DaftarPotensi({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
+
               color: 'black',
             }}
           >
@@ -301,7 +303,8 @@ export default function DaftarPotensi({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
+
               color: 'black',
             }}
           >
@@ -320,7 +323,8 @@ export default function DaftarPotensi({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
+
               color: 'black',
             }}
           >
@@ -329,7 +333,8 @@ export default function DaftarPotensi({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
+
               color: 'black',
             }}
           >
@@ -349,7 +354,8 @@ export default function DaftarPotensi({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
+
               color: 'black',
             }}
           >
@@ -358,7 +364,8 @@ export default function DaftarPotensi({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
+
               color: item.ket_status === 'Ya' ? 'green' : 'red',
             }}
           >

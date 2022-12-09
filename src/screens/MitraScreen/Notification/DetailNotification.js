@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { Image } from '@rneui/themed';
 import { Header } from '../../Komponen/Header';
+import { fontsCustom } from '../../../util/globalvar';
 export default function DetailNotification({ navigation, route }) {
   const { model } = route.params;
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function DetailNotification({ navigation, route }) {
         <Text
           style={{
             fontSize: 16,
-            fontWeight: '600',
+            fontFamily:fontsCustom.primary[700],
             color: 'black',
             marginTop: 8,
           }}
@@ -61,7 +62,7 @@ export default function DetailNotification({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
               color: 'black',
             }}
           >
@@ -71,7 +72,7 @@ export default function DetailNotification({ navigation, route }) {
         <Text
           style={{
             fontSize: 16,
-            fontWeight: '600',
+            fontFamily:fontsCustom.primary[700],
             color: 'black',
             marginTop: 8,
           }}
@@ -92,7 +93,8 @@ export default function DetailNotification({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
+
               color: 'black',
             }}
           >
@@ -102,7 +104,8 @@ export default function DetailNotification({ navigation, route }) {
         <Text
           style={{
             fontSize: 16,
-            fontWeight: '600',
+            fontFamily:fontsCustom.primary[700],
+
             color: 'black',
             marginTop: 8,
           }}
@@ -123,7 +126,8 @@ export default function DetailNotification({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
+
               color: 'black',
             }}
           >
@@ -133,7 +137,8 @@ export default function DetailNotification({ navigation, route }) {
         <Text
           style={{
             fontSize: 16,
-            fontWeight: '600',
+            fontFamily:fontsCustom.primary[700],
+
             color: 'black',
             marginTop: 8,
           }}
@@ -154,7 +159,8 @@ export default function DetailNotification({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
+
               color: 'black',
             }}
           >
@@ -164,7 +170,8 @@ export default function DetailNotification({ navigation, route }) {
         <Text
           style={{
             fontSize: 16,
-            fontWeight: '600',
+            fontFamily:fontsCustom.primary[700],
+
             color: 'black',
             marginTop: 8,
           }}

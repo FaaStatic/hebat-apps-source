@@ -432,7 +432,8 @@ const TugasList = ({ navigation, route }) => {
               color: colorApp.btnColor2,
               fontSize: 24,
               margin: 8,
-              fontWeight: '700',
+              fontFamily:fontsCustom.primary[700],
+
             }}
           >
             {type === 'monitoring' ? 'Tugas Monitoring' : 'Tugas Pendaftaran'}
@@ -472,7 +473,8 @@ const TugasList = ({ navigation, route }) => {
               <Text
                 style={{
                   fontSize: 14,
-                  fontWeight: '700',
+                  fontFamily:fontsCustom.primary[700],
+
                   color: 'black',
                 }}
               >
@@ -481,7 +483,8 @@ const TugasList = ({ navigation, route }) => {
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: '400',
+                  fontFamily:fontsCustom.primary[400],
+
                   color: 'grey',
                 }}
               >
@@ -516,7 +519,8 @@ const TugasList = ({ navigation, route }) => {
               <Text
                 style={{
                   fontSize: 14,
-                  fontWeight: '700',
+                  fontFamily:fontsCustom.primary[700],
+
                   color: 'black',
                 }}
               >
@@ -525,7 +529,8 @@ const TugasList = ({ navigation, route }) => {
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: '400',
+                  fontFamily:fontsCustom.primary[400],
+
                   color: 'grey',
                 }}
               >
@@ -590,7 +595,8 @@ const TugasList = ({ navigation, route }) => {
               style={{
                 fontSize: 14,
                 color: 'black',
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
+
               }}
             >
               Tambahkan Judul
@@ -599,7 +605,8 @@ const TugasList = ({ navigation, route }) => {
               style={{
                 fontSize: 12,
                 color: 'grey',
-                fontWeight: '400',
+                fontFamily:fontsCustom.primary[400],
+
               }}
             >
               Tulis judul kegiatan
@@ -634,7 +641,8 @@ const TugasList = ({ navigation, route }) => {
               style={{
                 fontSize: 14,
                 color: 'black',
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
+
               }}
             >
               Keterangan
@@ -643,7 +651,8 @@ const TugasList = ({ navigation, route }) => {
               style={{
                 fontSize: 12,
                 color: 'grey',
-                fontWeight: '400',
+                fontFamily:fontsCustom.primary[400],
+
               }}
             >
               {type === 'monitoring'
@@ -695,7 +704,8 @@ const TugasList = ({ navigation, route }) => {
                   textAlign: 'center',
                   alignSelf: 'center',
                   fontSize: 16,
-                  fontWeight: '600',
+                  fontFamily:fontsCustom.primary[700],
+
                   color: 'white',
                 }}
               >

@@ -5,7 +5,7 @@ import { HeaderWithoutHistory } from '../../Komponen/HeaderWithoutHistory';
 import Gaplist from '../../Komponen/GapList';
 import { CheckBox, Dialog } from '@rneui/themed';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import { Api } from '../../../util/ApiManager';
 import { PermissionUtil } from '../../../util/PermissionUtil';
 import { MessageUtil } from '../../../util/MessageUtil';
@@ -259,7 +259,7 @@ export default function PutusanPendaftaran({ navigation, route }) {
             style={{
               textAlign: 'center',
               fontSize: 14,
-              fontWeight: '300',
+              fontFamily:fontsCustom.primary[400],
               color: 'black',
               marginBottom: 8,
             }}
@@ -312,7 +312,8 @@ export default function PutusanPendaftaran({ navigation, route }) {
                   fontSize: 16,
                   color: 'white',
                   alignSelf: 'center',
-                  fontWeight: '800',
+                  fontFamily:fontsCustom.primary[700],
+
                 }}
               >
                 Isi Kelengkapan Data
@@ -330,7 +331,8 @@ export default function PutusanPendaftaran({ navigation, route }) {
                 style={{
                   fontSize: 16,
                   color: 'black',
-                  fontWeight: '600',
+                  fontFamily:fontsCustom.primary[700],
+
                 }}
               >
                 Keterangan
@@ -339,7 +341,8 @@ export default function PutusanPendaftaran({ navigation, route }) {
                 style={{
                   fontSize: 12,
                   color: 'grey',
-                  fontWeight: '400',
+                  fontFamily:fontsCustom.primary[400],
+
                 }}
               >
                 Tulis keterangan kenapa merchant menolak
@@ -390,7 +393,8 @@ export default function PutusanPendaftaran({ navigation, route }) {
                     fontSize: 16,
                     color: 'white',
                     alignSelf: 'center',
-                    fontWeight: '800',
+                    fontFamily:fontsCustom.primary[700],
+
                   }}
                 >
                   Simpan
@@ -416,7 +420,8 @@ export default function PutusanPendaftaran({ navigation, route }) {
                   fontSize: 16,
                   color: 'white',
                   alignSelf: 'center',
-                  fontWeight: '800',
+                  fontFamily:fontsCustom.primary[700],
+
                 }}
               >
                 Simpan
@@ -440,7 +445,8 @@ export default function PutusanPendaftaran({ navigation, route }) {
           <Text
             style={{
               fontSize: 18,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
+
               color: 'black',
             }}
           >
@@ -449,7 +455,8 @@ export default function PutusanPendaftaran({ navigation, route }) {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
+
               color: 'black',
               marginTop: 8,
             }}
@@ -529,7 +536,7 @@ const style = StyleSheet.create({
   },
   textTitle: {
     fontSize: 16,
-    fontWeight: '800',
+    fontFamily:fontsCustom.primary[700],
     color: 'black',
     marginBottom: 8,
   },

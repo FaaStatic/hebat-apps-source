@@ -286,7 +286,8 @@ const DataPetugasList = ({ navigation, route }) => {
                   <Text
                     style={{
                       fontSize: 16,
-                      fontWeight: '700',
+                      fontFamily:fontsCustom.primary[700],
+
                       color: 'black',
                     }}
                   >
@@ -295,7 +296,8 @@ const DataPetugasList = ({ navigation, route }) => {
                   <Text
                     style={{
                       fontSize: 14,
-                      fontWeight: '400',
+                      fontFamily:fontsCustom.primary[400],
+
                       color: 'black',
                     }}
                   >
@@ -329,7 +331,8 @@ const DataPetugasList = ({ navigation, route }) => {
               color: colorApp.btnColor2,
               fontSize: 24,
               margin: 8,
-              fontWeight: '700',
+              fontFamily:fontsCustom.primary[700],
+
             }}
           >
             Hubungi Petugas
@@ -369,7 +372,8 @@ const DataPetugasList = ({ navigation, route }) => {
               <Text
                 style={{
                   fontSize: 14,
-                  fontWeight: '700',
+                  fontFamily:fontsCustom.primary[700],
+
                   color: 'black',
                 }}
               >
@@ -378,7 +382,8 @@ const DataPetugasList = ({ navigation, route }) => {
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: '400',
+                  fontFamily:fontsCustom.primary[400],
+
                   color: 'grey',
                 }}
               >
@@ -443,7 +448,8 @@ const DataPetugasList = ({ navigation, route }) => {
               style={{
                 fontSize: 14,
                 color: 'black',
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
+
               }}
             >
               Tambahkan Judul
@@ -452,7 +458,8 @@ const DataPetugasList = ({ navigation, route }) => {
               style={{
                 fontSize: 12,
                 color: 'grey',
-                fontWeight: '400',
+                fontFamily:fontsCustom.primary[400],
+
               }}
             >
               Tulis judul kegiatan
@@ -487,7 +494,8 @@ const DataPetugasList = ({ navigation, route }) => {
               style={{
                 fontSize: 14,
                 color: 'black',
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
+
               }}
             >
               Keterangan
@@ -496,7 +504,8 @@ const DataPetugasList = ({ navigation, route }) => {
               style={{
                 fontSize: 12,
                 color: 'grey',
-                fontWeight: '400',
+                fontFamily:fontsCustom.primary[400],
+
               }}
             >
               Tulis keterangan tugas
@@ -546,7 +555,8 @@ const DataPetugasList = ({ navigation, route }) => {
                   textAlign: 'center',
                   alignSelf: 'center',
                   fontSize: 16,
-                  fontWeight: '600',
+                  fontFamily:fontsCustom.primary[700],
+
                   color: 'white',
                 }}
               >

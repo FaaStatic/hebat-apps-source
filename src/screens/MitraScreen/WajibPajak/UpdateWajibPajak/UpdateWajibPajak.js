@@ -16,7 +16,7 @@ import {
 import { Image, Input, Dialog, BottomSheet } from '@rneui/themed';
 import MapView, { Marker } from 'react-native-maps';
 import { Header } from '../../../Komponen/Header';
-import { colorApp, stringApp } from '../../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../../util/globalvar';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
 import { Api } from '../../../../util/ApiManager';
@@ -32,8 +32,8 @@ import { useFocusEffect } from '@react-navigation/native';
 var count = 0;
 const limit = 10;
 var firstload = true;
-var latitude = 0;
-var longitude = 0;
+var latitude = -6.966667;
+var longitude = 110.416664;
 const limitlatitudeDelta = 0.00089279988035873;
 const limitLongitudeDelta = 0.0012991949915885925;
 const { height: ViewHeight, width: ViewWidth } = Dimensions.get('window');
@@ -51,8 +51,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
   const [mapState, setMapState] = useState({
     latitude: -6.966667,
     longitude: 110.416664,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitudeDelta: limitlatitudeDelta,
+    longitudeDelta: limitLongitudeDelta,
   });
   const [openDialog, setOpenDialog] = useState(false);
   const [openDialog2, setOpenDialog2] = useState(false);
@@ -438,7 +438,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '700',
+              fontFamily:fontsCustom.primary[700],
+
               color: 'black',
               marginBottom: 16,
               width: 200,
@@ -449,7 +450,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
+
               color: 'black',
               marginBottom: 16,
               width: 200,
@@ -624,7 +626,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                   color: '#290736',
                   alignSelf: 'center',
                   textAlign: 'center',
-                  fontWeight: '800',
+                  fontFamily:fontsCustom.primary[700],
+
                   marginBottom: 4,
                   marginTop: 8,
                 }}
@@ -637,7 +640,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                   color: 'black',
                   alignSelf: 'center',
                   textAlign: 'center',
-                  fontWeight: '400',
+                  fontFamily:fontsCustom.primary[400],
+
                   marginBottom: 16,
                 }}
               >
@@ -649,7 +653,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                   color: 'black',
                   alignSelf: 'center',
                   textAlign: 'center',
-                  fontWeight: '400',
+                  fontFamily:fontsCustom.primary[400],
+
                   marginBottom: 8,
                 }}
               >
@@ -659,7 +664,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                 style={{
                   fontSize: 18,
                   color: 'black',
-                  fontWeight: '800',
+                  fontFamily:fontsCustom.primary[700],
                   marginBottom: 4,
                   marginStart: 16,
                 }}
@@ -670,7 +675,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                 style={{
                   fontSize: 12,
                   color: 'grey',
-                  fontWeight: '500',
+                  fontFamily:fontsCustom.primary[500],
+
                   marginStart: 16,
                   marginBottom: 16,
                 }}
@@ -781,7 +787,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                 style={{
                   fontSize: 18,
                   color: 'black',
-                  fontWeight: '800',
+                  fontFamily:fontsCustom.primary[700],
+
                   marginBottom: 4,
                   marginStart: 16,
                 }}
@@ -895,7 +902,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                     marginTop: 4,
                     fontSize: 12,
                     color: 'black',
-                    fontWeight: '700',
+                    fontFamily:fontsCustom.primary[700],
+
                     alignSelf: 'center',
                   }}
                 >
@@ -906,7 +914,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                     marginTop: 4,
                     fontSize: 12,
                     color: 'black',
-                    fontWeight: '700',
+                    fontFamily:fontsCustom.primary[700],
+
                     alignSelf: 'center',
                   }}
                 >
@@ -932,7 +941,7 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                   style={{
                     fontSize: 18,
                     color: 'white',
-                    fontWeight: '600',
+                    fontFamily:fontsCustom.primary[700],
                     alignSelf: 'center',
                   }}
                 >
@@ -1005,7 +1014,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
             style={{
               textAlign: 'center',
               fontSize: 16,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
+
               color: 'black',
               marginTop: 8,
               marginBottom: 8,
@@ -1040,7 +1050,8 @@ const UpdateWajibPajak = ({ navigation, route }) => {
                   textAlign: 'center',
                   color: 'black',
                   fontSize: 14,
-                  fontWeight: '600',
+                  fontFamily:fontsCustom.primary[700],
+
                 }}
               >
                 Cancel
@@ -1093,7 +1104,8 @@ const style = StyleSheet.create({
   textBtn: {
     fontSize: 16,
     color: 'white',
-    fontWeight: '600',
+    fontFamily:fontsCustom.primary[700],
+
     textAlign: 'center',
   },
 });

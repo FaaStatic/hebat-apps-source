@@ -14,7 +14,7 @@ import Lottie from 'lottie-react-native';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { Api } from '../../../util/ApiManager';
 import moment from 'moment/moment';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import { Header } from '../../Komponen/Header';
 import GapList from '../../Komponen/GapList';
@@ -101,7 +101,7 @@ const Monitoring = ({ navigation, route }) => {
               fontSize: 16,
               color: 'black',
               marginBottom: 8,
-              fontWeight: '700',
+              fontFamily:fontsCustom.primary[700],
             }}
           >
             {item.nama}

@@ -50,7 +50,7 @@ export const Header = ({ Title, back, action = null }) => {
               style={[
                 style.textTitle,
                 {
-                  fontWeight:'700',
+                  fontFamily:fontsCustom.primary[700],
                   fontSize: 14,
                   textAlign: 'center',
                 },
@@ -76,13 +76,13 @@ const style = StyleSheet.create({
   textTitle: {
     fontSize: 18,
     color: 'white',
-    fontWeight: '700',
-    width:175,
+    fontFamily:fontsCustom.primary[700],
+    width:200,
   },
   buttonRiwayat: {
     borderRadius: 8,
     height: StatusBar.currentHeight,
-    width: 125,
+    width: Platform.OS === "ios" ?  115 : 125,
     alignItems:'center',
     marginEnd: 16,
     padding: Platform.OS === 'ios' ? 8 : 0,

@@ -11,7 +11,7 @@ import {
   InteractionManager
 } from 'react-native';
 import { Api } from '../../../util/ApiManager';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import GapList from '../../Komponen/GapList';
@@ -186,7 +186,8 @@ const Notification = ({ navigation, route }) => {
             style={{
               fontSize: 16,
               color: 'black',
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
+
             }}
           >
             {item.nama}

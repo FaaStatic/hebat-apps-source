@@ -32,8 +32,8 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const { height: viewHeight, width: viewWidth } = Dimensions.get('window');
 
-var latitude = 0;
-var longitude = 0;
+var latitude = -6.966667;
+var longitude = 110.416664;
 const limitlatitudeDelta = 0.00089279988035873;
 const limitLongitudeDelta = 0.0012991949915885925;
 
@@ -58,8 +58,8 @@ export default function EditData({ navigation, route }) {
   const [mapState, setMapState] = useState({
     latitude: -6.966667,
     longitude: 110.416664,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitudeDelta: limitlatitudeDelta,
+    longitudeDelta:limitLongitudeDelta,
   });
 
   const mapsLayout = useRef();
@@ -180,6 +180,12 @@ export default function EditData({ navigation, route }) {
     setPhone('');
     latitude = -6.966667;    
     longitude = 110.416664;
+    setMapState({
+      latitude: latitude,
+      longitude: longitude,
+      latitudeDelta: limitlatitudeDelta,
+      longitudeDelta: limitLongitudeDelta,
+    });
     setFileList([]);
     setListData([]);
     setSavingFileData([]);
@@ -496,7 +502,7 @@ export default function EditData({ navigation, route }) {
                 style.textInput,
                 {
                   marginBottom: 16,
-                  fontWeight: '800',
+                  fontFamily:fontsCustom.primary[700],
                   fontSize: 16,
                 },
               ]}
@@ -510,6 +516,9 @@ export default function EditData({ navigation, route }) {
                 value={valueCategory}
                 items={listData}
                 setOpen={setOpen}
+                placeholderStyle={{
+                  fontFamily:fontsCustom.primary[400],
+                }}
                 setValue={setValueCategory}
                 placeholder={'Pilih Kategori Pajak'}
                 containerStyle={{
@@ -528,7 +537,7 @@ export default function EditData({ navigation, route }) {
                   style.textInput,
                   {
                     marginBottom: 16,
-                    fontWeight: '500',
+                    fontFamily:fontsCustom.primary[500],
                     fontSize: 12,
                     marginStart:16,
                   },
@@ -544,7 +553,7 @@ export default function EditData({ navigation, route }) {
               style.textInput,
               {
                 marginBottom: 16,
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
                 fontSize: 16,
                 marginLeft: 24,
               },
@@ -654,7 +663,7 @@ export default function EditData({ navigation, route }) {
                 marginTop: 4,
                 fontSize: 12,
                 color: 'black',
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
                 alignSelf: 'center',
               }}
             >
@@ -665,7 +674,7 @@ export default function EditData({ navigation, route }) {
                 marginTop: 4,
                 fontSize: 12,
                 color: 'black',
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
                 alignSelf: 'center',
               }}
             >
@@ -676,7 +685,7 @@ export default function EditData({ navigation, route }) {
             style={[
               style.textInput,
               {
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
                 fontSize: 16,
                 marginLeft: 24,
               },
@@ -689,7 +698,7 @@ export default function EditData({ navigation, route }) {
               style.textInput,
               {
                 marginBottom: 8,
-                fontWeight: '500',
+                fontFamily:fontsCustom.primary[500],
                 fontSize: 14,
                 marginLeft: 24,
               },
@@ -813,6 +822,7 @@ export default function EditData({ navigation, route }) {
                 alignSelf: 'center',
                 fontSize: 18,
                 color: 'white',
+                fontFamily:fontsCustom.primary[500],
               }}
             >
               Simpan
@@ -940,7 +950,7 @@ const style = StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     color: 'black',
-    fontWeight: '700',
+    fontFamily:fontsCustom.primary[700],
     width: '100%',
   },
   textInputContainer: {
@@ -966,7 +976,7 @@ const style = StyleSheet.create({
     marginEnd: 8,
     flex: 1,
     fontSize: 14,
-    fontWeight: '400',
+    fontFamily:fontsCustom.primary[400],
     color: 'black',
   },
   btnBottom: {
@@ -979,7 +989,7 @@ const style = StyleSheet.create({
   textBtn: {
     fontSize: 16,
     color: 'white',
-    fontWeight: '600',
+    fontFamily:fontsCustom.primary[700],
     textAlign: 'center',
   },
 });

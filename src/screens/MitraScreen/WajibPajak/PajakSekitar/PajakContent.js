@@ -22,7 +22,7 @@ import { Image, Input } from '@rneui/themed';
 import EvilIcon from 'react-native-vector-icons/dist/EvilIcons';
 import { StatusBar } from 'react-native';
 import { Api } from '../../../../util/ApiManager';
-import { colorApp } from '../../../../util/globalvar';
+import { colorApp, fontsCustom } from '../../../../util/globalvar';
 import { MessageUtil } from '../../../../util/MessageUtil';
 import GapList from '../../../Komponen/GapList';
 import { useSelector } from 'react-redux';
@@ -426,7 +426,8 @@ const PajakContent = forwardRef((props, ref) => {
                       style={{
                         fontSize: 16,
                         color: 'black',
-                        fontWeight: '600',
+                        fontFamily:fontsCustom.primary[700],
+
                       }}
                     >
                       {item.nama}
@@ -435,7 +436,8 @@ const PajakContent = forwardRef((props, ref) => {
                       style={{
                         fontSize: 14,
                         color: 'black',
-                        fontWeight: '400',
+                        fontFamily:fontsCustom.primary[400],
+
                         width: Platform.isPad ? "100%" : 200,
                       }}
                     >

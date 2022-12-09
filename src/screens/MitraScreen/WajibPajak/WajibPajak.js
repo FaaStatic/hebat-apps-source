@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, Dimensions } from 'react-native';
-import { colorApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom } from '../../../util/globalvar';
 import { HeaderWithoutHistory } from '../../Komponen/HeaderWithoutHistory';
 
 const { height: ViewHeight } = Dimensions.get('window');
@@ -49,7 +49,8 @@ const WajibPajak = ({ navigation, route }) => {
               textAlign: 'center',
               color: 'white',
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
+
             }}
           >
             Wajib Pajak Sekitar
@@ -73,7 +74,8 @@ const WajibPajak = ({ navigation, route }) => {
               textAlign: 'center',
               color: 'white',
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
+
             }}
           >
             Wajib Pajak Tutup
@@ -97,7 +99,8 @@ const WajibPajak = ({ navigation, route }) => {
               textAlign: 'center',
               color: 'white',
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
+
             }}
           >
             Update Wajib Pajak
@@ -121,7 +124,8 @@ const WajibPajak = ({ navigation, route }) => {
               textAlign: 'center',
               color: 'white',
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
+
             }}
           >
             Reklame

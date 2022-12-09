@@ -53,11 +53,13 @@ const AbsenCheck = ({ navigation, route }) => {
 
   useFocusEffect(
     useCallback(() => {
+      getLocation();
       const task = InteractionManager.runAfterInteractions(() => {
-        getLocation();
+        clearData();
         PermissionUtil.requestCameraPermission();
         PermissionUtil.requestExternalWritePermission();
         setCamera();
+        getLocation();
       });
       return () => task.cancel();
     }, [])
@@ -67,6 +69,17 @@ const AbsenCheck = ({ navigation, route }) => {
     const cameraPermission = await Camera.getCameraPermissionStatus();
   };
 
+  const clearData = () =>{
+     latitude = -6.966667;
+     longitude = 110.416664;
+    setMapState({
+      latitude: latitude,
+      longitude: longitude,
+      latitudeDelta: limitlatitudeDelta,
+      longitudeDelta: limitLongitudeDelta,
+    })
+   }
+    
   const getLocation = async () => {
     const locationPermission = await PermissionUtil.accessLocation();
     if (locationPermission === true) {
@@ -227,6 +240,7 @@ const AbsenCheck = ({ navigation, route }) => {
             latitudeDelta: limitlatitudeDelta,
             longitudeDelta: limitLongitudeDelta,
           }}
+           
           maxZoomLevel={20}
           style={{
             flex: 1,
@@ -236,8 +250,8 @@ const AbsenCheck = ({ navigation, route }) => {
           onLayout={() => {
             mapsLayout.current.animateCamera({
               center: {
-                latitude: latitude,
-                longitude: longitude,
+                latitude: mapState.latitude,
+                longitude: mapState.longitude,
               },
 
               head: 0,
@@ -256,8 +270,8 @@ const AbsenCheck = ({ navigation, route }) => {
         >
           <Marker.Animated
             coordinate={{
-              latitude: latitude,
-              longitude: longitude,
+              latitude: mapState.latitude,
+              longitude:  mapState.longitude,
             }}
             flat
             pinColor={'blue'}
@@ -357,7 +371,7 @@ const AbsenCheck = ({ navigation, route }) => {
           <Icon
             name="location"
             size={35}
-            color={colorApp.btnColor2}
+            color={status == 1 ? colorApp.btnColor2 : colorApp.btnColor3}
             style={{
               alignSelf: 'center',
             }}
@@ -388,7 +402,7 @@ const AbsenCheck = ({ navigation, route }) => {
           style={{
             fontSize: 24,
             color: 'green',
-            fontWeight: '600',
+            fontFamily:fontsCustom.primary[700],
             alignSelf: 'center',
           }}
         >
@@ -414,7 +428,7 @@ const AbsenCheck = ({ navigation, route }) => {
             style={{
               color: 'green',
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
               alignSelf: 'center',
             }}
           >

@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, StatusBar, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, StatusBar, StyleSheet, Text, Platform } from 'react-native';
 import React, { useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
@@ -84,7 +84,7 @@ export const HeaderWithChip = ({ Title, back, selectedItem = null }) => {
                     alignSelf: 'center',
                     fontSize: 12,
                     color: 'white',
-                    fontWeight: '600',
+                    fontFamily:fontsCustom.primary[700],
                   }}
                 >
                   {item.position}
@@ -108,13 +108,13 @@ const style = StyleSheet.create({
   textTitle: {
     fontSize: 20,
     color: 'white',
-    fontWeight: '700',
-    width:200,
+    fontFamily:fontsCustom.primary[700],
+    width:250,
   },
   buttonRiwayat: {
     borderRadius: 8,
     height: StatusBar.currentHeight,
-    width: 125,
+    width: Platform.OS === "ios" ?  115 : 125,
     marginEnd: 16,
     padding: Platform.OS === 'ios' ? 8 : 0,
 

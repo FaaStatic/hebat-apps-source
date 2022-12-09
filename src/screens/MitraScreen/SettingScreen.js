@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Header } from '../Komponen/Header';
 import { SessionManager } from '../../util/SessionUtil/SessionManager';
-import { colorApp, stringApp } from '../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../util/globalvar';
 import { Api } from '../../util/ApiManager';
 import { BackgroundLocationServices } from '../../util/BackgroundLocationServices';
 import { PermissionUtil } from '../../util/PermissionUtil';
@@ -386,7 +386,7 @@ const SettingScreen = ({ navigation, route }) => {
                   style.textTitle,
                   {
                     fontSize: 18,
-                    fontWeight: '600',
+                    fontFamily:fontsCustom.primary[700],
                   },
                 ]}
               >
@@ -397,7 +397,7 @@ const SettingScreen = ({ navigation, route }) => {
                   style.textTitle,
                   {
                     fontSize: 16,
-                    fontWeight: '400',
+                    fontFamily:fontsCustom.primary[400],
                   },
                 ]}
               >
@@ -451,7 +451,7 @@ const SettingScreen = ({ navigation, route }) => {
                   style.textTitle,
                   {
                     fontSize: 18,
-                    fontWeight: '600',
+                    fontFamily:fontsCustom.primary[700],
                   },
                 ]}
               >
@@ -462,7 +462,7 @@ const SettingScreen = ({ navigation, route }) => {
                   style.textTitle,
                   {
                     fontSize: 16,
-                    fontWeight: '400',
+                    fontFamily:fontsCustom.primary[400],
                   },
                 ]}
               >
@@ -515,7 +515,7 @@ const SettingScreen = ({ navigation, route }) => {
                   style.textTitle,
                   {
                     fontSize: 18,
-                    fontWeight: '600',
+                    fontFamily:fontsCustom.primary[700],
                   },
                 ]}
               >
@@ -526,7 +526,7 @@ const SettingScreen = ({ navigation, route }) => {
                   style.textTitle,
                   {
                     fontSize: 16,
-                    fontWeight: '400',
+                    fontFamily:fontsCustom.primary[400],
                   },
                 ]}
               >
@@ -574,7 +574,7 @@ const SettingScreen = ({ navigation, route }) => {
               style={[
                 style.textTitle,
                 {
-                  fontWeight: '600',
+                  fontFamily:fontsCustom.primary[700],
                   alignSelf: 'center',
                 },
               ]}
@@ -616,7 +616,7 @@ const SettingScreen = ({ navigation, route }) => {
               style={{
                 fontSize: 16,
                 color: 'white',
-                fontWeight: '600',
+                fontFamily:fontsCustom.primary[700],
                 textAlign: 'center',
               }}
             >
@@ -640,7 +640,7 @@ const SettingScreen = ({ navigation, route }) => {
               style={{
                 fontSize: 16,
                 color: 'white',
-                fontWeight: '600',
+                fontFamily:fontsCustom.primary[700],
                 textAlign: 'center',
               }}
             >
@@ -669,7 +669,7 @@ const SettingScreen = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
               marginBottom: 8,
               color: 'black',
             }}
@@ -756,7 +756,7 @@ const SettingScreen = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
               marginBottom: 8,
               color: 'black',
             }}
@@ -843,7 +843,7 @@ const SettingScreen = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
               marginBottom: 8,
               color: 'black',
             }}
@@ -888,7 +888,7 @@ const SettingScreen = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
               marginBottom: 8,
               color: 'black',
             }}
@@ -933,7 +933,7 @@ const SettingScreen = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
               marginBottom: 8,
               color: 'black',
             }}

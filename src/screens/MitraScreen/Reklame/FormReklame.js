@@ -37,6 +37,8 @@ const { width: viewWidth, height: viewHeight } = Dimensions.get('window');
 const MIN_HEIGHT_HEADER = StatusBar.currentHeight + 30;
 const MAX_HEIGHT_HEADER = 250;
 const DISTANCE = MAX_HEIGHT_HEADER - MIN_HEIGHT_HEADER;
+var latitude = -6.966667;
+var longitude = 110.416664;
 const limitlatitudeDelta = 0.00089279988035873;
 const limitLongitudeDelta = 0.0012991949915885925;
 const FormReklame = ({ navigation, route }) => {
@@ -52,10 +54,10 @@ const FormReklame = ({ navigation, route }) => {
   const [openList, setOpenList] = useState(false);
   const [openBottom, setOpenBottom] = useState(false);
   const [mapState, setMapState] = useState({
-    latitude: Number(modelData.latitude),
-    longitude: Number(modelData.longitude),
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitude: -6.966667,
+    longitude: 110.416664,
+    latitudeDelta: limitlatitudeDelta,
+    longitudeDelta: limitLongitudeDelta,
   });
   const scrollPosition = useRef(new Animated.Value(0)).current;
   const mapsLayout = useRef();
@@ -94,10 +96,24 @@ const FormReklame = ({ navigation, route }) => {
   const clearData = () => {
     setFileList([]);
     setSavingFileData([]);
+    latitude = -6.966667;    
+    longitude = 110.416664;
+    setMapState({
+      latitude: latitude,
+      longitude: longitude,
+      latitudeDelta: limitlatitudeDelta,
+      longitudeDelta: limitLongitudeDelta,
+    });
   };
 
   const addData = () => {
     setFileList(modelData.image);
+    setMapState({
+      latitude: Number(modelData.latitude),
+      longitude: Number(modelData.longitude),
+      latitudeDelta:limitlatitudeDelta,
+      longitudeDelta: limitLongitudeDelta,
+    });
     modelData.image.map((item) => {
       RNFetchBlob.config({
         fileCache: true,
@@ -448,7 +464,8 @@ const FormReklame = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
+
               color: 'black',
               marginTop: 8,
               marginBottom:8,
@@ -460,7 +477,8 @@ const FormReklame = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
+
               color: 'black',
               marginStart:8,
               marginBottom:8,
@@ -472,7 +490,8 @@ const FormReklame = ({ navigation, route }) => {
         <Text
           style={{
             fonstSize: 16,
-            fontWeight: '600',
+            fontFamily:fontsCustom.primary[700],
+
             color: 'black',
             marginTop: 8,
             marginStart: 16,
@@ -500,10 +519,12 @@ const FormReklame = ({ navigation, route }) => {
               placeholder={'Pilih Deskripsi Pajak Reklame'}
               disabled={status === null ? false : true}
               value={deskripsi}
-              closeAfterSelecting={true}
               placeholderStyle={{
+                fontFamily:fontsCustom.primary[400],
                 borderWidth: 0,
               }}
+              closeAfterSelecting={true}
+            
               items={listCategory}
               setOpen={setOpenList}
               setValue={setDeskripsi}
@@ -522,7 +543,8 @@ const FormReklame = ({ navigation, route }) => {
                 zIndex: 9999,
               }}
               modalTitleStyle={{
-                fontWeight: 'bold',
+                fontFamily:fontsCustom.primary[700],
+
               }}
             />
           ) : (
@@ -532,7 +554,8 @@ const FormReklame = ({ navigation, route }) => {
                 color: 'black',
                 width: '100%',
                 marginBottom: 16,
-                fontWeight: '500',
+                fontFamily:fontsCustom.primary[500],
+
                 fontSize: 12,
               }}
             >
@@ -547,7 +570,8 @@ const FormReklame = ({ navigation, route }) => {
         <Text
           style={{
             fonstSize: 16,
-            fontWeight: '600',
+            fontFamily:fontsCustom.primary[600],
+
             color: 'black',
             marginTop: 8,
             marginStart: 16,
@@ -667,7 +691,8 @@ const FormReklame = ({ navigation, route }) => {
               marginTop: 4,
               fontSize: 12,
               color: 'black',
-              fontWeight: '700',
+              fontFamily:fontsCustom.primary[700],
+
               alignSelf: 'center',
             }}
           >
@@ -678,7 +703,8 @@ const FormReklame = ({ navigation, route }) => {
               marginTop: 4,
               fontSize: 12,
               color: 'black',
-              fontWeight: '700',
+              fontFamily:fontsCustom.primary[700],
+
               alignSelf: 'center',
             }}
           >
@@ -690,7 +716,8 @@ const FormReklame = ({ navigation, route }) => {
           style={[
             style.textInput,
             {
-              fontWeight: '800',
+              fontFamily:fontsCustom.primary[700],
+
               fontSize: 16,
               marginLeft: 24,
             },
@@ -703,7 +730,8 @@ const FormReklame = ({ navigation, route }) => {
             style.textInput,
             {
               marginBottom: 8,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
+
               fontSize: 14,
               marginLeft: 24,
             },
@@ -857,7 +885,8 @@ const FormReklame = ({ navigation, route }) => {
               style={{
                 color: 'white',
                 alignSelf: 'center',
-                fontWeight: '600',
+                fontFamily:fontsCustom.primary[700],
+
                 fontSize: 16,
               }}
             >
@@ -1040,7 +1069,8 @@ const style = StyleSheet.create({
   },
   textTitle: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily:fontsCustom.primary[700],
+
     
     color: 'black',
     marginBottom: 8,
@@ -1055,7 +1085,8 @@ const style = StyleSheet.create({
   textBtn: {
     fontSize: 16,
     color: 'white',
-    fontWeight: '600',
+    fontFamily:fontsCustom.primary[700],
+
     textAlign: 'center',
   },
 });

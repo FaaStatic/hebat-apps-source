@@ -98,7 +98,6 @@ export default function BerandaMitra({ navigation, route }) {
             style={{
               marginStart: 30,
               fontSize: 22,
-              fontWeight: '700',
               color: 'black',
               fontFamily:fontsCustom.primary[700],
 
@@ -194,6 +193,7 @@ export default function BerandaMitra({ navigation, route }) {
           {menuMain.map((item) => {
             return (
               <TouchableOpacity
+              key={item.id}
                 onPress={() => {
                   navigation.navigate(item.nextPage);
                 }}
@@ -224,7 +224,7 @@ export default function BerandaMitra({ navigation, route }) {
                 />
                 <Text
                   style={{
-                    fontWeight: '700',
+                  
                     color: 'black',
                     fontFamily:fontsCustom.primary[700],
                     fontSize: 14,
@@ -282,7 +282,7 @@ export default function BerandaMitra({ navigation, route }) {
             />
             <Text
               style={{
-                fontWeight: '700',
+                
                 fontSize: 14,
                 color: 'black',
                 alignSelf: 'center',
@@ -313,6 +313,6 @@ const style = StyleSheet.create({
   textTitle: {
     fontSize: 24,
     color: 'white',
-    fontWeight: '400',
+    fontFamily:fontsCustom.primary[400],
   },
 });

@@ -1,6 +1,6 @@
 import React, { useState,useEffect,useCallback } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, Dimensions,InteractionManager, Platform } from 'react-native';
-import { colorApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom } from '../../../util/globalvar';
 import { HeaderWithoutHistory } from '../../Komponen/HeaderWithoutHistory';
 import Icon from 'react-native-vector-icons/dist/Entypo';
 import { PermissionUtil } from '../../../util/PermissionUtil';
@@ -73,7 +73,7 @@ const Absensi = ({ navigation, route }) => {
               color: 'white',
               fontSize: 16,
               marginStart: ViewWidth / 4,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
             }}
           >
             Absen Masuk
@@ -101,7 +101,7 @@ const Absensi = ({ navigation, route }) => {
               color: 'white',
               fontSize: 16,
               marginStart: ViewWidth / 4,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
             }}
           >
             Absen Pulang

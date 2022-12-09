@@ -13,7 +13,7 @@ import { BottomSheet, Image, Dialog } from '@rneui/themed';
 import GapList from '../../Komponen/GapList';
 import { Api } from '../../../util/ApiManager';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import Lottie from 'lottie-react-native';
 var count = 0;
@@ -163,7 +163,8 @@ export default function Pendaftaran({ navigation, route }) {
               style.textBase,
               {
                 fontSize: 16,
-                fontWeight: '700',
+                fontFamily:fontsCustom.primary[700],
+
               },
             ]}
           >
@@ -174,7 +175,8 @@ export default function Pendaftaran({ navigation, route }) {
               style.textBase,
               {
                 fontSize: 14,
-                fontWeight: '400',
+                fontFamily:fontsCustom.primary[400],
+
               },
             ]}
           >
@@ -186,7 +188,8 @@ export default function Pendaftaran({ navigation, route }) {
             style.textBase,
             {
               fontSize: 16,
-              fontWeight: '800',
+              fontFamily:fontsCustom.primary[700],
+
               color: 'red',
             },
           ]}
@@ -385,6 +388,7 @@ const style = StyleSheet.create({
   textBase: {
     fontSize: 14,
     color: 'black',
-    fontWeight: '600',
+    fontFamily:fontsCustom.primary[700],
+
   },
 });

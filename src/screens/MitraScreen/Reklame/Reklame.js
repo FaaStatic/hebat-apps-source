@@ -5,7 +5,7 @@ import { Api } from '../../../util/ApiManager';
 import { MessageUtil } from '../../../util/MessageUtil';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import { Image } from '@rneui/themed';
-import { colorApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom } from '../../../util/globalvar';
 import GapList from '../../Komponen/GapList';
 
 const limit = 10;
@@ -165,7 +165,8 @@ const Reklame = ({ navigation, route }) => {
             style={{
               color: colorApp.black,
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
+
               width: 250,
             }}
           >
@@ -177,7 +178,8 @@ const Reklame = ({ navigation, route }) => {
               fontSize: 14,
               width: 250,
 
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
+
             }}
           >
             {item.alamat}

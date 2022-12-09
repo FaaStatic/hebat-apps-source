@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 import { setShowSearch } from '../../../statemanager/HeaderDateState/HeaderDateSlicer';
 import moment from 'moment/moment';
 import { Image, Dialog } from '@rneui/themed';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import { Api } from '../../../util/ApiManager';
 import { MessageUtil } from '../../../util/MessageUtil';
@@ -284,7 +284,7 @@ const RiwayatReklame = ({ navigation, route }) => {
               alignSelf: 'flex-start',
               fontSize: 16,
               width: 250,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
               color: 'black',
               marginBottom: 8,
             }}
@@ -298,6 +298,7 @@ const RiwayatReklame = ({ navigation, route }) => {
               fontSize: 12,
               color: 'black',
               marginBottom: 8,
+              fontFamily:fontsCustom.primary[400],
             }}
           >
             {item.alamat}

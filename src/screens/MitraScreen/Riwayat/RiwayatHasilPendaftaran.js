@@ -20,9 +20,10 @@ import { setShowSearch } from '../../../statemanager/HeaderDateState/HeaderDateS
 import { TabItem } from '@rneui/base/dist/Tab/Tab.Item';
 import { TabViewItem } from '@rneui/base/dist/TabView/TabView.Item';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { colorApp, stringApp } from '../../../util/globalvar';
+import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import { MessageUtil } from '../../../util/MessageUtil';
 import { useFocusEffect } from '@react-navigation/native';
+import { color } from 'react-native-reanimated';
 
 var count = 0;
 const limit = 10;
@@ -212,7 +213,8 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
               style.textBase,
               {
                 fontSize: 16,
-                fontWeight: '600',
+                fontFamily:fontsCustom.primary[700],
+
                 textAlign: 'center',
               },
             ]}
@@ -224,7 +226,8 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
               style.textBase,
               {
                 fontSize: 14,
-                fontWeight: '500',
+                fontFamily:fontsCustom.primary[500],
+
                 textAlign: 'center',
               },
             ]}
@@ -243,7 +246,8 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
                 style.textBase,
                 {
                   fontSize: 12,
-                  fontWeight: '400',
+                  fontFamily:fontsCustom.primary[400],
+
                   textAlign: 'center',
                   marginBottom: 8,
                   marginEnd: 16,
@@ -256,8 +260,9 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
               style={[
                 style.textBase,
                 {
-                  fontSize: 14,
-                  fontWeight: '400',
+                  fontSize: 12,
+                  fontFamily:fontsCustom.primary[400],
+
                   textAlign: 'center',
                 },
               ]}
@@ -276,7 +281,8 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
                 style.textBase,
                 {
                   fontSize: 12,
-                  fontWeight: '400',
+                  fontFamily:fontsCustom.primary[400],
+
                   textAlign: 'center',
                 },
               ]}
@@ -287,8 +293,9 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
               style={[
                 style.textBase,
                 {
-                  fontSize: 14,
-                  fontWeight: '600',
+                  fontSize: 12,
+                  fontFamily:fontsCustom.primary[700],
+
                   textAlign: 'center',
                   color: 'green',
                 },
@@ -463,7 +470,7 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
           changeTabFunc(e);
         }}
         indicatorStyle={{
-          backgroundColor: '#FC572C',
+          backgroundColor: colorApp.button.primary,
           height: 3,
         }}
         containerStyle={{
@@ -472,11 +479,11 @@ const RiwayatHasilPendaftaran = ({ navigation, route }) => {
       >
         <TabItem
           title="TERDAFTAR"
-          titleStyle={{ fontSize: 14, color: indexTab === 0 ? '#FC572C' : 'gray' }}
+          titleStyle={{ fontSize: 14, color: indexTab === 0 ? colorApp.button.primary : 'gray' }}
         />
         <TabItem
           title="MENOLAK"
-          titleStyle={{ fontSize: 14, color: indexTab === 1 ? '#FC572C' : 'gray' }}
+          titleStyle={{ fontSize: 14, color: indexTab === 1 ? colorApp.button.primary : 'gray' }}
         />
       </Tab>
       <TabView value={indexTab} onChange={setIndexTab} animationType="timing">
@@ -652,7 +659,8 @@ const style = StyleSheet.create({
   textBase: {
     fontSize: 14,
     color: 'black',
-    fontWeight: '600',
+    fontFamily:fontsCustom.primary[700],
+
   },
 });
 

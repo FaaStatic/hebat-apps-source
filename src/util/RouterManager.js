@@ -52,6 +52,8 @@ import TugasList from '../screens/MitraScreen/PetugasAdmin/AdminKomponen/TugasLi
 import DataPetugasList from '../screens/MitraScreen/PetugasAdmin/AdminKomponen/DataPetugasList ';
 import RiwayatAbsensi from '../screens/MitraScreen/Riwayat/RiwayatAbsensi';
 import PreviewSurvey from '../screens/MitraScreen/Survey/PreviewSurvey';
+import RegisterMitra from '../screens/MitraScreen/RegisterMitra';
+
 
 
 
@@ -100,6 +102,7 @@ export default function RouteManager() {
         />
         <initStack.Screen name="Home" component={TabScreen} />
         <initStack.Screen name="BerandaMitra" component={BerandaMitra} />
+        <initStack.Screen name="RegisterMitra" component={RegisterMitra} />
         <initStack.Screen name="Pendataan" component={Pendataan} />
         <initStack.Screen name="RiwayatSurvey" component={RiwayatSurvey} />
         <initStack.Screen name="EditData" component={EditData} />

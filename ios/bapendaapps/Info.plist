@@ -45,10 +45,21 @@
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>whatsapp</string>
+    </array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>api.whatsapp.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
 			<key>eregister.semarangkota.go.id</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>

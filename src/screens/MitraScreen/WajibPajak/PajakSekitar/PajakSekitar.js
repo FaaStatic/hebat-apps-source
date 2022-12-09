@@ -16,7 +16,7 @@ import Geolocation from 'react-native-geolocation-service';
 import { PermissionUtil } from '../../../../util/PermissionUtil';
 import { MessageUtil } from '../../../../util/MessageUtil';
 import PajakContent from './PajakContent';
-import { colorApp } from '../../../../util/globalvar';
+import { colorApp, fontsCustom } from '../../../../util/globalvar';
 import { useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
 import { useFocusEffect } from '@react-navigation/native';
@@ -172,7 +172,8 @@ const PajakSekitar = ({ navigation, route }) => {
                 fontSize: 16,
                 color: 'white',
                 alignSelf: 'center',
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
+
               }}
             >
               Reset

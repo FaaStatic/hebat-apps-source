@@ -31,8 +31,8 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const { height: viewHeight, width: viewWidth } = Dimensions.get('window');
 
-var latitude = 0;
-var longitude = 0;
+var latitude = -6.966667;
+var longitude = 110.416664;
 const limitlatitudeDelta = 0.00089279988035873;
 const limitLongitudeDelta = 0.0012991949915885925;
 
@@ -52,8 +52,8 @@ export default function Pendataan({ navigation, route }) {
   const [mapState, setMapState] = useState({
     latitude: -6.966667,
     longitude: 110.416664,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitudeDelta: limitlatitudeDelta,
+    longitudeDelta: limitLongitudeDelta,
   });
   const [openBottom, setOpenBottom] = useState(false);
 
@@ -94,6 +94,12 @@ export default function Pendataan({ navigation, route }) {
     setAddress('');
     latitude = -6.966667;
     longitude = 110.416664;
+    setMapState({
+      latitude: latitude,
+      longitude: longitude,
+      latitudeDelta: limitlatitudeDelta,
+      longitudeDelta: limitLongitudeDelta,
+    });
     setFileList([]);
     setListData([]);
     setSavingFileData([]);
@@ -477,7 +483,7 @@ export default function Pendataan({ navigation, route }) {
               style.textInput,
               {
                 marginBottom: 16,
-                fontWeight: '800',
+                fontFamily:fontsCustom.primary[700],
                 fontSize: 16,
               },
             ]}
@@ -491,6 +497,9 @@ export default function Pendataan({ navigation, route }) {
               value={valueCategory}
               placeholder={'Pilih Kategori Pajak'}
               items={listData}
+              placeholderStyle={{
+                fontFamily:fontsCustom.primary[400],
+              }}
               setOpen={setOpen}
               containerStyle={{
                 backgroundColor: 'white',
@@ -509,7 +518,7 @@ export default function Pendataan({ navigation, route }) {
                 style.textInput,
                 {
                   marginBottom: 16,
-                  fontWeight: '500',
+                  fontFamily:fontsCustom.primary[500],
                   fontSize: 14,
                   marginStart: 16,
                 },
@@ -525,7 +534,8 @@ export default function Pendataan({ navigation, route }) {
             style.textInput,
             {
               marginBottom: 16,
-              fontWeight: '800',
+              fontFamily:fontsCustom.primary[700],
+
               fontSize: 16,
               marginLeft: 24,
             },
@@ -634,7 +644,8 @@ export default function Pendataan({ navigation, route }) {
               marginTop: 4,
               fontSize: 12,
               color: 'black',
-              fontWeight: '700',
+              fontFamily:fontsCustom.primary[700],
+
               alignSelf: 'center',
             }}
           >
@@ -645,7 +656,8 @@ export default function Pendataan({ navigation, route }) {
               marginTop: 4,
               fontSize: 12,
               color: 'black',
-              fontWeight: '700',
+              fontFamily:fontsCustom.primary[700],
+
               alignSelf: 'center',
             }}
           >
@@ -980,7 +992,8 @@ const style = StyleSheet.create({
     marginEnd: 8,
     flex: 1,
     fontSize: 14,
-    fontWeight: '400',
+    fontFamily:fontsCustom.primary[400],
+
     color: 'black',
   },
   btnBottom: {

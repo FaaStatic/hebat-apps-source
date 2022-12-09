@@ -344,7 +344,7 @@ const RiwayatMonitoring = ({ navigation, route }) => {
           width: '100%',
         }}
       >
-        <ActivityIndicator color="'#FC572C'" size={'small'} style={{ alignSelf: 'center' }} />
+        <ActivityIndicator color={colorApp.button.primary} size={'small'} style={{ alignSelf: 'center' }} />
       </View>;
     } else {
       return <></>;

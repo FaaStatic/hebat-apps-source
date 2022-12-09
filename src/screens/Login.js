@@ -86,9 +86,7 @@ export default function Login({ navigation, route }) {
       clearTimeout();
     }, 6000);
   };
-  const resetPassword = () => {
-    Alert.alert('Hebat!', 'No Action!!');
-  };
+ 
 
  
   return (
@@ -153,7 +151,7 @@ export default function Login({ navigation, route }) {
                   </View>
                   <Gap height={40} />
                 </View>
-                <View style={{
+                {Platform.OS === "ios" &&  <View style={{
                   flexDirection:'row',
                   justifyContent:'center',
                   alignSelf:'center',
@@ -164,7 +162,7 @@ export default function Login({ navigation, route }) {
                       fontSize: 12,
                   }}>Belum Memiliki Akun ? </Text>
                   <TouchableOpacity 
-                  onPress={()=>{openUrlRegister()}}
+                  onPress={()=>{navigation.navigate("RegisterMitra")}}
                   style={{
                     padding:0,
                     
@@ -176,7 +174,7 @@ export default function Login({ navigation, route }) {
                       color: colorApp.button.primary, fontSize: 12, 
                     }}>Daftar Disini!</Text>
                   </TouchableOpacity>
-                </View>
+                </View>}
               </View>
             </ScrollView>
           </LinearGradient>
@@ -200,7 +198,7 @@ const style = StyleSheet.create({
     marginEnd: 8,
     flex: 1,
     fontSize: 14,
-    fontWeight: '400',
+    fontFamily:fontsCustom.primary[400],
   },
   textInputContainer: {
     padding: 8,

@@ -21,11 +21,12 @@ const taskGeo = async (taskDataArguments) => {
 
 const options = {
   taskName: 'Background Services',
-  taskTitle: 'HEBAT Semarang Apps',
-  taskDesc: 'HEBAT Using Background Service To Collect Location',
+  taskTitle: 'HEBAT!',
+  taskDesc: 'HEBAT! Using Background Service To Collect Location',
   taskIcon: {
     name: 'ic_launcher',
     type: 'mipmap',
+    package: 'co.id.nexagroup.hebat'
   },
   color: '#ffff',
   linkingURI: 'hebatapp://mitra', // See Deep Linking for more info
@@ -39,7 +40,7 @@ export const BackgroundLocationServices = {
     PermissionUtil.accessLocation();
     await BackgroundService.start(taskGeo, options);
     await BackgroundService.updateNotification({
-      taskDesc: 'HEBAT Using Background Service For Collect Your Location',
+      taskDesc: 'HEBAT! Using Background Service For Collect Your Location',
     });
   },
   stopBackroundServices: async () => {

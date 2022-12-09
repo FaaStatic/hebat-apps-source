@@ -36,6 +36,8 @@ const { width: viewWidth, height: viewHeight } = Dimensions.get('window');
 const MIN_HEIGHT_HEADER = StatusBar.currentHeight + 30;
 const MAX_HEIGHT_HEADER = 250;
 const DISTANCE = MAX_HEIGHT_HEADER - MIN_HEIGHT_HEADER;
+var latitude = -6.966667;
+var longitude = 110.416664;
 const limitlatitudeDelta = 0.00089279988035873;
 const limitLongitudeDelta = 0.0012991949915885925;
 
@@ -174,11 +176,13 @@ const DetailMonitoring = ({ navigation, route }) => {
   const clearData = () => {
     setSavingFileData([]);
     setFileList([]);
+    latitude = -6.966667;    
+    longitude = 110.416664;
     setMapState({
-      latitude: -6.966667,
-      longitude: 110.416664,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
+      latitude: latitude,
+      longitude: longitude,
+      latitudeDelta: limitlatitudeDelta,
+      longitudeDelta: limitLongitudeDelta,
     });
   }
 
@@ -459,7 +463,7 @@ const DetailMonitoring = ({ navigation, route }) => {
             top: 0,
             left: 0,
             right: 0,
-            backgroundColor: positionY >= MAX_HEIGHT_HEADER - 200 ? '#FC572C' : 'grey',
+            backgroundColor: positionY >= MAX_HEIGHT_HEADER - 200 ? colorApp.gradientSatu : 'grey',
             zIndex: 999,
             height: headerHeight,
           },
@@ -552,7 +556,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
               color: 'black',
               marginTop: 8,
             }}
@@ -562,7 +566,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
               color: 'black',
             }}
           >
@@ -591,7 +595,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               style={{
                 fontSize: 14,
                 color: 'white',
-                fontWeight: '500',
+                fontFamily:fontsCustom.primary[500],
                 alignSelf: 'center',
               }}
             >
@@ -602,7 +606,7 @@ const DetailMonitoring = ({ navigation, route }) => {
         <Text
           style={{
             fonstSize: 16,
-            fontWeight: '700',
+            fontFamily:fontsCustom.primary[700],
             color: 'black',
             marginTop: 8,
             marginStart: 16,
@@ -613,7 +617,7 @@ const DetailMonitoring = ({ navigation, route }) => {
         <Text
           style={{
             fonstSize: 12,
-            fontWeight: '400',
+            fontFamily:fontsCustom.primary[400],
             color: 'black',
             marginTop: 8,
             marginStart: 16,
@@ -662,7 +666,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           marginTop:8,
           fontSize:14,
           marginStart : 16,
-          fontWeight:'700'
+          fontFamily:fontsCustom.primary[700],
         }}>Map</Text>
         <View
           style={{
@@ -771,7 +775,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               marginTop: 4,
               fontSize: 12,
               color: 'black',
-              fontWeight: '700',
+              fontFamily:fontsCustom.primary[700],
               alignSelf: 'center',
             }}
           >
@@ -782,7 +786,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               marginTop: 4,
               fontSize: 12,
               color: 'black',
-              fontWeight: '700',
+              fontFamily:fontsCustom.primary[700],
               alignSelf: 'center',
             }}
           >
@@ -817,7 +821,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           style={[
             style.textInput,
             {
-              fontWeight: '800',
+              fontFamily:fontsCustom.primary[700],
               fontSize: 16,
               marginLeft: 24,
             },
@@ -830,7 +834,7 @@ const DetailMonitoring = ({ navigation, route }) => {
             style.textInput,
             {
               marginBottom: 8,
-              fontWeight: '500',
+              fontFamily:fontsCustom.primary[500],
               fontSize: 14,
               marginLeft: 24,
             },
@@ -978,14 +982,14 @@ const DetailMonitoring = ({ navigation, route }) => {
               marginEnd: 24,
               marginStart: 24,
               borderRadius: 8,
-              backgroundColor: '#FC572C',
+              backgroundColor: colorApp.button.primary,
             }}
           >
             <Text
               style={{
                 color: 'white',
                 alignSelf: 'center',
-                fontWeight: '600',
+                fontFamily:fontsCustom.primary[700],
                 fontSize: 16,
               }}
             >
@@ -1085,7 +1089,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               style={{
                 fontSize: 18,
                 color: 'white',
-                fontWeight: '600',
+                fontFamily:fontsCustom.primary[700],
                 alignSelf: 'center',
               }}
             >
@@ -1266,7 +1270,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '800',
+              fontFamily:fontsCustom.primary[700],
               marginTop: 8,
               marginStart: 16,
               color: 'black',
@@ -1277,7 +1281,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
               marginTop: 8,
               marginStart: 16,
               color: 'black',
@@ -1288,7 +1292,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 12,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
               marginTop: 8,
               marginBottom:8,
               marginStart: 16,
@@ -1300,7 +1304,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '600',
+              fontFamily:fontsCustom.primary[700],
               marginTop: 8,
               marginStart: 16,
               color: 'black',
@@ -1311,7 +1315,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 12,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
               marginTop: 8,
               marginStart: 16,
               marginBottom:8,
@@ -1323,7 +1327,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '800',
+              fontFamily:fontsCustom.primary[700],
               marginTop: 8,
               marginStart: 16,
               color: 'black',
@@ -1388,7 +1392,7 @@ const DetailMonitoring = ({ navigation, route }) => {
                   fontSize: 18,
                   color: 'black',
                   alignSelf: 'center',
-                  fontWeight: '600',
+                  fontFamily:fontsCustom.primary[700],
                 }}
               >
                 Tutup
@@ -1413,7 +1417,7 @@ const DetailMonitoring = ({ navigation, route }) => {
                   fontSize: 18,
                   color: 'white',
                   alignSelf: 'center',
-                  fontWeight: '600',
+                  fontFamily:fontsCustom.primary[700],
                 }}
               >
                 Unduh
@@ -1496,7 +1500,7 @@ const style = StyleSheet.create({
   },
   textTitle: {
     fontSize: 16,
-    fontWeight: '800',
+    fontFamily:fontsCustom.primary[700],
     color: 'black',
     marginBottom: 8,
   },
@@ -1510,7 +1514,7 @@ const style = StyleSheet.create({
   textBtn: {
     fontSize: 16,
     color: 'white',
-    fontWeight: '600',
+    fontFamily:fontsCustom.primary[700],
     textAlign: 'center',
   },
 });

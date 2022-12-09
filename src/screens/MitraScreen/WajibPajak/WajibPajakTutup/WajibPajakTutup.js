@@ -395,7 +395,8 @@ const WajibPajakTutup = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '700',
+              fontFamily:fontsCustom.primary[700],
+
               color: 'black',
               marginBottom: 16,
               width: 200,
@@ -406,7 +407,8 @@ const WajibPajakTutup = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '400',
+              fontFamily:fontsCustom.primary[400],
+
               color: 'black',
               marginBottom: 16,
               width: 200,
@@ -582,7 +584,8 @@ const WajibPajakTutup = ({ navigation, route }) => {
                   color: '#290736',
                   alignSelf: 'center',
                   textAlign: 'center',
-                  fontWeight: '800',
+                  fontFamily:fontsCustom.primary[700],
+
                   marginBottom: 4,
                   marginTop: 8,
                 }}
@@ -595,7 +598,8 @@ const WajibPajakTutup = ({ navigation, route }) => {
                   color: 'black',
                   alignSelf: 'center',
                   textAlign: 'center',
-                  fontWeight: '400',
+                  fontFamily:fontsCustom.primary[400],
+
                   marginBottom: 16,
                 }}
               >
@@ -607,7 +611,8 @@ const WajibPajakTutup = ({ navigation, route }) => {
                   color: 'black',
                   alignSelf: 'center',
                   textAlign: 'center',
-                  fontWeight: '400',
+                  fontFamily:fontsCustom.primary[400],
+
                   marginBottom: 8,
                 }}
               >
@@ -634,7 +639,8 @@ const WajibPajakTutup = ({ navigation, route }) => {
                 style={{
                   fontSize: 18,
                   color: 'black',
-                  fontWeight: '800',
+                  fontFamily:fontsCustom.primary[700],
+
                   marginBottom: 4,
                   marginStart: 16,
                 }}
@@ -645,7 +651,8 @@ const WajibPajakTutup = ({ navigation, route }) => {
                 style={{
                   fontSize: 12,
                   color: 'grey',
-                  fontWeight: '500',
+                  fontFamily:fontsCustom.primary[500],
+
                   marginStart: 16,
                   marginBottom: 16,
                 }}
@@ -769,7 +776,8 @@ const WajibPajakTutup = ({ navigation, route }) => {
                 <Text
                   style={{
                     fontSize: 14,
-                    fontWeight: '800',
+                    fontFamily:fontsCustom.primary[700],
+
                   }}
                 >
                   Tambah Tanda Tangan
@@ -831,7 +839,8 @@ const WajibPajakTutup = ({ navigation, route }) => {
                     style={{
                       color: 'white',
                       fontSize: 14,
-                      fontWeight: '600',
+                      fontFamily:fontsCustom.primary[700],
+
                       textAlign: 'center',
                     }}
                   >
@@ -975,7 +984,8 @@ const WajibPajakTutup = ({ navigation, route }) => {
               style={{
                 fontSize: 18,
                 color: 'white',
-                fontWeight: '600',
+                fontFamily:fontsCustom.primary[700],
+
                 alignSelf: 'center',
               }}
             >
@@ -1041,7 +1051,7 @@ const style = StyleSheet.create({
   textBtn: {
     fontSize: 16,
     color: 'white',
-    fontWeight: '600',
+    fontFamily:fontsCustom.primary[700],
     textAlign: 'center',
   },
 });
