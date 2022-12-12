@@ -6,6 +6,7 @@ import { BackgroundLocationServices } from '../../util/BackgroundLocationService
 import { GeolocationUtil } from '../../util/GeolocationUtil';
 import { stringApp } from '../../util/globalvar';
 import { MessageUtil } from '../../util/MessageUtil';
+import messaging from '@react-native-firebase/messaging'; 
 
 export const LoginSlicer = createSlice({
   name: 'login',
@@ -30,6 +31,25 @@ export const LoginSlicer = createSlice({
   },
 });
 
+
+export const updateFcm = async () => {
+  var idToken = await messaging().getToken();
+  var sesi = await SessionManager.GetAsObject(stringApp.session);
+  const params = {
+    "id_user":sesi.id,
+    "fcm_id":idToken
+  };
+   await Api.post("Authentication/update_fcm", params).then(res => {
+    console.log('====================================');
+    console.log("Token Update :", res.data.metadata.message);
+    console.log('====================================');
+   }).catch(err => {
+    console.log('====================================');
+    console.log(`error : ${err}`);
+    console.log('====================================');
+   });
+}
+
 export const loginProcess = (params, navigation) => async (dispatch) => {
   try {
     await Api.post('authentication', params)
@@ -44,6 +64,7 @@ export const loginProcess = (params, navigation) => async (dispatch) => {
           MessageUtil.successMessage(message);
           GeolocationUtil.accessLocation();
           BackgroundLocationServices.startBackgroundServices();
+          updateFcm();
           setTimeout(() => {
             navigation.replace('BerandaMitra');
             clearTimeout();

@@ -44,7 +44,7 @@ export default Persyaratan = () => {
       <Gap height={30} />
       <Text style={{ fontFamily: fontsCustom.primary[400], color: colorApp.black, fontSize: 14 }}>
         {' '}
-        Masih bingung? cek syarat berikut!{' '}
+        Masih bingung? cek syarat berikut!
       </Text>
       <Gap height={10} />
 

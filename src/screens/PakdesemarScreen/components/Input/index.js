@@ -112,7 +112,10 @@ const Input = ({
       return <MaterialIcons name="login" size={20} color={colorApp.primary} />;
     }
     if (icon === 'info' || iconIos === 'info') {
-      return <AntDesign name="infocirlceo" size={20} color={colorApp.primary} />;
+      return <AntDesign name="infocirlceo" size={20} style={{
+        marginStart:4,
+        justifyContent:'center'
+      }} color={colorApp.primary} />;
     }
     if (icon === 'copy' || iconIos === 'copy') {
       return <MaterialIcons name="content-copy" size={20} color={colorApp.button.primary} />;
@@ -253,7 +256,8 @@ const Input = ({
                         <Icon />
                         <Text
                           style={{
-                            marginHorizontal: 5,
+                            textAlignVertical:'center',
+                            textAlign:'center',
                             color: colorApp.primary,
                             fontSize: 14,
                             fontFamily: fontsCustom.primary[700],

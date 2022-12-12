@@ -10,6 +10,7 @@ import {
   Linking,
   SafeAreaView,
   FlatList,
+  Dimensions
 } from 'react-native';
 import { Skeleton } from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
@@ -20,6 +21,11 @@ import { colorApp, fontsCustom } from '../../util/globalvar';
 import { sosmed } from './menu';
 import ServiceHelper from './addOns/ServiceHelper';
 import { MessageUtil } from '../../util/MessageUtil';
+
+
+
+const {height:ViewHeight, width : ViewWidth } = Dimensions.get("window");
+
 export default Support = ({ navigation, route }) => {
   const [sosialMedia, setSosialMedia] = useState(sosmed);
   const [linkTanya, setLinkTanya] = useState('');
@@ -74,8 +80,8 @@ export default Support = ({ navigation, route }) => {
   const renderItemSosmed = (item, index) => {
     return (
       <>
-        <View style={{ flexDirection: 'row', flex: index != 3 ? Platform.isPad == true ? 1 : 0.45 : Platform.isPad == true ? 1 : 0.47 }}>
-          <View style={{ height: 50, justifyContent: 'center' }}>
+        <View style={{ flexDirection: 'row', justifyContent:'flex-start', width:'45%' }}>
+          <View style={{ height: 50, justifyContent: 'center',margin:8, }}>
             <Image source={item.logo} style={styles.sosemed} />
           </View>
           <Gap width={10} />
@@ -93,10 +99,12 @@ export default Support = ({ navigation, route }) => {
               onPress={() => openLink(item.link_sosmed)}
             >
               <Text
+              numberOfLines={2}
                 style={{
                   fontFamily: fontsCustom.primary[700],
                   fontSize: 10,
                   color: colorApp.black,
+                  width: Platform.isPad ? ViewWidth/2 :  ViewWidth/3.5,
                 }}
               >
                 {item.description}
@@ -129,8 +137,10 @@ export default Support = ({ navigation, route }) => {
                   showsVerticalScrollIndicator={false}
                   nestedScrollEnabled={true}
                   data={sosialMedia}
-                  keyExtractor={(item) => 'Sosmed-' + item.title}
+                  keyExtractor={(item,index) => 'Sosmed-' + index}
                   numColumns={2}
+                   columnWrapperStyle={{justifyContent: 'space-around'}}
+                
                   onEndReachedThreshold={0.5}
                   initialNumToRender={10}
                   renderItem={({ item, index }) => renderItemSosmed(item, index)}
@@ -142,10 +152,10 @@ export default Support = ({ navigation, route }) => {
                 backgroundColor={colorApp.primary}
                 backgroundColorInInput={colorApp.button.primary}
                 onPressIcon={() => openLink(linkTanya)}
-                value="Informasi lebih lanjut?"
+                value=" Informasi lebih lanjut?"
                 icon="info"
                 isReadOnly={true}
-                textIcon="Tanya BAPENDA"
+                textIcon="Halo BAPENDA"
               />
               <Gap height={20} />
               <Text style={styles.title1}>Pertanyaan Umum</Text>

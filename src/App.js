@@ -13,6 +13,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = () => {
   useEffect(() => {
+    
+    NotificationUtil.firebaseBackgroundHandlerNotification();
     if (Platform.OS === 'ios') {
       PushNotificationIOS.requestPermissions();
     }
@@ -22,7 +24,6 @@ const App = () => {
 
     NotificationUtil.channelExistCheck();
     NotificationUtil.notificationConfigure();
-    NotificationUtil.firebaseBackgroundHandlerNotification();
     if (Platform.OS === 'ios') {
       NotificationUtil.notificationConfigure();
       PushNotificationIOS.addEventListener(

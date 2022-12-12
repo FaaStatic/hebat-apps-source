@@ -7,7 +7,7 @@ import { IcMapsWhite } from '../../assets';
 export default ListPosPelayanan = ({ data, onPressMenu }) => {
   return data.map((item) => {
     return (
-      <View style={styles.cardView}>
+      <TouchableOpacity onPress={() => onPressMenu(item)} style={styles.cardView}>
         <View
           style={{
             justifyContent: 'center',
@@ -38,7 +38,7 @@ export default ListPosPelayanan = ({ data, onPressMenu }) => {
               {item.deskripsi}
             </Text>
           </View>
-          <TouchableOpacity onPress={() => onPressMenu(item)} style={styles.cardViewIn}>
+          <View  style={styles.cardViewIn}>
             <View
               style={{
                 flexDirection: 'row',
@@ -57,9 +57,9 @@ export default ListPosPelayanan = ({ data, onPressMenu }) => {
                 resizeMode="contain"
               />
             </View>
-          </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   });
 };

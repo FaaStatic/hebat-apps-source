@@ -174,10 +174,10 @@ export default function Home({ navigation, route }) {
             </View>
             <Gap height={20} />
             <Input
-              value={'Anda seorang mitra?'}
+              value={'  Anda seorang mitra?'}
               isReadOnly={true}
-              backgroundColor={colorApp.primary}
-              borderColor={colorApp.primary}
+              backgroundColor={"#F7F7F7"}
+              borderColor={"#F7F7F7"}
               onPressIcon={() => navigation.navigate('Mitra')}
               icon="login"
               backgroundColorInInput={colorApp.button.primary}
@@ -227,7 +227,7 @@ export default function Home({ navigation, route }) {
                 horizontal={Platform.isPad == true ? false : true}
                 numColumns={Platform.isPad == true && 4}
                 data={article}
-                keyExtractor={(item) => 'Article-' + item.title}
+                keyExtractor={(item, index) => 'Article-' + index}
                 onEndReachedThreshold={0.5}
                 initialNumToRender={10}
                 renderItem={({ item }) => renderItemArticle(item)}

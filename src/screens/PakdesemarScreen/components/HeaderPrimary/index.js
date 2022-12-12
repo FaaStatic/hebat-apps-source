@@ -43,7 +43,7 @@ export default HeaderPrimary = ({ rute, onIcon, onPressIcon }) => {
         >
           {headerTitle}
         </Text>
-        <View style={{ flexDirection: 'row', marginTop: 10 }}>
+        <View style={{ flexDirection: 'row', justifyContent:'flex-start' ,marginTop: 10 }}>
           <Text style={styles.titleLogo}>{headerSubTitle}</Text>
           <Image
             source={require('../../assets/img/logo.png')}
@@ -77,15 +77,16 @@ export default HeaderPrimary = ({ rute, onIcon, onPressIcon }) => {
 const styles = StyleSheet.create({
   avatar: {
     height: 50,
-    width: 117,
+    width: 120,
+    marginTop:15 ,
     marginBottom: 10,
   },
   titleLogo: {
-    alignSelf: 'flex-end',
-    marginTop: 15,
-    marginEnd: 5,
     fontSize: 30,
+    marginTop:20,
     marginBottom: 5,
+    textAlignVertical:'center',
+    textAlign:'center',
     color: colorApp.black,
     fontFamily: fontsCustom.primary[700],
   },

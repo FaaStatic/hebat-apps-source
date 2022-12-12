@@ -18,7 +18,7 @@ import {
 import { Button, CustomModal, Gap, HeaderPrimary, Input } from './PakdesemarScreen/components';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch } from 'react-redux';
-import { storeUsername, storePassword, loginProcess } from '../statemanager/LoginState/LoginSlicer';
+import { storeUsername, storePassword, loginProcess, updateFcm } from '../statemanager/LoginState/LoginSlicer';
 import { SessionManager } from '../util/SessionUtil/SessionManager';
 import { colorApp, fontsCustom, stringApp } from '../util/globalvar';
 import { BackgroundLocationServices } from '../util/BackgroundLocationServices';
@@ -45,14 +45,13 @@ export default function Login({ navigation, route }) {
     return()=> task.cancel();
   },[]));
 
-  const openUrlRegister = async () => {
-    await Linking.openURL(supportedURL);
-  }
+ 
 
   const sessionCheck = () => {
     setFirst(true);
     var data = SessionManager.GetAsObject(stringApp.session);
     if (data !== null) {
+      updateFcm();
       BackgroundLocationServices.startBackgroundServices();
       navigation.navigate('BerandaMitra');
       setFirst(false);
@@ -172,6 +171,7 @@ export default function Login({ navigation, route }) {
                   }}>
                     <Text style={{
                       color: colorApp.button.primary, fontSize: 12, 
+                      fontFamily: fontsCustom.primary[700],
                     }}>Daftar Disini!</Text>
                   </TouchableOpacity>
                 </View>}
