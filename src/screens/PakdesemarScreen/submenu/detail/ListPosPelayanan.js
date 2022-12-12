@@ -32,7 +32,7 @@ export default ListPosPelayanan = ({ data, onPressMenu }) => {
                 fontSize: 10,
                 fontFamily: fontsCustom.primary[400],
                 color: colorApp.black,
-                textAlign: 'justify',
+                // textAlign: 'justify',
               }}
             >
               {item.deskripsi}

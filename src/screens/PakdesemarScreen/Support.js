@@ -175,7 +175,7 @@ export default Support = ({ navigation, route }) => {
                     return (
                       <>
                         <Gap height={10} />
-                        <View
+                        <TouchableOpacity onPress={() => openFaq(item.id)}
                           key={item.id}
                           style={{
                             flexDirection: 'row',
@@ -205,10 +205,10 @@ export default Support = ({ navigation, route }) => {
                           >
                             {item.pertanyaan}
                           </Text>
-                          <TouchableOpacity onPress={() => openFaq(item.id)}>
-                            <AntDesign name={icon} size={17} color={colorApp.button.primary} />
-                          </TouchableOpacity>
-                        </View>
+                          {/* <TouchableOpacity> */}
+                          <AntDesign name={icon} size={17} color={colorApp.button.primary} />
+                          {/* </TouchableOpacity> */}
+                        </TouchableOpacity>
                         <Gap height={active == item.id ? 0 : 5} />
                         {active == item.id && (
                           <>

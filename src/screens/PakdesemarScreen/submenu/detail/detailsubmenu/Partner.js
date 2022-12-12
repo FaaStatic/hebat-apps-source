@@ -86,7 +86,8 @@ export default Partner = ({ load, primaryDataBank, data, onPressOpenApps, onPres
             return (
               <>
                 <Gap height={5} />
-                <View
+                <TouchableOpacity
+                  onPress={() => openList(item.id)}
                   key={item.id}
                   style={{
                     flexDirection: 'row',
@@ -117,10 +118,10 @@ export default Partner = ({ load, primaryDataBank, data, onPressOpenApps, onPres
                   >
                     {item.judul}
                   </Text>
-                  <TouchableOpacity onPress={() => openList(item.id)}>
-                    <AntDesign name={icon} size={17} color={colorApp.header.primary} />
-                  </TouchableOpacity>
-                </View>
+                  {/* <TouchableOpacity> */}
+                  <AntDesign name={icon} size={17} color={colorApp.header.primary} />
+                  {/* </TouchableOpacity> */}
+                </TouchableOpacity>
                 <Gap height={active == item.id ? 0 : 10} />
                 {active == item.id && (
                   <>
