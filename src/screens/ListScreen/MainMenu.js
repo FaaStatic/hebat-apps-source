@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Image, Text, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { fontsCustom } from '../../util/globalvar';
+
 
 const { height: viewHeight } = Dimensions.get('window');
 
@@ -20,7 +22,7 @@ export const MainMenu = ({ item, action }) => {
           alignSelf: 'center',
           marginTop: 16,
           color: 'black',
-          fontWeight: '600',
+          fontFamily:fontsCustom.primary[700],
         }}
       >
         {item.title}

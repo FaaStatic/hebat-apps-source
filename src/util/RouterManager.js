@@ -7,51 +7,53 @@ import Article from '../screens/PakdesemarScreen/Article';
 import Support from '../screens/PakdesemarScreen/Support';
 import Login from '../screens/Login';
 import SplashScreen from '../screens/SplashScreen';
-import Pendataan from '../screens/GaspollScreen/Pendataan/Pendataan';
-import RiwayatSurvey from '../screens/GaspollScreen/Riwayat/RiwayatSurvei';
+import Pendataan from '../screens/MitraScreen/Pendataan/Pendataan';
+import RiwayatSurvey from '../screens/MitraScreen/Riwayat/RiwayatSurvei';
 import LoadWebView from '../screens/PakdesemarScreen/LoadWebView';
-import EditData from '../screens/GaspollScreen/EditData/EditData';
-import FormKelengkapan from '../screens/GaspollScreen/Potensi/FormKelengkapan';
-import FormPotensi from '../screens/GaspollScreen/Potensi/FormPotensi';
-import DaftarPotensi from '../screens/GaspollScreen/Potensi/DaftarPotensi';
-import Pendaftaran from '../screens/GaspollScreen/Pendaftaran/Pendaftaran';
-import PutusanPendaftaran from '../screens/GaspollScreen/Pendaftaran/PutusanPendaftaran';
-import RiwayatHasilPendaftaran from '../screens/GaspollScreen/Riwayat/RiwayatHasilPendaftaran';
+import EditData from '../screens/MitraScreen/EditData/EditData';
+import FormKelengkapan from '../screens/MitraScreen/Potensi/FormKelengkapan';
+import FormPotensi from '../screens/MitraScreen/Potensi/FormPotensi';
+import DaftarPotensi from '../screens/MitraScreen/Potensi/DaftarPotensi';
+import Pendaftaran from '../screens/MitraScreen/Pendaftaran/Pendaftaran';
+import PutusanPendaftaran from '../screens/MitraScreen/Pendaftaran/PutusanPendaftaran';
+import RiwayatHasilPendaftaran from '../screens/MitraScreen/Riwayat/RiwayatHasilPendaftaran';
 import MainSubMenu from '../screens/PakdesemarScreen/MainSubMenu';
 import DetailLacakPelayanan from '../screens/PakdesemarScreen/submenu/DetailLacakPelayanan';
 import DetailStatusBayar from '../screens/PakdesemarScreen/submenu/DetailStatusBayar';
 import DetailPembayaran from '../screens/PakdesemarScreen/submenu/DetailPembayaran';
-import FormSurvey from '../screens/GaspollScreen/Survey/FormSurvey';
+import FormSurvey from '../screens/MitraScreen/Survey/FormSurvey';
 import DetailSubMenuPartner from '../screens/PakdesemarScreen/submenu/detail/DetailSubMenuPartner';
-import Beranda from '../screens/GaspollScreen/Beranda';
-import RiwayatMonitoring from '../screens/GaspollScreen/Riwayat/RiwayatMonitoring';
-import Monitoring from '../screens/GaspollScreen/Monitoring/Monitoring';
-import DetailMonitoring from '../screens/GaspollScreen/Monitoring/DetailMonitoring';
-import SettingScreen from '../screens/GaspollScreen/SettingScreen';
-import Notification from '../screens/GaspollScreen/Notification/Notification';
-import DetailNotification from '../screens/GaspollScreen/Notification/DetailNotification';
-import FormReklame from '../screens/GaspollScreen/Reklame/FormReklame';
-import Reklame from '../screens/GaspollScreen/Reklame/Reklame';
-import RiwayatReklame from '../screens/GaspollScreen/Riwayat/RiwayatReklame';
+import BerandaMitra from '../screens/MitraScreen/BerandaMitra';
+import RiwayatMonitoring from '../screens/MitraScreen/Riwayat/RiwayatMonitoring';
+import Monitoring from '../screens/MitraScreen/Monitoring/Monitoring';
+import DetailMonitoring from '../screens/MitraScreen/Monitoring/DetailMonitoring';
+import SettingScreen from '../screens/MitraScreen/SettingScreen';
+import Notification from '../screens/MitraScreen/Notification/Notification';
+import DetailNotification from '../screens/MitraScreen/Notification/DetailNotification';
+import FormReklame from '../screens/MitraScreen/Reklame/FormReklame';
+import Reklame from '../screens/MitraScreen/Reklame/Reklame';
+import RiwayatReklame from '../screens/MitraScreen/Riwayat/RiwayatReklame';
 import DetailArticle from '../screens/PakdesemarScreen/DetailArticle';
 import FormRegistrasi from '../screens/PakdesemarScreen/submenu/detail/FormRegistrasi';
-import WajibPajak from '../screens/GaspollScreen/WajibPajak/WajibPajak';
-import PajakSekitar from '../screens/GaspollScreen/WajibPajak/PajakSekitar/PajakSekitar';
+import WajibPajak from '../screens/MitraScreen/WajibPajak/WajibPajak';
+import PajakSekitar from '../screens/MitraScreen/WajibPajak/PajakSekitar/PajakSekitar';
 import MainNotification from '../screens/PakdesemarScreen/MainNotification';
 import ViewPdf from '../screens/PakdesemarScreen/addOns/ViewPdf';
 import BottomNavigation from '../screens/PakdesemarScreen/components/BottomNavigation';
-import RiwayatPajakTutup from '../screens/GaspollScreen/Riwayat/RiwayatPajakTutup';
-import WajibPajakTutup from '../screens/GaspollScreen/WajibPajak/WajibPajakTutup/WajibPajakTutup';
-import UpdateWajibPajak from '../screens/GaspollScreen/WajibPajak/UpdateWajibPajak/UpdateWajibPajak';
-import RiwayatUpdatePajak from '../screens/GaspollScreen/Riwayat/RiwayatUpdatePajak';
-import AdminScreen from '../screens/GaspollScreen/PetugasAdmin/AdminScreen';
-import Absensi from '../screens/GaspollScreen/Absensi/Absensi';
-import AbsenCheck from '../screens/GaspollScreen/Absensi/AbsenCheck';
+import RiwayatPajakTutup from '../screens/MitraScreen/Riwayat/RiwayatPajakTutup';
+import WajibPajakTutup from '../screens/MitraScreen/WajibPajak/WajibPajakTutup/WajibPajakTutup';
+import UpdateWajibPajak from '../screens/MitraScreen/WajibPajak/UpdateWajibPajak/UpdateWajibPajak';
+import RiwayatUpdatePajak from '../screens/MitraScreen/Riwayat/RiwayatUpdatePajak';
+import AdminScreen from '../screens/MitraScreen/PetugasAdmin/AdminScreen';
+import Absensi from '../screens/MitraScreen/Absensi/Absensi';
+import AbsenCheck from '../screens/MitraScreen/Absensi/AbsenCheck';
 import DetailRiwayatStatusBayarPBB from '../screens/PakdesemarScreen/submenu/detail/detailsubmenu/DetailRiwayatStatusBayarPBB';
-import TugasList from '../screens/GaspollScreen/PetugasAdmin/AdminKomponen/TugasList';
-import DataPetugasList from '../screens/GaspollScreen/PetugasAdmin/AdminKomponen/DataPetugasList ';
-import RiwayatAbsensi from '../screens/GaspollScreen/Riwayat/RiwayatAbsensi';
-import PreviewSurvey from '../screens/GaspollScreen/Survey/PreviewSurvey';
+import TugasList from '../screens/MitraScreen/PetugasAdmin/AdminKomponen/TugasList';
+import DataPetugasList from '../screens/MitraScreen/PetugasAdmin/AdminKomponen/DataPetugasList ';
+import RiwayatAbsensi from '../screens/MitraScreen/Riwayat/RiwayatAbsensi';
+import PreviewSurvey from '../screens/MitraScreen/Survey/PreviewSurvey';
+import RegisterMitra from '../screens/MitraScreen/RegisterMitra';
+
 
 
 
@@ -69,9 +71,25 @@ const TabScreen = ({ navigation, route }) => {
   );
 };
 
+const linkingData = {
+  prefixes: ['hebatapp://'],
+  config: {
+    screens: {
+      Home: {
+        path: 'home'
+      },
+      BerandaMitra: {
+        path: 'mitra'
+      }
+    }
+  }
+  
+};
+
 export default function RouteManager() {
   return (
-    <NavigationContainer>
+    <NavigationContainer
+    linking={linkingData}>
       <initStack.Navigator
         screenOptions={{
           headerShown: false,
@@ -83,7 +101,8 @@ export default function RouteManager() {
           options={{ headerShown: false }}
         />
         <initStack.Screen name="Home" component={TabScreen} />
-        <initStack.Screen name="BerandaGaspoll" component={Beranda} />
+        <initStack.Screen name="BerandaMitra" component={BerandaMitra} />
+        <initStack.Screen name="RegisterMitra" component={RegisterMitra} />
         <initStack.Screen name="Pendataan" component={Pendataan} />
         <initStack.Screen name="RiwayatSurvey" component={RiwayatSurvey} />
         <initStack.Screen name="EditData" component={EditData} />

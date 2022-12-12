@@ -75,7 +75,7 @@ const HeaderDate = ({
                   width: '20%',
                   fontSize: 20,
                   color: 'white',
-                  fontWeight: '500',
+                  fontFamily:fontsCustom.primary[500],
                   borderBottomColor: 'white',
                 }}
                 value={textInput}
@@ -197,8 +197,8 @@ const style = StyleSheet.create({
     color: 'white',
     paddingTop: 4,
     paddingBottom: 4,
-    fontWeight: '700',
-    width:200,
+    fontFamily:fontsCustom.primary[700],
+    width:250,
   },
   btnDate: {
     backgroundColor: 'white',
@@ -213,7 +213,7 @@ const style = StyleSheet.create({
 
   textDate: {
     fontSize: 12,
-    fontWeight: '400',
+    fontFamily:fontsCustom.primary[400],
     textAlign: 'center',
     alignSelf: 'center',
     color: 'black',
