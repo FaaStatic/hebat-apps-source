@@ -26,12 +26,8 @@ export default function Home({ navigation, route }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     getDataArticle();
-    handlingNotificationTopic();
   }, []);
-  const handlingNotificationTopic = async () => {
-    const constTopic = 'bapenda';
-    await messaging().subscribeToTopic(constTopic);
-  };
+ 
   const getDataArticle = async () => {
     const params = {
       keyword: '',

@@ -4,6 +4,7 @@ import { NotificationUtil } from './util/NotificationUtil';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import firebase from '@react-native-firebase/app';
 import RouteManager from './util/RouterManager';
+import messaging from '@react-native-firebase/messaging';
 import FlashMessage from 'react-native-flash-message';
 import { stringApp, firebaseConfig } from './util/globalvar';
 import { Provider } from 'react-redux';
@@ -12,8 +13,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = () => {
-  useEffect(() => {
-    
+  useEffect(() => { 
     NotificationUtil.firebaseBackgroundHandlerNotification();
     if (Platform.OS === 'ios') {
       PushNotificationIOS.requestPermissions();
@@ -21,26 +21,25 @@ const App = () => {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
-
-    NotificationUtil.channelExistCheck();
-    NotificationUtil.notificationConfigure();
     if (Platform.OS === 'ios') {
-      NotificationUtil.notificationConfigure();
+      NotificationUtil.channelExistCheck();
+      NotificationUtil.notificationConfigureIos();
       PushNotificationIOS.addEventListener(
-        stringApp.typeNotif,
-        NotificationUtil.onRemoteNotification
+        "notification",
+        NotificationUtil.onRemoteIosNotification
       );
-     let handler = NotificationUtil.notificationHandler();
+     var handler = NotificationUtil.notificationHandler();
 
       return () => {
-        PushNotificationIOS.removeEventListener(stringApp.typeNotif);
+        PushNotificationIOS.removeEventListener("notification");
         handler;
       };
     } else {
+      NotificationUtil.channelExistCheck();
+      NotificationUtil.notificationConfigure();
       NotificationUtil.notificationHandler();
     }
-    
-  }, []);
+  },[]);
 
   return (
     <GestureHandlerRootView style={style.container}>

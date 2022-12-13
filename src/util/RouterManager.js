@@ -78,8 +78,14 @@ const linkingData = {
       Home: {
         path: 'home'
       },
+      DetailArticle:{
+        path:'detailarticle/:data',
+      },
       BerandaMitra: {
         path: 'mitra'
+      },
+      MainNotification:{
+        path:"MainNotification"
       }
     }
   }

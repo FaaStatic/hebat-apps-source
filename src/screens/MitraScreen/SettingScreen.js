@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BottomSheet, Image } from '@rneui/themed';
+import { BottomSheet, Image,Dialog } from '@rneui/themed';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/dist/Entypo';
 import GapList from '../Komponen/GapList';
@@ -25,6 +25,7 @@ const SettingScreen = ({ navigation, route }) => {
   const [openBottom2, setOpenBottom2] = useState(false);
   const [openBottom3, setOpenBottom3] = useState(false);
   const [openBottom4, setOpenBottom4] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const [loadingScreen, setLoadingScreen] = useState(false);
   const [nama, setNama] = useState('');
   const [noTelp, setNoTelp] = useState('');
@@ -234,6 +235,13 @@ const SettingScreen = ({ navigation, route }) => {
     navigation.replace('Home');
   };
 
+  const DeleteIcon= () => {
+
+    SessionManager.ClearAllKeys();
+    BackgroundLocationServices.stopBackroundServices();
+    navigation.replace('Home');
+  };
+
   const sesi = async () => {
     var data = SessionManager.GetAsObject(stringApp.session);
     const param = {
@@ -412,7 +420,7 @@ const SettingScreen = ({ navigation, route }) => {
               <Icon
                 name="pencil"
                 size={28}
-                color={'black'}
+                color={colorApp.input}
                 style={{
                   alignSelf: 'center',
                 }}
@@ -477,7 +485,7 @@ const SettingScreen = ({ navigation, route }) => {
               <Icon
                 name="pencil"
                 size={28}
-                color={'black'}
+                color={colorApp.input}
                 style={{
                   alignSelf: 'center',
                 }}
@@ -541,7 +549,7 @@ const SettingScreen = ({ navigation, route }) => {
               <Icon
                 name="pencil"
                 size={28}
-                color={'black'}
+                color={colorApp.input}
                 style={{
                   alignSelf: 'center',
                 }}
@@ -555,6 +563,7 @@ const SettingScreen = ({ navigation, route }) => {
             }}
             style={{
               marginTop: 16,
+              marginBottom: 16,
               marginStart:24,
               padding: 8,
               flexDirection: 'row',
@@ -564,7 +573,7 @@ const SettingScreen = ({ navigation, route }) => {
             <Icon
               name="log-out"
               size={28}
-              color={'black'}
+              color={colorApp.btnColor1}
               style={{
                 alignSelf: 'flex-start',
                 marginEnd: 8,
@@ -576,10 +585,47 @@ const SettingScreen = ({ navigation, route }) => {
                 {
                   fontFamily:fontsCustom.primary[700],
                   alignSelf: 'center',
+                  color:colorApp.btnColor1
                 },
               ]}
             >
               Logout
+            </Text>
+          </TouchableOpacity>
+          <GapList/>
+          <TouchableOpacity
+            onPress={() => {
+              setOpenDialog(true);
+            }}
+            style={{
+              marginTop: 16,
+              marginBottom: 16,
+              marginStart:24,
+              padding: 8,
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+            }}
+          >
+            <Icon
+              name="trash"
+              size={28}
+              color={'red'}
+              style={{
+                alignSelf: 'flex-start',
+                marginEnd: 8,
+              }}
+            />
+            <Text
+              style={[
+                style.textTitle,
+                {
+                  fontFamily:fontsCustom.primary[700],
+                  alignSelf: 'center',
+                  color:'red'
+                },
+              ]}
+            >
+              Hapus akun
             </Text>
           </TouchableOpacity>
         </View>
@@ -1022,6 +1068,50 @@ const SettingScreen = ({ navigation, route }) => {
           </View>
         </View>
       </BottomSheet>
+      <Dialog overlayStyle={{
+        backgroundColor:'white',
+        borderRadius:8,
+        padding:16,
+        flexDirection:'column',
+        justifyContent:'space-evenly'
+      }} isVisible={openDialog} onBackdropPress={()=>{setOpenDialog(false)}}>
+        <Text style={{
+          fontFamily:fontsCustom.primary[400],
+          textAlign:'center',
+          marginBottom:28,
+        }}>Apakah anda yakin ingin menghapus akun ini? <Text style={{
+          fontFamily:fontsCustom.primary[700],
+        }}>akun akan terhapus jika anda tidak login selama 30 hari.</Text></Text>
+
+        <View style={{
+          flexDirection:'row',
+          justifyContent:'space-around',
+        }}> 
+          <TouchableOpacity onPress={()=>{
+            setOpenDialog(false);
+          }} style={{
+               padding:8,
+               justifyContent:'center',
+               alignItems:'center',
+          }}><Text style={{
+            color:'grey',
+            fontFamily:fontsCustom.primary[400],
+          }}>Batal</Text></TouchableOpacity>
+          <TouchableOpacity 
+          onPress={()=>{
+            DeleteIcon();
+          }} style={{
+            backgroundColor:colorApp.button.primary,
+            borderRadius:8,
+            padding:8,
+            justifyContent:'center',
+            alignItems:'center',
+          }}><Text style={{
+            color:'white',
+            fontFamily:fontsCustom.primary[700],
+          }}>Setuju dan logout</Text></TouchableOpacity>
+        </View>
+      </Dialog>
     </View>
   );
 };
