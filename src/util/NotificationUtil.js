@@ -126,9 +126,13 @@ export const NotificationUtil = {
     messaging().onMessage(async (remoteMessage) => {
       NotificationUtil.initLocalNotificationBackground(remoteMessage);
     });
+  
   },
-  firebaseBackgroundHandlerNotification: () => {
-    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+  firebaseBackgroundHandlerNotification: async () => {
+    if(Platform.OS === 'android'){
+      await messaging().registerDeviceForRemoteMessages();
+    }
+       messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       NotificationUtil.initLocalNotificationBackground(remoteMessage);
     });
   },

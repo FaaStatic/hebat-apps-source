@@ -18,6 +18,8 @@ export default function SplashScreen({ navigation, route }) {
     };
   }, [navigation]);
 
+
+
   const sessionCheck = async () => {
     setTimeout(() => {
       var sesi = SessionManager.GetAsObject('@session');
@@ -49,10 +51,10 @@ export default function SplashScreen({ navigation, route }) {
           <Image
             source={require('../../assets/images/splashscreen.png')}
             style={{
-              resizeMode: 'contain',
+              resizeMode: 'cover',
               alignSelf: 'center',
               width: 200,
-              height: 124,
+              height: 125,
             }}
           />
           <Image

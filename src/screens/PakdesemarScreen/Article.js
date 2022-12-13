@@ -110,7 +110,7 @@ export default Article = ({ navigation, route }) => {
       <SafeAreaView style={{ flex: 1, backgroundColor: colorApp.gradientDua }}>
         <LinearGradient
           colors={[colorApp.gradientSatu, colorApp.gradientDua]}
-          start={{ x: -2, y: 0.7 }}
+          start={{ x: -2, y: 0.8 }}
           end={{ x: 0.1, y: 0 }}
           style={[stylesheet.pages]}
         >
@@ -242,7 +242,7 @@ export default Article = ({ navigation, route }) => {
                   showsVerticalScrollIndicator={false}
                   nestedScrollEnabled={true}
                   data={article.slice(1, article.length)}
-                  keyExtractor={(item) => 'Article-' + item.title}
+                  keyExtractor={(item,index) => 'Article-' + index}
                   renderItem={({ item }) => renderItemArticle(item)}
                 />
               </View>

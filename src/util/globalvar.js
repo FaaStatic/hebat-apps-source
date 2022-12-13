@@ -12,7 +12,7 @@ const colorApp = {
   gradientSatu: '#FA9494',
   gradientDua: '#FAFAFA',
   primary: '#ffffff',
-  secondary: '#E6ECF6',
+  secondary: '#F2F2F2',
   header: {
     primary: '#C70039',
     secondary: 'rgba(250, 148, 148, 0.3)',
@@ -24,7 +24,7 @@ const colorApp = {
   label: '#646460',
   black: '#000',
   button: {
-    primary: '#C70039',
+    primary: '#EB1C36',
     secondary: '#000',
   },
   placeholderColor: 'rgba(0, 0, 0, 0.4)',
