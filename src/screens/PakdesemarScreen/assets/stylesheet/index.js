@@ -1,3 +1,4 @@
+import { Dimensions } from "react-native";
 import { colorApp } from "../../../../util/globalvar"
 export const stylesheet = {
   container: {
@@ -16,6 +17,7 @@ export const stylesheet = {
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     paddingBottom: 0,
+    flex:1,
   },
   textLoader: {
     color: '#ffffff',

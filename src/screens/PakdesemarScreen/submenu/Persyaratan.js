@@ -59,7 +59,7 @@ export default Persyaratan = () => {
           return (
             <>
               <Gap height={5} />
-              <TouchableOpacity onPress={() => openList(item.id)}
+              <TouchableOpacity onPress={() => openList(item.id) }
                 key={item.id}
                 style={{
                   flexDirection: 'row',
