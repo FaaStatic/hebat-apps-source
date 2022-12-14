@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StatusBar, View, StyleSheet, Platform, SafeAreaView } from 'react-native';
+import { StatusBar, View, StyleSheet, Platform, LogBox } from 'react-native';
 import { NotificationUtil } from './util/NotificationUtil';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import firebase from '@react-native-firebase/app';
@@ -39,6 +39,7 @@ const App = () => {
       NotificationUtil.notificationConfigure();
       NotificationUtil.notificationHandler();
     }
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   },[]);
 
   return (

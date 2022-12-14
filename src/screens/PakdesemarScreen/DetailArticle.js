@@ -22,7 +22,7 @@ const height = Dimensions.get('window').height;
 const APPBAR_HEIGHT = Platform.isPad == true ? height / 7 : 110;
 const width = Dimensions.get('window').width;
 export default DetailArticle = ({ navigation, route }) => {
-  const { data,id } = route.params;
+  const { data } = route.params;
   
   const [load, setLoad] = useState(true);
   const [statusFull, setStatusFull] = useState(true);
@@ -37,13 +37,12 @@ export default DetailArticle = ({ navigation, route }) => {
   });
 
   useEffect(() => {
-    console.log('====================================');
-    console.log(navigation.params);
-    console.log('====================================');
     getDetailArticle();
   }, []);
   const getDetailArticle = async () => {
-    
+    console.log('====================================');
+    console.log(data.id);
+    console.log('====================================');
     const params = {
       id: data.id,
     };
@@ -76,7 +75,6 @@ export default DetailArticle = ({ navigation, route }) => {
       <View style={{ height: APPBAR_HEIGHT }} />
       <HeaderSubMenu
         title="Artikel"
-        logo={data.image}
         type="icon-only"
         icon="black"
         background={colorApp.header.secondary}
