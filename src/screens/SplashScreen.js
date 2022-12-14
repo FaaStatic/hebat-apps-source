@@ -56,12 +56,13 @@ export default function SplashScreen({ navigation, route }) {
               width: 200,
               height: 125,
             }}
+            
           />
           <Image
             source={YelSpleshScreen}
             style={{
               height: 33,
-              resizeMode: 'contain',
+              resizeMode: 'cover',
               width: 180,
             }}
           />

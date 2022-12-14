@@ -2,7 +2,7 @@ import PushNotification, { Importance } from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import messaging from '@react-native-firebase/messaging';
 import { Platform, DeviceEventEmitter, Linking } from 'react-native';
-
+import { navigationRef } from './RouterManager';
 export const NotificationUtil = {
   createChannel: () => {
     PushNotification.createChannel(
@@ -158,13 +158,15 @@ export const NotificationUtil = {
     console.log('tesnotif', notification);
     if (notification.data) {
       if (notification.userInteraction == true) {
-        // console.log('====================================');
-        // console.log(notification.data.id_berita);
-        // console.log('====================================');
-        // const data = {
-        //   id: 77,
-        // };
-        Linking.openURL(`hebatapp://MainNotification`);
+        var idBerita = notification.data.id_berita;
+      
+        if (navigationRef.isReady()) {
+          navigationRef.navigate("DetailArticle",{
+            data: {
+              id: idBerita
+            },
+          });
+        }
       }
     } else {
       if (notification.foreground == false) {
@@ -177,11 +179,14 @@ export const NotificationUtil = {
   onRemoteIosNotification: (notification) => {
     if (notification.data) {
       if (notification.userInteraction == true) {
-        
-        // const data = {
-        //   id: notification.data.id_berita,
-        // };
-        Linking.openURL(`hebatapp://MainNotification`);
+        var idBerita = notification.data.id_berita;
+        if (navigationRef.isReady()) {
+          navigationRef.navigate("DetailArticle",{
+            data: {
+              id: idBerita
+            },
+          });
+        }
       }
     } else {
       if (notification.foreground == false) {

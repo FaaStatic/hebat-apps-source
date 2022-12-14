@@ -6,6 +6,7 @@ import Home from '../screens/PakdesemarScreen/Home';
 import Article from '../screens/PakdesemarScreen/Article';
 import Support from '../screens/PakdesemarScreen/Support';
 import Login from '../screens/Login';
+import { createNavigationContainerRef } from '@react-navigation/native';
 import SplashScreen from '../screens/SplashScreen';
 import Pendataan from '../screens/MitraScreen/Pendataan/Pendataan';
 import RiwayatSurvey from '../screens/MitraScreen/Riwayat/RiwayatSurvei';
@@ -60,6 +61,7 @@ import RegisterMitra from '../screens/MitraScreen/RegisterMitra';
 
 const initStack = createNativeStackNavigator();
 const InitTab = createBottomTabNavigator();
+const navigationRef = createNavigationContainerRef();
 const TabScreen = ({ navigation, route }) => {
   return (
     <InitTab.Navigator tabBar={(props) => <BottomNavigation {...props} />}>
@@ -95,6 +97,7 @@ const linkingData = {
 export default function RouteManager() {
   return (
     <NavigationContainer
+    ref={navigationRef}
     linking={linkingData}>
       <initStack.Navigator
         screenOptions={{
@@ -221,3 +224,5 @@ export default function RouteManager() {
     </NavigationContainer>
   );
 }
+
+export {navigationRef}
