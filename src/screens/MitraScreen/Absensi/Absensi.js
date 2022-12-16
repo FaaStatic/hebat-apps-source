@@ -59,20 +59,22 @@ const Absensi = ({ navigation, route }) => {
           style={{
             flexDirection: 'row',
             backgroundColor: colorApp.btnColor2,
-            justifyContent: 'flex-start',
             padding: 16,
             borderRadius: 8,
           }}
         >
-          <Icon name="location" size={24} color={'white'} />
+          <Icon name="location" size={24} color={'white'} style={{
+            alignSelf:'flex-start',
+          }} />
 
           <Text
             style={{
               alignSelf: 'center',
               textAlign: 'center',
+              width:'100%',
               color: 'white',
               fontSize: 16,
-              marginStart: ViewWidth / 4,
+              
               fontFamily:fontsCustom.primary[700],
             }}
           >
@@ -88,19 +90,20 @@ const Absensi = ({ navigation, route }) => {
           style={{
             flexDirection: 'row',
             backgroundColor: colorApp.btnColor3,
-            justifyContent: 'flex-start',
             padding: 16,
             borderRadius: 8,
           }}
         >
-          <Icon name="location" size={24} color={'white'} />
+          <Icon name="location" size={24} color={'white'}  tyle={{
+            alignSelf:'flex-start',
+          }} />
           <Text
             style={{
               alignSelf: 'center',
               textAlign: 'center',
               color: 'white',
               fontSize: 16,
-              marginStart: ViewWidth / 4,
+              width:'100%',
               fontFamily:fontsCustom.primary[700],
             }}
           >
