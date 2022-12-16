@@ -25,6 +25,13 @@ const RegisterMitra = ({ navigation, route }) => {
         allowUniversalAccessFromFileURLs={true}
         domStorageEnabled={true}
         allowFileAccess={true}
+        onNavigationStateChange={(navState) => {
+          if (navState.url === 'https://register.nexa.net.id/bapenda/notif.html') {
+            setTimeout(() => {
+              navigation.goBack();
+            }, 3000);
+          }
+        }}
         cacheEnabled={true}
         cacheMode="LOAD_DEFAULT"
         scalesPageToFit={Platform.OS === 'ios'}
