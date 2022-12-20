@@ -21,7 +21,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -46,9 +46,9 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>whatsapp</string>
-    </array>
+	<array>
+		<string>whatsapp</string>
+	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
@@ -106,16 +106,16 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Hebat! need camera access to take the photo for attendance features.</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Hebat! need location access to verify the allowed location for check-in.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Hebat! need location access to verify the allowed location for check-in.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Hebat! need location access to verify the allowed location for check-in.</string>
-    <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>Hebat! need photo library access for adding a photo to form input data applications.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Hebat! need read photo library access to adding form input data applications.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Hebat! need photo library access for adding a photo to form input data applications.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Hebat! need read photo library access to adding form input data applications.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NeoSansStd-Bold.ttf</string>
