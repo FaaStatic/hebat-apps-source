@@ -196,7 +196,7 @@ export default DetailStatusBayar = ({ navigation, route }) => {
               <Gap height={20} />
               <Input
                 value={nomor}
-                onChangeText={(val) => optionSetNomor(val)}
+                onChangeText={(val) => data.id == 'StatusPBB' ? optionSetNomor(val) : setNomor(val)}
                 placeholder="Masukan Nomor Disini"
                 placeholderColor={true}
                 keyboardType="numeric"

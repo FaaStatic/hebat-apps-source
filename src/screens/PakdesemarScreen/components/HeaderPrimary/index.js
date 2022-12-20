@@ -22,7 +22,7 @@ export default HeaderPrimary = ({ rute, onIcon, onPressIcon }) => {
           : 'Halo para';
   let headerSubTitle =
     rute == 'Beranda'
-      ? 'Kawan'
+      ? ''
       : rute == 'Article'
         ? 'Artikel'
         : rute == 'Hubungi'
@@ -43,7 +43,7 @@ export default HeaderPrimary = ({ rute, onIcon, onPressIcon }) => {
         >
           {headerTitle}
         </Text>
-        <View style={{ flexDirection: 'row', justifyContent:'flex-start' ,marginTop: 10 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
           <Text style={styles.titleLogo}>{headerSubTitle}</Text>
           <Image
             source={require('../../assets/img/logo.png')}
@@ -78,15 +78,15 @@ const styles = StyleSheet.create({
   avatar: {
     height: 50,
     width: 120,
-    marginTop:15 ,
+    marginTop: 15,
     marginBottom: 10,
   },
   titleLogo: {
     fontSize: 30,
-    marginTop:20,
+    marginTop: 20,
     marginBottom: 5,
-    textAlignVertical:'center',
-    textAlign:'center',
+    textAlignVertical: 'center',
+    textAlign: 'center',
     color: colorApp.black,
     fontFamily: fontsCustom.primary[700],
   },
