@@ -4,7 +4,7 @@ import { colorApp } from '../../util/globalvar';
 import { MessageUtil } from '../../util/MessageUtil';
 import ServiceHelper from './addOns/ServiceHelper';
 import { stylesheet } from './assets';
-import { CustomModal, HeaderSubMenu } from './components';
+import { Button, CustomModal, HeaderSubMenu } from './components';
 import { menuMetodeBayar, menuPelayanan, menuRegistrasi, menuStatusBayar } from './menu';
 import LacakPelayanan from './submenu/LacakPelayanan';
 import MetodePembayaran from './submenu/MetodePembayaran';
@@ -181,6 +181,17 @@ export default MainSubMenu = ({ navigation, route }) => {
               }}
             >
               <SegeraHadir />
+              {Platform.OS == 'ios' && (
+                <View style={{ width: '100%', alignItems: 'center', marginTop: 30 }}>
+                  <Button
+                    height={35}
+                    title="TUTUP"
+                    type="primary"
+                    width="30%"
+                    onPress={() => setModal(false)}
+                  />
+                </View>
+              )}
             </View>
           </View>
         </View>
