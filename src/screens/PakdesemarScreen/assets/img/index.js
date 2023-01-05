@@ -64,7 +64,15 @@ import IcBnSupportActive from './ic_bn_support_active.png';
 import IcBnLoginActive from './ic_bn_login_active.png';
 import IcQris from './qris.png';
 import IcStsOnline from './ic_sts_online.png';
+import IcLacakPelayanan from './ic_lacak_pelayanan.png';
+import BgLacakPelayanan from './bg_lacak_pelayanan.png';
+import IcESPPTPBB from './ic_esppt_pbb.png';
+import BgESPPTPBB from './bg_esppt_pbb.png';
 export {
+  IcESPPTPBB,
+  BgESPPTPBB,
+  IcLacakPelayanan,
+  BgLacakPelayanan,
   IcStsOnline,
   IcQris,
   IcBnHomeActive,

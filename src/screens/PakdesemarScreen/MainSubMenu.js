@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, StatusBar, Platform, Dimensions } from 'react-native';
+import { View, StatusBar, Platform, Dimensions, Alert, Modal } from 'react-native';
 import { colorApp } from '../../util/globalvar';
 import { MessageUtil } from '../../util/MessageUtil';
 import ServiceHelper from './addOns/ServiceHelper';
 import { stylesheet } from './assets';
 import { CustomModal, HeaderSubMenu } from './components';
-import { menuMetodeBayar, menuRegistrasi, menuStatusBayar } from './menu';
-// import LacakPelayanan from './submenu/LacakPelayanan';
+import { menuMetodeBayar, menuPelayanan, menuRegistrasi, menuStatusBayar } from './menu';
+import LacakPelayanan from './submenu/LacakPelayanan';
 import MetodePembayaran from './submenu/MetodePembayaran';
 // import Pencetakan from './submenu/Pencetakan';
 import Persyaratan from './submenu/Persyaratan';
@@ -19,6 +19,7 @@ export default MainSubMenu = ({ navigation, route }) => {
   const { data } = route.params;
   const [loading, setLoading] = useState(false);
   const [listPartner, setDataPartner] = useState(menuMetodeBayar);
+  const [modal, setModal] = useState(false);
   useEffect(() => {
     if (data.nama == 'Pembayaran') {
       setLoading(true);
@@ -105,6 +106,13 @@ export default MainSubMenu = ({ navigation, route }) => {
   const onPresMenuRegistrasi = (data) => {
     navigation.navigate('FormRegistrasi', { data: data });
   };
+  const onPressMenuPelayanan = (data) => {
+    if (data.id == 'ESPPTPBB') {
+      navigation.navigate('LoadWebView', { url: 'http://e-spptpbb.semarangkota.go.id/' });
+    } else {
+      setModal(true);
+    }
+  };
   return (
     <>
       <StatusBar backgroundColor={colorApp.header.primary} />
@@ -126,12 +134,11 @@ export default MainSubMenu = ({ navigation, route }) => {
         }}
       >
         <View style={[stylesheet.content]}>
-          {data.nama == 'Lacak Pelayanan' ? (
-            /* <LacakPelayanan
-              onPressLacakLayanan={(val) => actionLacak(val)}
-              onPressLupaNomor={() => actionLupaNomor()}
-            /> */
-            <SegeraHadir />
+          {data.nama == 'Pelayanan' ? (
+            <LacakPelayanan
+              data={menuPelayanan}
+              onPressMenu={(data) => onPressMenuPelayanan(data)}
+            />
           ) : data.nama == 'Status Bayar' ? (
             <StatusBayar
               data={menuStatusBayar}
@@ -150,6 +157,34 @@ export default MainSubMenu = ({ navigation, route }) => {
         </View>
       </View>
       <CustomModal loading={loading} message={'Loading'} />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modal}
+        onRequestClose={() => setModal(false)}
+      >
+        <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginHorizontal: 20,
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: colorApp.primary,
+                borderRadius: 19,
+                padding: 15,
+                width: '100%',
+              }}
+            >
+              <SegeraHadir />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };
