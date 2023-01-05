@@ -23,12 +23,16 @@ import {
   BgRegisPribadi,
   IcRegisBU,
   BgRegisBU,
+  IcLacakPelayanan,
+  BgLacakPelayanan,
+  IcESPPTPBB,
+  BgESPPTPBB,
 } from '../assets';
 
 const menuPakdeSemar = [
   {
     logo: IcMainMenuLacakLayanan,
-    name: 'Lacak Pelayanan',
+    name: 'Pelayanan',
     link: '',
   },
   {
@@ -114,6 +118,25 @@ const menuStatusBayar = [
   },
 ];
 
+const menuPelayanan = [
+  {
+    id: 'LacakPelayanan',
+    name: 'Lacak Pelayanan',
+    logo: IcLacakPelayanan,
+    image: BgLacakPelayanan,
+    description:
+      'Lacak status pelayanan sistem perpakajan usaha hanya dengan memasukan Nomor pelayanan anda untuk mengetahui status terbarunya.',
+  },
+  {
+    id: 'ESPPTPBB',
+    name: 'ESPPT PBB',
+    logo: IcESPPTPBB,
+    image: BgESPPTPBB,
+    description:
+      'Pajak Bumi dan Bangunan Perdesaan dan Perkotaan (PBB-P2) adalah salah satu jenis Pajak yang diselenggarakan pemungutannya oleh Badan Pendapatan Daerah.',
+  },
+];
+
 const menuRegistrasi = [
   {
     id: 'Pribadi',
@@ -181,4 +204,12 @@ const menuMetodeBayar = [
   },
 ];
 
-export { menuPakdeSemar, sosmed, menuStatusBayar, menuPercetakan, menuMetodeBayar, menuRegistrasi };
+export {
+  menuPakdeSemar,
+  sosmed,
+  menuStatusBayar,
+  menuPercetakan,
+  menuMetodeBayar,
+  menuRegistrasi,
+  menuPelayanan,
+};

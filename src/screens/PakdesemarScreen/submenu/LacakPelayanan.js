@@ -1,66 +1,116 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  KeyboardAvoidingView,
-  ScrollView,
-} from 'react-native';
+import React from 'react';
+import { View, TouchableOpacity, StyleSheet, Image, Text, Platform } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { colorApp, fontsCustom } from '../../../util/globalvar';
-import { BgLacakLayanan } from '../assets';
-import { Gap, Input, Button } from '../components';
-export default LacakPelayanan = ({ onPressLacakLayanan, onPressLupaNomor }) => {
-  const [nomor, setNomor] = useState('');
+import { Gap } from '../components';
+export default LacakPelayanan = ({ data, onPressMenu }) => {
   return (
     <View>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Gap height={50} />
-          <Image
-            style={{ width: '100%', height: 199, resizeMode: 'contain' }}
-            source={BgLacakLayanan}
-          />
-          <Gap height={40} />
-          <Text
-            style={{
-              fontFamily: fontsCustom.primary[700],
-              fontSize: 16,
-              color: colorApp.black,
-            }}
-          >
-            Masukan Nomor Pelayanan Anda
-          </Text>
-          <Gap height={3} />
-          <Text style={{ color: colorApp.black }}>Pastikan sesuai ya!</Text>
-          <Gap height={20} />
-          <Input borderColor={colorApp.secondary} onChangeText={(val) => setNomor(val)} />
-          <Gap height={20} />
-          <View style={{ flexDirection: 'row' }}>
-            <Text
-              style={{
-                color: colorApp.black,
-                fontFamily: fontsCustom.primary[400],
-                fontSize: 12,
-              }}
-            >
-              Lupa nomornya? cek caranya{' '}
-            </Text>
-            <TouchableOpacity onPress={() => onPressLupaNomor()} style={{ flex: 1 }}>
-              <Text style={{ fontWeight: 'bold', color: colorApp.button.primary, fontSize: 12 }}>
-                Disini
-              </Text>
+      <Gap height={30} />
+      <Text style={{ fontFamily: fontsCustom.primary[400], color: colorApp.black, fontSize: 14 }}>
+        Pilih layanan yang ingin kamu gunakan!
+      </Text>
+      <Gap height={10} />
+      {data.map((item) => {
+        return (
+          <>
+            <TouchableOpacity key={item.id} onPress={() => onPressMenu(item)}>
+              <LinearGradient
+                colors={[colorApp.gradientSatu, colorApp.gradientDua]}
+                start={{ x: -0.2, y: 0 }}
+                end={{ x: 1, y: -2 }}
+                style={styles.cardView}
+              >
+                <View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <View
+                      style={{
+                        position: 'absolute',
+                        marginStart:
+                          Platform.isPad == true ? '72%' : Platform.OS == 'android' ? '50%' : '49%',
+                        opacity: 0.5,
+                      }}
+                    >
+                      <Image
+                        source={item.image}
+                        style={{
+                          width: item.id == 'LacakPelayanan' ? 184 : 131,
+                          height: item.id == 'LacakPelayanan' ? 165 : 151,
+                          marginTop: item.id == 'LacakPelayanan' ? 45 : 55,
+                          marginStart: item.id == 'LacakPelayanan' ? 0 : 25,
+                        }}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: 'center',
+                        height: 249,
+                        flex: 1,
+                        marginStart: 20,
+                      }}
+                    >
+                      <View style={styles.cardViewIn}>
+                        <Image
+                          style={{ width: 33, height: 31 }}
+                          source={item.logo}
+                          resizeMode="contain"
+                        />
+                      </View>
+                      <Gap height={20} />
+                      <View style={{ width: '55%' }}>
+                        <Text
+                          style={{
+                            fontSize: 20,
+                            fontFamily: fontsCustom.primary[700],
+                            color: colorApp.black,
+                          }}
+                        >
+                          {item.name}
+                        </Text>
+                        <Gap height={7} />
+                        <Text
+                          style={{
+                            fontSize: 8,
+                            fontFamily: fontsCustom.primary[400],
+                            color: colorApp.black,
+                          }}
+                        >
+                          {item.description}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </LinearGradient>
             </TouchableOpacity>
-            <Button
-              height={35}
-              title="Lacak Sekarang"
-              type="primary"
-              width="40%"
-              onPress={() => onPressLacakLayanan(nomor)}
-            />
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+            <Gap height={10} />
+          </>
+        );
+      })}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  cardView: {
+    borderRadius: 19,
+    marginBottom: 10,
+    width: '100%',
+    height: 249,
+    marginEnd: 16,
+  },
+  imgCardView: {
+    position: 'absolute',
+    height: 229,
+    width: 120,
+    borderRadius: 19,
+    opacity: 0.1,
+  },
+  cardViewIn: {
+    width: 64,
+    height: 64,
+    backgroundColor: colorApp.primary,
+    borderRadius: 19,
+    padding: 15,
+  },
+});
