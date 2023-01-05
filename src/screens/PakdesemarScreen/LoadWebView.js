@@ -3,7 +3,7 @@ import { StyleSheet, View, ActivityIndicator, Text, StatusBar } from 'react-nati
 import { WebView } from 'react-native-webview';
 import { colorApp } from '../../util/globalvar';
 import { HeaderSubMenu } from './components';
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 80 : 100;
+const APPBAR_HEIGHT = Platform.OS === 'ios' ? 120 : 100;
 const LoadWebView = ({ navigation, route }) => {
   const { url } = route.params;
   const [isVisible, setIsVisible] = useState(true);
