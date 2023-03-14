@@ -11,6 +11,9 @@ import { Provider } from 'react-redux';
 import { Store } from './statemanager/Store';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { enableScreens } from 'react-native-screens';
+
+enableScreens(false);
 
 const App = () => {
   useEffect(() => { 
