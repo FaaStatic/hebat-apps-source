@@ -45,8 +45,8 @@ const Absensi = ({ navigation, route }) => {
           paddingTop: 8,
           paddingBottom: 8,
           flexDirection: 'column',
-          justifyContent: 'space-evenly',
-          height: ViewHeight / 5,
+          justifyContent: 'space-around',
+          height: 150,
           backgroundColor: 'white',
         }}
       >

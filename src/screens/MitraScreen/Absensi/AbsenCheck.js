@@ -50,7 +50,7 @@ const AbsenCheck = ({ navigation, route }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openDownload, setOpenDownload] = useState(false);
   const [valueUpload, setValueUpload] = useState(0);
-
+  const [cameraPermission, setCameraPermission] = useState(false);
   useFocusEffect(
     useCallback(() => {
       getLocation();
@@ -66,20 +66,25 @@ const AbsenCheck = ({ navigation, route }) => {
   );
 
   const setCamera = async () => {
-    const cameraPermission = await Camera.getCameraPermissionStatus();
+    const cameraPermission = await Camera.requestCameraPermission();
+    if (cameraPermission === 'authorized') {
+      setCameraPermission(true);
+    } else {
+      setCameraPermission(false);
+    }
   };
 
-  const clearData = () =>{
-     latitude = -6.966667;
-     longitude = 110.416664;
+  const clearData = () => {
+    latitude = -6.966667;
+    longitude = 110.416664;
     setMapState({
       latitude: latitude,
       longitude: longitude,
       latitudeDelta: limitlatitudeDelta,
       longitudeDelta: limitLongitudeDelta,
-    })
-   }
-    
+    });
+  };
+
   const getLocation = async () => {
     const locationPermission = await PermissionUtil.accessLocation();
     if (locationPermission === true) {
@@ -108,10 +113,17 @@ const AbsenCheck = ({ navigation, route }) => {
 
   const absenApi = async () => {
     var sesi = SessionManager.GetAsObject(stringApp.session);
-    const snapshot = await cameraRef.current.takeSnapshot({
-      quality: 85,
-      skipMetadata: true,
-    });
+
+    const snapshot =
+      Platform.OS === 'android'
+        ? await cameraRef.current.takeSnapshot({
+            quality: 85,
+            skipMetadata: true,
+          })
+        : await cameraRef.current.takePhoto({
+            qualityPrioritization: 'balanced',
+            skipMetadata: true,
+          });
 
     let uriX = snapshot.path;
     let mimeType = mime.lookup(snapshot.path);
@@ -151,22 +163,18 @@ const AbsenCheck = ({ navigation, route }) => {
       }
     ]).progress(prog => {
       setOpenDownload(true);
-     setValueUpload(prog);
+      setValueUpload(prog);
     }).then(res => {
-      console.log('====================================');
-      console.log(res.data);
-      console.log('====================================');
       var body = JSON.parse(res.data);
       var status = body.metadata.status;
       var message = body.metadata.message;
-      console.log(body);
-      console.log(status);
-      console.log(status);
-      console.log(message);
       if(status === 200){
+        
         setOpenDownload(true);
         setTimeout(()=>{
-          setOpenDialog(true);
+          setOpenDownload(false);
+          MessageUtil.successMessage(message,"")
+          setOpenDialog(false);
         },1000);
       }else{
         MessageUtil.errorMessage(message);
@@ -240,7 +248,6 @@ const AbsenCheck = ({ navigation, route }) => {
             latitudeDelta: limitlatitudeDelta,
             longitudeDelta: limitLongitudeDelta,
           }}
-           
           maxZoomLevel={20}
           style={{
             flex: 1,
@@ -271,7 +278,7 @@ const AbsenCheck = ({ navigation, route }) => {
           <Marker.Animated
             coordinate={{
               latitude: mapState.latitude,
-              longitude:  mapState.longitude,
+              longitude: mapState.longitude,
             }}
             flat
             pinColor={'blue'}
@@ -402,7 +409,7 @@ const AbsenCheck = ({ navigation, route }) => {
           style={{
             fontSize: 24,
             color: 'green',
-            fontFamily:fontsCustom.primary[700],
+            fontFamily: fontsCustom.primary[700],
             alignSelf: 'center',
           }}
         >
@@ -428,7 +435,7 @@ const AbsenCheck = ({ navigation, route }) => {
             style={{
               color: 'green',
               fontSize: 16,
-              fontFamily:fontsCustom.primary[700],
+              fontFamily: fontsCustom.primary[700],
               alignSelf: 'center',
             }}
           >
