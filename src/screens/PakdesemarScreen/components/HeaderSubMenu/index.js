@@ -21,9 +21,10 @@ const HeaderSubMenu = ({ absolute, gapCustom, title, onPress, icon, type, color,
           width: '100%',
           paddingHorizontal: 16,
           height: APPBAR_HEIGHT,
+
         }}
       >
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', }}>
           {icon != undefined && <Button type={type} icon={icon} onPress={onPress} />}
           <Text style={styles.title(color, icon)}>{title}</Text>
         </View>

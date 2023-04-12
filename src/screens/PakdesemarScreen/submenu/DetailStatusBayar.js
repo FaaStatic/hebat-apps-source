@@ -55,6 +55,7 @@ export default DetailStatusBayar = ({ navigation, route }) => {
     var metadata = res.data.metadata;
     var response = res.data.response;
     setLoading(false);
+    console.log(response);
     if (metadata.status === 200) {
       navigation.navigate('ViewPdf', { file: response.url_pdf });
     } else {
@@ -65,15 +66,16 @@ export default DetailStatusBayar = ({ navigation, route }) => {
     const res = await ServiceHelper.actionServicePost(endpoint, params);
     var metadata = res.data.metadata;
     var response = res.data.response;
-    if (metadata.status === 200) {
-      if (response.JML_BARIS !== 0) {
+    if (metadata.status === 200 && response !== null) {
+      if (response.JML_BARIS !== 0 && response !== null) {
         await actionServiceAddNJOP('Status_pembayaran/search_nop_pbb', params, response)
       } else {
         setLoading(false);
         MessageUtil.errorMessage('Data Kosong!!');
       }
     } else {
-      MessageUtil.errorMessage(metadata.message);
+      setLoading(false);
+      MessageUtil.errorMessage('Data Kosong!!');
     }
   };
   const actionServiceAddNJOP = async (endpoint, params, resData) => {

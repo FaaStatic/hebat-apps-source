@@ -16,7 +16,7 @@ const IconOnly = ({ onPress, icon }) => {
     }
   };
   return (
-    <TouchableOpacity activeOpacity={0.2} onPress={onPress}>
+    <TouchableOpacity activeOpacity={0.2} onPress={onPress} >
       <Icon />
     </TouchableOpacity>
   );
