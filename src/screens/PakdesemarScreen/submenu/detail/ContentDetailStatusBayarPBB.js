@@ -6,6 +6,7 @@ import moment from 'moment';
 import 'moment/locale/id';
 import Entypo from 'react-native-vector-icons/Entypo'
 import { CurrencyFormat } from '../../addOns/CurrencyFormat';
+import { FakeCurrencyInput } from 'react-native-currency-input';
 var noPush = 1
 export default ContentDetailStatusBayarPBB = ({ detail, onPressCetakSKL, onPressDetailRiwayat }) => {
   const [masterListRiwayat, setMasterListRiwayat] = useState([])
@@ -277,7 +278,8 @@ export default ContentDetailStatusBayarPBB = ({ detail, onPressCetakSKL, onPress
         <Gap height={10} />
         <View style={styles.cardIn}>
           <Text style={styles.title}>NJOP Bumi</Text>
-          <Text style={styles.description}>{detail.NJOP_BUMI.trim()}</Text>
+          <FakeCurrencyInput value={detail.NJOP_BUMI.trim()} prefix='Rp' style={styles.description} precision={0} />
+          {/* <Text style={}>{detail.NJOP_BUMI.trim()}</Text> */}
         </View>
         <Gap height={10} />
         <View style={styles.cardIn}>
