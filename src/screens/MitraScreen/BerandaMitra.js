@@ -17,8 +17,7 @@ import { Api } from '../../util/ApiManager';
 import { SessionManager } from '../../util/SessionUtil/SessionManager';
 import { useFocusEffect } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
-
-const { width: viewWidth, height: viewHeight } = Dimensions.get('window');
+import { PermissionUtil } from '../../util/PermissionUtil';
 
 export default function BerandaMitra({ navigation, route }) {
   const [userView, setUserView] = useState([]);
@@ -28,6 +27,7 @@ export default function BerandaMitra({ navigation, route }) {
       const backHome = BackHandler.addEventListener('hardwareBackPress', backHandler);
       const task = InteractionManager.runAfterInteractions(() => {
         getUser();
+        PermissionUtil.requestExternalWritePermission();
       });
       return () => {
         task.cancel();
@@ -68,7 +68,7 @@ export default function BerandaMitra({ navigation, route }) {
     <LinearGradient
       colors={[colorApp.gradientSatu, colorApp.gradientDua]}
       start={{ x: -1, y: 0 }}
-      end={{ x: 0, y: 1}}
+      end={{ x: 0, y: 1 }}
       style={style.container}
     >
       <View
@@ -99,8 +99,7 @@ export default function BerandaMitra({ navigation, route }) {
               marginStart: 30,
               fontSize: 22,
               color: 'black',
-              fontFamily:fontsCustom.primary[700],
-
+              fontFamily: fontsCustom.primary[700],
             }}
           >
             Menu Mitra
@@ -128,7 +127,6 @@ export default function BerandaMitra({ navigation, route }) {
             style={{
               width: 20,
               height: 20,
-            
             }}
             resizeMode={'contain'}
           />
@@ -156,27 +154,29 @@ export default function BerandaMitra({ navigation, route }) {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           style={{
-            marginTop:50,
+            marginTop: 50,
           }}
-        ><View style={{
-          width: Platform.isPad ? '40%' :'80%',
-          alignSelf:'center',
-        }}>
-     <Image
-            source={require('../../../assets/images/illustration_mitra.png')}
+        >
+          <View
             style={{
-              height: 250,
-              width:'100%'
-           
+              width: Platform.isPad ? '40%' : '80%',
+              alignSelf: 'center',
             }}
-            resizeMode={'contain'}
-            containerStyle={{
-              height: 250,
-              flexDirection: 'row',
-              justifyContent: 'center',
-            }}
-          />
-        </View>
+          >
+            <Image
+              source={require('../../../assets/images/illustration_mitra.png')}
+              style={{
+                height: 250,
+                width: '100%',
+              }}
+              resizeMode={'contain'}
+              containerStyle={{
+                height: 250,
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}
+            />
+          </View>
 
           <Text
             style={{
@@ -184,7 +184,7 @@ export default function BerandaMitra({ navigation, route }) {
               marginStart: 24,
               fontSize: 14,
               marginTop: 14,
-              fontFamily:fontsCustom.primary[400],
+              fontFamily: fontsCustom.primary[400],
               marginBottom: 18,
             }}
           >
@@ -193,7 +193,7 @@ export default function BerandaMitra({ navigation, route }) {
           {menuMain.map((item) => {
             return (
               <TouchableOpacity
-              key={item.id}
+                key={item.id}
                 onPress={() => {
                   navigation.navigate(item.nextPage);
                 }}
@@ -224,9 +224,8 @@ export default function BerandaMitra({ navigation, route }) {
                 />
                 <Text
                   style={{
-                  
                     color: 'black',
-                    fontFamily:fontsCustom.primary[700],
+                    fontFamily: fontsCustom.primary[700],
                     fontSize: 14,
                     alignSelf: 'center',
                     marginStart: 30,
@@ -245,8 +244,7 @@ export default function BerandaMitra({ navigation, route }) {
               fontSize: 14,
               marginTop: 14,
               marginBottom: 16,
-              fontFamily:fontsCustom.primary[400],
-
+              fontFamily: fontsCustom.primary[400],
             }}
           >
             Menu Lainnya
@@ -282,13 +280,11 @@ export default function BerandaMitra({ navigation, route }) {
             />
             <Text
               style={{
-                
                 fontSize: 14,
                 color: 'black',
                 alignSelf: 'center',
                 marginStart: 30,
-                fontFamily:fontsCustom.primary[700],
-
+                fontFamily: fontsCustom.primary[700],
               }}
             >
               Pengaturan

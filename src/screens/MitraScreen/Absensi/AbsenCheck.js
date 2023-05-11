@@ -163,21 +163,31 @@ const AbsenCheck = ({ navigation, route }) => {
       }
     ]).progress(prog => {
       setOpenDownload(true);
-      setValueUpload(prog);
+      console.log(prog);
+      if (prog > 100) {
+        setValueUpload(100);
+      } else {
+        setValueUpload(prog);
+      }
     }).then(res => {
       var body = JSON.parse(res.data);
       var status = body.metadata.status;
       var message = body.metadata.message;
-      if(status === 200){
-        
+      if (status === 200) {
         setOpenDownload(true);
-        setTimeout(()=>{
+        setTimeout(() => {
           setOpenDownload(false);
-          MessageUtil.successMessage(message,"")
+          MessageUtil.successMessage(message, '');
           setOpenDialog(false);
-        },1000);
-      }else{
+          setTimeout(() => {
+            navigation.navigate('BerandaMitra');
+          }, 1000);
+        }, 1000);
+      } else {
+        console.log('Sini!')
+        setOpenDownload(false);
         MessageUtil.errorMessage(message);
+        setOpenDialog(false);
       }
    
     }).catch(err => {
