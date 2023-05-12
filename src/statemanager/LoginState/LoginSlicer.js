@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Api } from '../../util/ApiManager';
-import { Platform, PermissionsAndroid } from 'react-native';
 import { SessionManager } from '../../util/SessionUtil/SessionManager';
 import { BackgroundLocationServices } from '../../util/BackgroundLocationServices';
 import { GeolocationUtil } from '../../util/GeolocationUtil';
 import { stringApp } from '../../util/globalvar';
 import { MessageUtil } from '../../util/MessageUtil';
-import messaging from '@react-native-firebase/messaging'; 
+import messaging from '@react-native-firebase/messaging';
 
 export const LoginSlicer = createSlice({
   name: 'login',
@@ -31,24 +30,25 @@ export const LoginSlicer = createSlice({
   },
 });
 
-
 export const updateFcm = async () => {
   var idToken = await messaging().getToken();
   var sesi = await SessionManager.GetAsObject(stringApp.session);
   const params = {
-    "id_user":sesi.id,
-    "fcm_id":idToken
+    id_user: sesi.id,
+    fcm_id: idToken,
   };
-   await Api.post("Authentication/update_fcm", params).then(res => {
-    console.log('====================================');
-    console.log("Token Update :", res.data.metadata.message);
-    console.log('====================================');
-   }).catch(err => {
-    console.log('====================================');
-    console.log(`error : ${err}`);
-    console.log('====================================');
-   });
-}
+  await Api.post('Authentication/update_fcm', params)
+    .then((res) => {
+      console.log('====================================');
+      console.log('Token Update :', res.data.metadata.message);
+      console.log('====================================');
+    })
+    .catch((err) => {
+      console.log('====================================');
+      console.log(`error : ${err}`);
+      console.log('====================================');
+    });
+};
 
 export const loginProcess = (params, navigation) => async (dispatch) => {
   try {
@@ -71,7 +71,7 @@ export const loginProcess = (params, navigation) => async (dispatch) => {
           }, 1000);
           console.log(SessionManager.GetAsObject(stringApp.session));
         } else {
-          MessageUtil.errorMessage("Username atau password salah! Mohon diperiksa kembali");
+          MessageUtil.errorMessage('Username atau password salah! Mohon diperiksa kembali');
           console.log('fail', message);
         }
       })

@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Skeleton } from '@rneui/themed';
 import {
   View,
@@ -10,24 +10,32 @@ import {
   ScrollView,
   StatusBar,
   Platform,
+  Modal,
 } from 'react-native';
-import moment from 'moment';
 import 'moment/locale/id';
 import LinearGradient from 'react-native-linear-gradient';
 import { colorApp, fontsCustom } from '../../util/globalvar';
 import { menuPakdeSemar } from './menu';
 import { stylesheet } from './assets';
-import { Gap, HeaderPrimary, Input } from './components';
+import { Button, Gap, HeaderPrimary, Input } from './components';
 import ServiceHelper from './addOns/ServiceHelper';
 import { MessageUtil } from '../../util/MessageUtil';
-import messaging from '@react-native-firebase/messaging';
-export default function Home({ navigation, route }) {
+import { BgSupportNew } from './assets';
+export default function Home({ navigation }) {
   const [article, setArticle] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState(false);
+  const [version, setVersion] = useState(0);
   useEffect(() => {
+    checkStatusVersionApps();
     getDataArticle();
   }, []);
- 
+
+  const checkStatusVersionApps = () => {
+    setModal(true);
+    setVersion(18);
+  };
+
   const getDataArticle = async () => {
     const params = {
       keyword: '',
@@ -140,7 +148,8 @@ export default function Home({ navigation, route }) {
         colors={[colorApp.gradientSatu, colorApp.gradientDua]}
         start={{ x: 5, y: 2.5 }}
         end={{ x: -1, y: 0.7 }}
-        style={[stylesheet.pages]}>
+        style={[stylesheet.pages]}
+      >
         {Platform.OS == 'ios' && <Gap height={35} />}
         <ScrollView showsVerticalScrollIndicator={false}>
           <Gap height={40} />
@@ -172,8 +181,8 @@ export default function Home({ navigation, route }) {
             <Input
               value={'  Anda seorang mitra?'}
               isReadOnly={true}
-              backgroundColor={"#F7F7F7"}
-              borderColor={"#F7F7F7"}
+              backgroundColor={'#F7F7F7'}
+              borderColor={'#F7F7F7'}
               onPressIcon={() => navigation.navigate('Mitra')}
               icon="login"
               backgroundColorInInput={colorApp.button.primary}
@@ -201,19 +210,26 @@ export default function Home({ navigation, route }) {
                       height={120}
                       variant="rectangular"
                     />
-                    {Platform.isPad == true &&
-                      <><Gap width={10} /><Skeleton
-                        LinearGradientComponent={LinearGradient}
-                        animation="wave"
-                        width={160}
-                        height={120}
-                        variant="rectangular" />
-                        <Gap width={10} /><Skeleton
+                    {Platform.isPad == true && (
+                      <>
+                        <Gap width={10} />
+                        <Skeleton
                           LinearGradientComponent={LinearGradient}
                           animation="wave"
                           width={160}
                           height={120}
-                          variant="rectangular" /></>}
+                          variant="rectangular"
+                        />
+                        <Gap width={10} />
+                        <Skeleton
+                          LinearGradientComponent={LinearGradient}
+                          animation="wave"
+                          width={160}
+                          height={120}
+                          variant="rectangular"
+                        />
+                      </>
+                    )}
                   </View>
                 </>
               )}
@@ -231,6 +247,66 @@ export default function Home({ navigation, route }) {
             </View>
           </View>
         </ScrollView>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modal}
+          onRequestClose={() => setModal(false)}
+        >
+          <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ borderRadius: 20, backgroundColor: 'white' }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', padding: 12 }}>
+                  <Image
+                    source={BgSupportNew}
+                    style={{ width: 250, height: 190, resizeMode: 'contain' }}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: fontsCustom.primary[700],
+                      fontSize: 18,
+                      textAlign: 'center',
+                      paddingHorizontal: 16,
+                    }}
+                  >
+                    Informasi
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: fontsCustom.primary[400],
+                      fontSize: 16,
+                      textAlign: 'center',
+                      marginTop: 5,
+                      paddingHorizontal: 16,
+                    }}
+                  >
+                    Sudah tersedia versi aplikasi terbaru
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: fontsCustom.primary[700],
+                      fontSize: 16,
+                      textAlign: 'center',
+                      paddingHorizontal: 16,
+                    }}
+                  >
+                    Hebat! v. {version}
+                  </Text>
+                  <Gap height={20} />
+                  <Button
+                    title={'Perbarui'}
+                    onPress={() => null}
+                    width={130}
+                    fontSize={14}
+                    height={40}
+                    type={'primary'}
+                  />
+                  <Gap height={10} />
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </LinearGradient>
     </>
   );

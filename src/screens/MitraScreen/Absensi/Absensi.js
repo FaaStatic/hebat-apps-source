@@ -8,60 +8,62 @@ import { useFocusEffect } from '@react-navigation/native';
 import { RNLauncherKitHelper } from 'react-native-launcher-kit';
 import ServiceHelper from '../../PakdesemarScreen/addOns/ServiceHelper';
 import { BgLacakLayanan } from '../../PakdesemarScreen/assets';
+import { Button, Gap } from '../../PakdesemarScreen/components';
 const { height: ViewHeight, width: ViewWidth } = Dimensions.get('window');
 const Absensi = ({ navigation, route }) => {
-
-  const [modal,setModal] = useState(false);
+  const [modal, setModal] = useState(false);
   const [refresh, setRefresh] = useState('');
-  useEffect(()=>{
-    if(Platform.OS == 'android'){
+  const [listForbiddenApps, setListForbiddenApps] = useState([]);
+  useEffect(() => {
+    if (Platform.OS == 'android') {
       checkForbiddenApps();
     }
-    const appStateListener = AppState.addEventListener(
-      'change',
-      nextAppState => {
-        console.log('Next AppState is: ', nextAppState);
-        setRefresh(nextAppState);
-      },
-    );
+    const appStateListener = AppState.addEventListener('change', (nextAppState) => {
+      console.log('Next AppState is: ', nextAppState);
+      setRefresh(nextAppState);
+    });
     return () => {
       appStateListener.remove();
     };
-  },[refresh])
+  }, [refresh]);
 
-  useFocusEffect(useCallback(()=>{
-    const task = InteractionManager.runAfterInteractions(()=>{
-      if(Platform.OS === "ios"){
-        PermissionUtil.accessIosCameraPhotoLibrary();
-      }else{
-        PermissionUtil.requestCameraPermission();
-        PermissionUtil.requestExternalWritePermission();
-      }
-     
-    });
-    return()=> task.cancel();
-  },[]));
+  useFocusEffect(
+    useCallback(() => {
+      const task = InteractionManager.runAfterInteractions(() => {
+        if (Platform.OS === 'ios') {
+          PermissionUtil.accessIosCameraPhotoLibrary();
+        } else {
+          PermissionUtil.requestCameraPermission();
+        }
+      });
+      return () => task.cancel();
+    }, [])
+  );
 
   const checkForbiddenApps = async () => {
     const res = await ServiceHelper.actionServiceGet('Master/get_forbidden_app');
     var metadata = res.data.metadata;
     var response = res.data.response;
     if (metadata.status === 200) {
+      console.log(response);
       let data = [];
+      let dataListTrue = [];
       for (let index = 0; index < response.length; index++) {
         const element = response[index].package;
-        const result = await RNLauncherKitHelper.checkIfPackageInstalled(
-          element,
-        );
+        const result = await RNLauncherKitHelper.checkIfPackageInstalled(element);
         console.log(result);
-        data.push(result)
+        response[index].status = result;
+        data.push(response[index]);
+        if (result == true) {
+          dataListTrue.push(response[index].nama);
+        }
       }
-      let status = data.find((boolean) => boolean == true);
-      console.log(status);
-      if(status != undefined){
-        setModal(true)
+      setListForbiddenApps(dataListTrue);
+      let status = data.find((item) => item.status == true);
+      if (status != undefined) {
+        setModal(true);
       } else {
-        setModal(false)
+        setModal(false);
       }
     } else {
       console.log(metadata.message);
@@ -107,19 +109,24 @@ const Absensi = ({ navigation, route }) => {
             borderRadius: 8,
           }}
         >
-          <Icon name="location" size={24} color={'white'} style={{
-            alignSelf:'flex-start',
-          }} />
+          <Icon
+            name="location"
+            size={24}
+            color={'white'}
+            style={{
+              alignSelf: 'flex-start',
+            }}
+          />
 
           <Text
             style={{
               alignSelf: 'center',
               textAlign: 'center',
-              width:'100%',
+              width: '100%',
               color: 'white',
               fontSize: 16,
-              
-              fontFamily:fontsCustom.primary[700],
+
+              fontFamily: fontsCustom.primary[700],
             }}
           >
             Absen Masuk
@@ -138,17 +145,22 @@ const Absensi = ({ navigation, route }) => {
             borderRadius: 8,
           }}
         >
-          <Icon name="location" size={24} color={'white'}  tyle={{
-            alignSelf:'flex-start',
-          }} />
+          <Icon
+            name="location"
+            size={24}
+            color={'white'}
+            tyle={{
+              alignSelf: 'flex-start',
+            }}
+          />
           <Text
             style={{
               alignSelf: 'center',
               textAlign: 'center',
               color: 'white',
               fontSize: 16,
-              width:'100%',
-              fontFamily:fontsCustom.primary[700],
+              width: '100%',
+              fontFamily: fontsCustom.primary[700],
             }}
           >
             Absen Pulang
@@ -156,39 +168,56 @@ const Absensi = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
       <Modal animationType="slide" transparent={true} visible={modal}>
-          <View style={{
-            overflow: 'hidden',
-            height : ViewHeight,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-          }}>
-            <View
-              style={{
-                marginTop : ViewHeight / 3,
-                alignSelf: 'center',
-                backgroundColor : 'white',
-                borderRadius : 20
-              }}
-            >
-              <View style={{justifyContent: 'center', alignItems: 'center', padding : 12 }}>
+        <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ borderRadius: 20, backgroundColor: 'white' }}>
+              <View style={{ justifyContent: 'center', alignItems: 'center', padding: 12 }}>
                 <Image
                   source={BgLacakLayanan}
-                  style={{ width: ViewWidth / 2, height: ViewHeight / 4, resizeMode : 'contain' }}
+                  style={{ width: ViewWidth / 2, height: ViewHeight / 4, resizeMode: 'contain' }}
                 />
                 <Text
                   style={{
                     fontFamily: fontsCustom.primary[700],
-                    fontSize: 20,
+                    fontSize: 16,
                     textAlign: 'center',
-                    marginTop: 16,
+                    marginTop: 5,
                     paddingHorizontal: 16,
                   }}
                 >
-                  Mohon maaf aplikasi kami mendeteksi ada aplikasi Fake GPS di Smartphone anda!
+                  Mohon maaf aplikasi kami mendeteksi ada Aplikasi Manipulasi Lokasi di Smartphone
+                  anda!
                 </Text>
+                <Gap height={5} />
+                {listForbiddenApps.map((item) => {
+                  return (
+                    <Text
+                      style={{
+                        fontFamily: fontsCustom.primary[700],
+                        fontSize: 14,
+                        textAlign: 'center',
+                        paddingHorizontal: 16,
+                      }}
+                    >
+                      {item}
+                    </Text>
+                  );
+                })}
+                <Gap height={20} />
+                <Button
+                  title={'Tutup'}
+                  onPress={() => navigation.goBack()}
+                  width={100}
+                  fontSize={14}
+                  height={40}
+                  type={'primary'}
+                />
+                <Gap height={10} />
               </View>
             </View>
           </View>
-        </Modal>
+        </View>
+      </Modal>
     </View>
   );
 };
