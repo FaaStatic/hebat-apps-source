@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Skeleton } from '@rneui/themed';
+import DeviceInfo from 'react-native-device-info';
 import {
   View,
   Text,
@@ -11,6 +12,7 @@ import {
   StatusBar,
   Platform,
   Modal,
+  Linking,
 } from 'react-native';
 import 'moment/locale/id';
 import LinearGradient from 'react-native-linear-gradient';
@@ -21,19 +23,44 @@ import { Button, Gap, HeaderPrimary, Input } from './components';
 import ServiceHelper from './addOns/ServiceHelper';
 import { MessageUtil } from '../../util/MessageUtil';
 import { BgSupportNew } from './assets';
+
+var OsVer = parseInt(Platform.Version, 10);
 export default function Home({ navigation }) {
   const [article, setArticle] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const [version, setVersion] = useState(0);
+  const [linkOpenApp, setLinkOpenApp] = useState('');
   useEffect(() => {
     checkStatusVersionApps();
     getDataArticle();
   }, []);
 
-  const checkStatusVersionApps = () => {
-    setModal(true);
-    setVersion(18);
+  const checkStatusVersionApps = async () => {
+    const params = {
+      modul: 'user',
+    };
+    const res = await ServiceHelper.actionServicePost('Authentication/checkversion', params);
+    var metadata = res.data.metadata;
+    var response = res.data.response;
+    if (metadata.status == 200) {
+      console.log('Response App Version :', response);
+      let appVersionLocal = parseFloat(DeviceInfo.getVersion());
+      console.log(appVersionLocal);
+      let value_version =
+        Platform.OS === 'android' ? response.version_android : response.version_ios;
+      let appVersionAPI = parseFloat(value_version);
+      console.log(appVersionAPI);
+      if (appVersionAPI > appVersionLocal) {
+        setVersion(appVersionAPI);
+        let link =
+          Platform.OS === 'android' ? response.link_update_android : response.link_update_ios;
+        setLinkOpenApp(link);
+        setModal(true);
+      }
+    } else {
+      console.log(metadata.message);
+    }
   };
 
   const getDataArticle = async () => {
@@ -67,6 +94,13 @@ export default function Home({ navigation }) {
   const detailArticle = (data) => {
     navigation.navigate('DetailArticle', { data: data });
   };
+  const actionOpenLink = () => {
+    setModal(false);
+    setTimeout(() => {
+      Linking.openURL(linkOpenApp);
+    }, 1000);
+  };
+
   const renderItemMenu = (item) => {
     return (
       <TouchableOpacity
@@ -295,7 +329,7 @@ export default function Home({ navigation }) {
                   <Gap height={20} />
                   <Button
                     title={'Perbarui'}
-                    onPress={() => null}
+                    onPress={() => actionOpenLink()}
                     width={130}
                     fontSize={14}
                     height={40}
