@@ -213,7 +213,7 @@ export default function Home({ navigation }) {
             </View>
             <Gap height={20} />
             <Input
-              value={'  Anda seorang mitra?'}
+              value={'Anda Seorang Kawan?'}
               isReadOnly={true}
               backgroundColor={'#F7F7F7'}
               borderColor={'#F7F7F7'}

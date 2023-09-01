@@ -54,10 +54,7 @@ import DataPetugasList from '../screens/MitraScreen/PetugasAdmin/AdminKomponen/D
 import RiwayatAbsensi from '../screens/MitraScreen/Riwayat/RiwayatAbsensi';
 import PreviewSurvey from '../screens/MitraScreen/Survey/PreviewSurvey';
 import RegisterMitra from '../screens/MitraScreen/RegisterMitra';
-
-
-
-
+import PelayananLacak from '../screens/PakdesemarScreen/PelayananLacak';
 
 const initStack = createNativeStackNavigator();
 const InitTab = createBottomTabNavigator();
@@ -78,27 +75,24 @@ const linkingData = {
   config: {
     screens: {
       Home: {
-        path: 'home'
+        path: 'home',
       },
-      DetailArticle:{
-        path:'detailarticle/:data',
+      DetailArticle: {
+        path: 'detailarticle/:data',
       },
       BerandaMitra: {
-        path: 'mitra'
+        path: 'mitra',
       },
-      MainNotification:{
-        path:"MainNotification"
-      }
-    }
-  }
-  
+      MainNotification: {
+        path: 'MainNotification',
+      },
+    },
+  },
 };
 
 export default function RouteManager() {
   return (
-    <NavigationContainer
-    ref={navigationRef}
-    linking={linkingData}>
+    <NavigationContainer ref={navigationRef} linking={linkingData}>
       <initStack.Navigator
         screenOptions={{
           headerShown: false,
@@ -162,14 +156,22 @@ export default function RouteManager() {
             status: null,
           }}
         />
-         <initStack.Screen name="RiwayatAbsensi" component={RiwayatAbsensi} />
-        <initStack.Screen name="DataPetugasList" component={DataPetugasList} initialParams={{
-          type:null
-        }}/>
-        <initStack.Screen name="TugasList" component={TugasList} initialParams={{
-          itemPetugas:null,
-          type:null
-        }} />
+        <initStack.Screen name="RiwayatAbsensi" component={RiwayatAbsensi} />
+        <initStack.Screen
+          name="DataPetugasList"
+          component={DataPetugasList}
+          initialParams={{
+            type: null,
+          }}
+        />
+        <initStack.Screen
+          name="TugasList"
+          component={TugasList}
+          initialParams={{
+            itemPetugas: null,
+            type: null,
+          }}
+        />
         <initStack.Screen name="WajibPajakTutup" component={WajibPajakTutup} />
         <initStack.Screen name="UpdateWajibPajak" component={UpdateWajibPajak} />
         <initStack.Screen name="RiwayatUpdatePajak" component={RiwayatUpdatePajak} />
@@ -207,7 +209,7 @@ export default function RouteManager() {
             status: null,
           }}
         />
-           <initStack.Screen
+        <initStack.Screen
           name="PreviewSurvey"
           component={PreviewSurvey}
           initialParams={{
@@ -216,13 +218,17 @@ export default function RouteManager() {
           }}
         />
         <initStack.Screen name="DetailArticle" component={DetailArticle} />
+        <initStack.Screen name="LacakPelayanan" component={PelayananLacak} />
         <initStack.Screen name="FormRegistrasi" component={FormRegistrasi} />
         <initStack.Screen name="MainNotification" component={MainNotification} />
         <initStack.Screen name="ViewPdf" component={ViewPdf} />
-        <initStack.Screen name="DetailRiwayatStatusBayarPBB" component={DetailRiwayatStatusBayarPBB} />
+        <initStack.Screen
+          name="DetailRiwayatStatusBayarPBB"
+          component={DetailRiwayatStatusBayarPBB}
+        />
       </initStack.Navigator>
     </NavigationContainer>
   );
 }
 
-export {navigationRef}
+export { navigationRef };

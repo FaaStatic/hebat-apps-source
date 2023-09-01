@@ -19,7 +19,7 @@ import Icon3 from 'react-native-vector-icons/FontAwesome5';
 import Icon4 from 'react-native-vector-icons/dist/AntDesign';
 import Geolocation from 'react-native-geolocation-service';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
-import { Camera, useCameraDevices } from 'react-native-vision-camera';
+import { RNCamera } from 'react-native-camera';
 import { useIsFocused } from '@react-navigation/native';
 import { MessageUtil } from '../../../util/MessageUtil';
 import * as mime from 'react-native-mime-types';
@@ -35,11 +35,9 @@ const { height: ViewHeight, width: ViewWidth } = Dimensions.get('window');
 const AbsenCheck = ({ navigation, route }) => {
   const { status } = route.params;
   const { wrap, fs } = RNFetchBlob;
-  const devices = useCameraDevices();
-  const cameraActive = useIsFocused();
-  const cameraUsing = devices.front;
   const cameraRef = useRef();
   const mapsLayout = useRef();
+  const cameraActive = useIsFocused();
   const [mapState, setMapState] = useState({
     latitude: latitude,
     longitude: longitude,
@@ -50,7 +48,6 @@ const AbsenCheck = ({ navigation, route }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openDownload, setOpenDownload] = useState(false);
   const [valueUpload, setValueUpload] = useState(0);
-  const [cameraPermission, setCameraPermission] = useState(false);
   useFocusEffect(
     useCallback(() => {
       getLocation();
@@ -58,21 +55,11 @@ const AbsenCheck = ({ navigation, route }) => {
         clearData();
         PermissionUtil.requestCameraPermission();
         PermissionUtil.requestExternalWritePermission();
-        setCamera();
         getLocation();
       });
       return () => task.cancel();
     }, [])
   );
-
-  const setCamera = async () => {
-    const cameraPermission = await Camera.requestCameraPermission();
-    if (cameraPermission === 'authorized') {
-      setCameraPermission(true);
-    } else {
-      setCameraPermission(false);
-    }
-  };
 
   const clearData = () => {
     latitude = -6.966667;
@@ -114,32 +101,26 @@ const AbsenCheck = ({ navigation, route }) => {
   const absenApi = async () => {
     var sesi = SessionManager.GetAsObject(stringApp.session);
 
-    const snapshot =
-      Platform.OS === 'android'
-        ? await cameraRef.current.takeSnapshot({
-            quality: 85,
-            skipMetadata: true,
-          })
-        : await cameraRef.current.takePhoto({
-            qualityPrioritization: 'balanced',
-            skipMetadata: true,
-          });
+    const options = { quality: 0.85, base64: true };
+    const snapshot = await cameraRef.current.takePictureAsync(options);
 
-    let uriX = snapshot.path;
+    console.log(snapshot.uri);
+
+    let uriX = Platform.OS === 'ios' ? snapshot.uri.replace('file://', '') : snapshot.uri;
     let mimeType = mime.lookup(snapshot.path);
-    let name = snapshot.path.replace(/^.*[\\\/]/, '');
+    let name = snapshot.uri.replace(/^.*[\\\/]/, '');
     polyfill();
     let data = new FormData();
     data.append('files', {
       name: name,
       type: mimeType,
-      uri: Platform.OS === 'android' ? 'file://' + uriX : uriX,
+      uri: uriX,
     });
 
     var test = {
       name: name,
       type: mimeType,
-      uri: Platform.OS === 'android' ? 'file://' + uriX : uriX,
+      uri: uriX,
     };
     console.log('====================================');
     console.log(test);
@@ -147,73 +128,74 @@ const AbsenCheck = ({ navigation, route }) => {
 
     // prettier-ignore
     RNFetchBlob.fetch('POST', 'https://gmedia.bz/bapenda/api/authentication/absens', {
-      'Client-Service': 'monitoring-bapeda',
-      'Auth-Key': 'gmedia',
-      'Content-Type': 'x-www-form-urlencoded',
-      'id': `${sesi.id}`,
-      'latitude': `${mapState.latitude}`,
-      'longitude': `${mapState.longitude}`,
-      'flag': `${status}`,
-    },[
-      {
-        name: 'files',
-        filename: name,
-        type: mimeType,
-        data:wrap(uriX)
-      }
-    ]).progress(prog => {
-      setOpenDownload(true);
-      console.log(prog);
-      if (prog > 100) {
-        setValueUpload(100);
-      } else {
-        setValueUpload(prog);
-      }
-    }).then(res => {
-      var body = JSON.parse(res.data);
-      var status = body.metadata.status;
-      var message = body.metadata.message;
-      if (status === 200) {
+        'Client-Service': 'monitoring-bapeda',
+        'Auth-Key': 'gmedia',
+        'Content-Type': 'x-www-form-urlencoded',
+        'id': `${sesi.id}`,
+        'latitude': `${mapState.latitude}`,
+        'longitude': `${mapState.longitude}`,
+        'flag': `${status}`,
+      },[
+        {
+          name: 'files',
+          filename: name,
+          type: mimeType,
+          data:wrap(uriX)
+        }
+      ]).progress(prog => {
         setOpenDownload(true);
-        setTimeout(() => {
-          setOpenDownload(false);
-          MessageUtil.successMessage(message, '');
-          setOpenDialog(false);
+        console.log(prog);
+        if (prog > 100) {
+          setValueUpload(100);
+        } else {
+          setValueUpload(prog);
+        }
+      }).then(res => {
+
+        var body = JSON.parse(res.data);
+        var status = body.metadata.status;
+        var message = body.metadata.message;
+        if (status === 200) {
+          setOpenDownload(true);
           setTimeout(() => {
-            navigation.navigate('BerandaMitra');
+            setOpenDownload(false);
+            MessageUtil.successMessage(message, '');
+            setOpenDialog(false);
+            setTimeout(() => {
+              navigation.navigate('BerandaMitra');
+            }, 1000);
           }, 1000);
-        }, 1000);
-      } else {
-        console.log('Sini!')
-        setOpenDownload(false);
-        MessageUtil.errorMessage(message);
-        setOpenDialog(false);
-      }
-   
-    }).catch(err => {
-      console.log('====================================');
-      console.log(err);
-      console.log('====================================');
-    });
+        } else {
+          console.log('Sini!')
+          setOpenDownload(false);
+          MessageUtil.errorMessage(message);
+          setOpenDialog(false);
+        }
+
+      }).catch(err => {
+        console.log('====================================');
+        console.log(err);
+        console.log('====================================');
+      });
   };
 
-  if (cameraUsing == null)
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: 'white',
-          flexDirection: 'column',
-          justifyContent: 'center',
-        }}
-      >
-        <ActivityIndicator
-          style={{ alignSelf: 'center' }}
-          color={colorApp.button.primary}
-          size={'large'}
-        />
-      </View>
-    );
+  // if (cameraUsing == null)
+  //   return (
+  //     <View
+  //       style={{
+  //         flex: 1,
+  //         backgroundColor: 'white',
+  //         flexDirection: 'column',
+  //         justifyContent: 'center',
+  //       }}
+  //     >
+  //       <ActivityIndicator
+  //         style={{ alignSelf: 'center' }}
+  //         color={colorApp.button.primary}
+  //         size={'large'}
+  //       />
+  //     </View>
+  //   );
   return (
     <View
       style={{
@@ -224,15 +206,15 @@ const AbsenCheck = ({ navigation, route }) => {
         alignItems: 'center',
       }}
     >
-      <Camera
+      <RNCamera
+        type="front"
         ref={cameraRef}
+        captureAudio={false}
         style={{
           ...StyleSheet.absoluteFill,
           height: ViewHeight / 1.5,
         }}
-        photo={true}
-        device={cameraUsing}
-        isActive={cameraActive}
+        autoFocus="on"
       />
 
       <View

@@ -110,11 +110,15 @@ export default MainSubMenu = ({ navigation, route }) => {
     if (data.id == 'ESPPTPBB') {
       navigation.navigate('LoadWebView', { url: 'http://e-spptpbb.semarangkota.go.id/' });
     } else {
-      setModal(true);
+      navigation.navigate('LacakPelayanan');
     }
   };
   return (
-    <>
+    <View
+      style={{
+        flex: 1,
+      }}
+    >
       <StatusBar backgroundColor={colorApp.header.primary} />
       <View style={{ height: APPBAR_HEIGHT }} />
       <HeaderSubMenu
@@ -196,6 +200,6 @@ export default MainSubMenu = ({ navigation, route }) => {
           </View>
         </View>
       </Modal>
-    </>
+    </View>
   );
 };

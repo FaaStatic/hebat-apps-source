@@ -1,7 +1,7 @@
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import IonIcons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather'
+import Feather from 'react-native-vector-icons/Feather';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, Image } from 'react-native';
 import Select2 from './Selected2';
@@ -112,10 +112,17 @@ const Input = ({
       return <MaterialIcons name="login" size={20} color={colorApp.primary} />;
     }
     if (icon === 'info' || iconIos === 'info') {
-      return <AntDesign name="infocirlceo" size={20} style={{
-        marginStart:4,
-        justifyContent:'center'
-      }} color={colorApp.primary} />;
+      return (
+        <AntDesign
+          name="infocirlceo"
+          size={20}
+          style={{
+            marginStart: 4,
+            justifyContent: 'center',
+          }}
+          color={colorApp.primary}
+        />
+      );
     }
     if (icon === 'copy' || iconIos === 'copy') {
       return <MaterialIcons name="content-copy" size={20} color={colorApp.button.primary} />;
@@ -195,12 +202,12 @@ const Input = ({
           style={
             Platform.OS === 'android'
               ? styles.wrapper(
-                borderColor == undefined ? colorApp.input : borderColor,
-                !isReadOnly,
-                height,
-                icon,
-                backgroundColor
-              )
+                  borderColor == undefined ? colorApp.input : borderColor,
+                  !isReadOnly,
+                  height,
+                  icon,
+                  backgroundColor
+                )
               : styles.wrapperTop(border, !isReadOnly, height, icon, backgroundColor)
           }
         >
@@ -209,6 +216,7 @@ const Input = ({
             keyboardType={keyboardType ? keyboardType : 'default'}
             // onFocus={onFocusForm}
             onBlur={onBlurForm}
+            inputAccessoryViewID={'123DoneX'}
             style={[
               styles.input(height, !isReadOnly, icon, multiline),
               {
@@ -256,8 +264,8 @@ const Input = ({
                         <Icon />
                         <Text
                           style={{
-                            textAlignVertical:'center',
-                            textAlign:'center',
+                            textAlignVertical: 'center',
+                            textAlign: 'center',
                             color: colorApp.primary,
                             fontSize: 14,
                             fontFamily: fontsCustom.primary[700],
@@ -281,13 +289,19 @@ const Input = ({
           style={
             Platform.OS === 'android'
               ? styles.wrapper(
-                borderColor == undefined ? colorApp.input : borderColor,
-                !isReadOnly,
-                height,
-                icon,
-                backgroundColor
-              )
-              : styles.wrapperTop(borderColor == undefined ? colorApp.input : borderColor, !isReadOnly, height, icon, backgroundColor)
+                  borderColor == undefined ? colorApp.input : borderColor,
+                  !isReadOnly,
+                  height,
+                  icon,
+                  backgroundColor
+                )
+              : styles.wrapperTop(
+                  borderColor == undefined ? colorApp.input : borderColor,
+                  !isReadOnly,
+                  height,
+                  icon,
+                  backgroundColor
+                )
           }
           activeOpacity={onPress != 'undefined' ? 0.9 : 0.2}
         >
@@ -318,9 +332,8 @@ const Input = ({
             <Icon />
           </View>
         </TouchableOpacity>
-      )
-      }
-    </View >
+      )}
+    </View>
   );
 };
 
