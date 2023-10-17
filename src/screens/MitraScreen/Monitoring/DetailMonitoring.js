@@ -13,8 +13,9 @@ import {
   UIManager,
   LayoutAnimation,
   InteractionManager,
-  Platform
+  Platform,
 } from 'react-native';
+
 import MapView, { Marker } from 'react-native-maps';
 import { Image, CheckBox, Dialog, BottomSheet, LinearProgress } from '@rneui/themed';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -26,11 +27,10 @@ import Icon from 'react-native-vector-icons/dist/AntDesign';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
 import SignatureScreen from 'react-native-signature-canvas';
 import { MessageUtil } from '../../../util/MessageUtil';
-import { Api } from '../../../util/ApiManager';
+import { Api, urlBapenda } from '../../../util/ApiManager';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import RNFetchBlob from 'rn-fetch-blob';
 import { useFocusEffect } from '@react-navigation/native';
-
 
 const { width: viewWidth, height: viewHeight } = Dimensions.get('window');
 const MIN_HEIGHT_HEADER = StatusBar.currentHeight + 30;
@@ -70,7 +70,6 @@ const DetailMonitoring = ({ navigation, route }) => {
   const [openBottom, setOpenBottom] = useState(false);
   const [openBottom1, setOpenBottom1] = useState(false);
 
-
   const headerHeight = scrollPosition.interpolate({
     inputRange: [0, DISTANCE - 100],
     outputRange: [MAX_HEIGHT_HEADER, MIN_HEIGHT_HEADER],
@@ -90,22 +89,24 @@ const DetailMonitoring = ({ navigation, route }) => {
     extrapolateRight: 'clamp',
   });
 
-  useFocusEffect(useCallback(()=>{
-    if (status === null) {
-      getLocation();
-    }
-    const task = InteractionManager.runAfterInteractions(()=>{
-      clearData();
+  useFocusEffect(
+    useCallback(() => {
       if (status === null) {
         getLocation();
       }
-      addData();
-    });
-    return()=> task.cancel();
-  },[]));
+      const task = InteractionManager.runAfterInteractions(() => {
+        clearData();
+        if (status === null) {
+          getLocation();
+        }
+        addData();
+      });
+      return () => task.cancel();
+    }, [])
+  );
 
   const addData = () => {
-    console.log("yuhu : ",modelData);
+    console.log('yuhu : ', modelData);
     if (status !== null) {
       setDeskripsi(modelData.hasil_monitor);
       if (modelData.monitoring_image.length > 0) {
@@ -176,7 +177,7 @@ const DetailMonitoring = ({ navigation, route }) => {
   const clearData = () => {
     setSavingFileData([]);
     setFileList([]);
-    latitude = -6.966667;    
+    latitude = -6.966667;
     longitude = 110.416664;
     setMapState({
       latitude: latitude,
@@ -184,7 +185,7 @@ const DetailMonitoring = ({ navigation, route }) => {
       latitudeDelta: limitlatitudeDelta,
       longitudeDelta: limitLongitudeDelta,
     });
-  }
+  };
 
   const saveData = async () => {
     const params = {
@@ -274,7 +275,7 @@ const DetailMonitoring = ({ navigation, route }) => {
     let cameraPermission = await PermissionUtil.requestCameraPermission();
     let saveStorage = await PermissionUtil.requestExternalWritePermission();
     if (cameraPermission && saveStorage) {
-     launchImageLibrary(options, (response) => {
+      launchImageLibrary(options, (response) => {
         if (response.didCancel) {
           console.log('Canceled By User');
         } else {
@@ -384,8 +385,8 @@ const DetailMonitoring = ({ navigation, route }) => {
       const configOption = Platform.select({
         ios: {
           fileCache: true,
-          notification:true,
-          path: fs.dirs.DocumentDir + "/berita_acara_monitoring.pdf",
+          notification: true,
+          path: fs.dirs.DocumentDir + '/berita_acara_monitoring.pdf',
           appendExt: 'pdf',
         },
         android: {
@@ -405,7 +406,7 @@ const DetailMonitoring = ({ navigation, route }) => {
       RNFetchBlob.config(configOption)
         .fetch(
           'GET',
-          `https://gmedia.bz/bapenda/api/Monitoring/pdf_berita_acara?monitoring_id=${modelData.id_monitoring}&tgl_monitor=${modelData.tgl_monitor}&petugas=${sesi.id}&ket_ttd=${ttdKet}`
+          `${urlBapenda}api/Monitoring/pdf_berita_acara?monitoring_id=${modelData.id_monitoring}&tgl_monitor=${modelData.tgl_monitor}&petugas=${sesi.id}&ket_ttd=${ttdKet}`
         )
         .progress((received, total) => {
           var totalReceived = (received / total) * 100;
@@ -420,14 +421,13 @@ const DetailMonitoring = ({ navigation, route }) => {
             var response = JSON.stringify(res);
             console.log(response);
             setDialogDownload(false);
-            setTimeout(()=>{
+            setTimeout(() => {
               RNFetchBlob.ios.openDocument(res.data);
-            },1000);
+            }, 1000);
             setTimeout(() => {
               MessageUtil.successMessage(`File Successfully Downloaded! ${configOption.path}`);
               clearTimeout();
             }, 5000);
-          
           } else {
             setDialogDownload(false);
             RNFetchBlob.android.actionViewIntent;
@@ -505,8 +505,7 @@ const DetailMonitoring = ({ navigation, route }) => {
                 flexDirection: 'row',
                 position: 'absolute',
                 marginStart: 16,
-                marginTop: Platform.OS === "ios" ? 35 :  8,
-
+                marginTop: Platform.OS === 'ios' ? 35 : 8,
               }}
             >
               <TouchableOpacity
@@ -556,7 +555,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 16,
-              fontFamily:fontsCustom.primary[700],
+              fontFamily: fontsCustom.primary[700],
               color: 'black',
               marginTop: 8,
             }}
@@ -566,7 +565,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 14,
-              fontFamily:fontsCustom.primary[400],
+              fontFamily: fontsCustom.primary[400],
               color: 'black',
             }}
           >
@@ -584,7 +583,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               borderRadius: 8,
               padding: 8,
               marginRight: 16,
-              padding:8,
+              padding: 8,
               marginTop: 16,
               marginBottom: 16,
               justifyContent: 'center',
@@ -595,7 +594,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               style={{
                 fontSize: 14,
                 color: 'white',
-                fontFamily:fontsCustom.primary[500],
+                fontFamily: fontsCustom.primary[500],
                 alignSelf: 'center',
               }}
             >
@@ -606,7 +605,7 @@ const DetailMonitoring = ({ navigation, route }) => {
         <Text
           style={{
             fonstSize: 16,
-            fontFamily:fontsCustom.primary[700],
+            fontFamily: fontsCustom.primary[700],
             color: 'black',
             marginTop: 8,
             marginStart: 16,
@@ -617,7 +616,7 @@ const DetailMonitoring = ({ navigation, route }) => {
         <Text
           style={{
             fonstSize: 12,
-            fontFamily:fontsCustom.primary[400],
+            fontFamily: fontsCustom.primary[400],
             color: 'black',
             marginTop: 8,
             marginStart: 16,
@@ -661,13 +660,17 @@ const DetailMonitoring = ({ navigation, route }) => {
         </View>
 
         <View />
-        <Text style={{
-          marginBottom:16,
-          marginTop:8,
-          fontSize:14,
-          marginStart : 16,
-          fontFamily:fontsCustom.primary[700],
-        }}>Map</Text>
+        <Text
+          style={{
+            marginBottom: 16,
+            marginTop: 8,
+            fontSize: 14,
+            marginStart: 16,
+            fontFamily: fontsCustom.primary[700],
+          }}
+        >
+          Map
+        </Text>
         <View
           style={{
             height: 250,
@@ -696,7 +699,6 @@ const DetailMonitoring = ({ navigation, route }) => {
               latitudeDelta: limitlatitudeDelta,
               longitudeDelta: limitLongitudeDelta,
             }}
-         
             onRegionChangeComplete={(region) => {
               if (status === null) {
                 latitude = region.latitude;
@@ -733,7 +735,6 @@ const DetailMonitoring = ({ navigation, route }) => {
               }}
               pinColor="blue"
               title="You are here"
-              
             />
           </MapView>
           {status === null && (
@@ -775,7 +776,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               marginTop: 4,
               fontSize: 12,
               color: 'black',
-              fontFamily:fontsCustom.primary[700],
+              fontFamily: fontsCustom.primary[700],
               alignSelf: 'center',
             }}
           >
@@ -786,7 +787,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               marginTop: 4,
               fontSize: 12,
               color: 'black',
-              fontFamily:fontsCustom.primary[700],
+              fontFamily: fontsCustom.primary[700],
               alignSelf: 'center',
             }}
           >
@@ -821,26 +822,26 @@ const DetailMonitoring = ({ navigation, route }) => {
           style={[
             style.textInput,
             {
-              fontFamily:fontsCustom.primary[700],
+              fontFamily: fontsCustom.primary[700],
               fontSize: 16,
               marginLeft: 24,
             },
           ]}
         >
-         Unggah Gambar
+          Unggah Gambar
         </Text>
         <Text
           style={[
             style.textInput,
             {
               marginBottom: 8,
-              fontFamily:fontsCustom.primary[500],
+              fontFamily: fontsCustom.primary[500],
               fontSize: 14,
               marginLeft: 24,
             },
           ]}
         >
-         Mohon Tekan Tombol Dibawah Ini Untuk Unggah Gambar
+          Mohon Tekan Tombol Dibawah Ini Untuk Unggah Gambar
         </Text>
         {fileList.length > 0 ? (
           <FlatList
@@ -989,7 +990,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               style={{
                 color: 'white',
                 alignSelf: 'center',
-                fontFamily:fontsCustom.primary[700],
+                fontFamily: fontsCustom.primary[700],
                 fontSize: 16,
               }}
             >
@@ -997,11 +998,14 @@ const DetailMonitoring = ({ navigation, route }) => {
             </Text>
           </TouchableOpacity>
         )}
-        <View style={{
-          height:100,
-          backgroundColor:'white',
-          marginTop:16,marginBottom:16,
-        }}/>
+        <View
+          style={{
+            height: 100,
+            backgroundColor: 'white',
+            marginTop: 16,
+            marginBottom: 16,
+          }}
+        />
       </Animated.ScrollView>
       <Dialog
         isVisible={modalConfirm}
@@ -1027,7 +1031,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               marginStart: 24,
               fontSize: 12,
               marginBottom: 8,
-              fontFamily:fontsCustom.primary[400],
+              fontFamily: fontsCustom.primary[400],
               color: 'black',
               textAlign: 'center',
             }}
@@ -1089,7 +1093,7 @@ const DetailMonitoring = ({ navigation, route }) => {
               style={{
                 fontSize: 18,
                 color: 'white',
-                fontFamily:fontsCustom.primary[700],
+                fontFamily: fontsCustom.primary[700],
                 alignSelf: 'center',
               }}
             >
@@ -1120,157 +1124,158 @@ const DetailMonitoring = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       </Dialog>
-      <Dialog overlayStyle={{
+      <Dialog
+        overlayStyle={{
           flexDirection: 'column',
           padding: 24,
-          backgroundColor:'white',
-          borderRadius:8,
-          justifyContent:'center',
-      }} isVisible={dialogOpen}>
-        
-          <Text
-            style={[
-              style.styleInput,
-              {
-                color: 'black',
-                fontFamily:fontsCustom.primary[700],
-                textAlign:'center',
-                marginBottom:24,
-              },
-            ]}
-          >
-            Apakah Anda yakin Ingin Menyimpan Data ini?
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                setDialogOpen(false);
-              }}
-              style={{
-                flexDirection: 'column',
-                justifyContent: 'center',
-                height: 35,
-                elevation:2,
-                padding: 8,
-              }}
-            >
-              <Text
-                style={[
-                  style.styleInput,
-                  {
-                    color: 'gray',
-                    fontFamily:fontsCustom.primary[700],
-                  },
-                ]}
-              >
-                Batal
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                saveData();
-              }}
-              style={{
-                height: 35,
-                backgroundColor:colorApp.button.primary,
-                padding: 8,
-                flexDirection: 'column',
-                justifyContent: 'center',
-                borderRadius:8,
-              }}
-            >
-              <Text
-                style={[
-                  style.styleInput,
-                  {
-                    fontFamily:fontsCustom.primary[700],
-                    color: 'white',
-                  },
-                ]}
-              >
-                Simpan Data
-              </Text>
-            </TouchableOpacity>
-          </View>
-       
-      </Dialog>
-      <Dialog overlayStyle={{
-         backgroundColor: 'white',
-         flexDirection: 'column',
-        padding:24,
-        borderRadius:8,
-         justifyContent: 'flex-start',
-      }} isVisible={dialogDownload}>
-      
-          <Text
-            style={{
-              fontSize: 14,
-              fontFamily:fontsCustom.primary[700],
+          backgroundColor: 'white',
+          borderRadius: 8,
+          justifyContent: 'center',
+        }}
+        isVisible={dialogOpen}
+      >
+        <Text
+          style={[
+            style.styleInput,
+            {
               color: 'black',
+              fontFamily: fontsCustom.primary[700],
+              textAlign: 'center',
+              marginBottom: 24,
+            },
+          ]}
+        >
+          Apakah Anda yakin Ingin Menyimpan Data ini?
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              setDialogOpen(false);
             }}
-          >
-            Pengunduhan Dalam Proses, Mohon Ditunggu...
-          </Text>
-          <View
             style={{
-              marginTop: 8,
-              marginBottom: 8,
-              marginStart: 14,
-              marginVertical: 16,
-              flexDirection: 'row',
-              justifyContent: 'space-around',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              height: 35,
+              elevation: 2,
+              padding: 8,
             }}
           >
-            <LinearProgress
-              style={{ alignSelf: 'center' }}
-              value={downloadProgress}
-              color={colorApp.button.primary}
-              variant="determinate"
-            />
             <Text
-              style={{
-                fontSize: 12,
-                color: 'gray',
-                marginStart: 36,
-                fontFamily:fontsCustom.primary[500],
-                textAlign: 'center',
-                alignSelf: 'center',
-              }}
-            >{` ${downloadProgress}/100`}</Text>
-          </View>
-
+              style={[
+                style.styleInput,
+                {
+                  color: 'gray',
+                  fontFamily: fontsCustom.primary[700],
+                },
+              ]}
+            >
+              Batal
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              saveData();
+            }}
+            style={{
+              height: 35,
+              backgroundColor: colorApp.button.primary,
+              padding: 8,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              borderRadius: 8,
+            }}
+          >
+            <Text
+              style={[
+                style.styleInput,
+                {
+                  fontFamily: fontsCustom.primary[700],
+                  color: 'white',
+                },
+              ]}
+            >
+              Simpan Data
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Dialog>
+      <Dialog
+        overlayStyle={{
+          backgroundColor: 'white',
+          flexDirection: 'column',
+          padding: 24,
+          borderRadius: 8,
+          justifyContent: 'flex-start',
+        }}
+        isVisible={dialogDownload}
+      >
+        <Text
+          style={{
+            fontSize: 14,
+            fontFamily: fontsCustom.primary[700],
+            color: 'black',
+          }}
+        >
+          Pengunduhan Dalam Proses, Mohon Ditunggu...
+        </Text>
+        <View
+          style={{
+            marginTop: 8,
+            marginBottom: 8,
+            marginStart: 14,
+            marginVertical: 16,
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+          }}
+        >
+          <LinearProgress
+            style={{ alignSelf: 'center' }}
+            value={downloadProgress}
+            color={colorApp.button.primary}
+            variant="determinate"
+          />
           <Text
             style={{
               fontSize: 12,
-              fontFamily:fontsCustom.primary[400],
               color: 'gray',
-              marginBottom:8,
+              marginStart: 36,
+              fontFamily: fontsCustom.primary[500],
+              textAlign: 'center',
+              alignSelf: 'center',
             }}
-          >
-            berita acara monitoring.pdf
-          </Text>
-     
+          >{` ${downloadProgress}/100`}</Text>
+        </View>
+
+        <Text
+          style={{
+            fontSize: 12,
+            fontFamily: fontsCustom.primary[400],
+            color: 'gray',
+            marginBottom: 8,
+          }}
+        >
+          berita acara monitoring.pdf
+        </Text>
       </Dialog>
       <BottomSheet isVisible={openBottom}>
         <View
           style={{
             backgroundColor: 'white',
             flexDirection: 'column',
-            borderTopStartRadius:8,
-            borderTopEndRadius:8,
+            borderTopStartRadius: 8,
+            borderTopEndRadius: 8,
             padding: 12,
           }}
         >
           <Text
             style={{
               fontSize: 16,
-              fontFamily:fontsCustom.primary[700],
+              fontFamily: fontsCustom.primary[700],
               marginTop: 8,
               marginStart: 16,
               color: 'black',
@@ -1281,7 +1286,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 14,
-              fontFamily:fontsCustom.primary[700],
+              fontFamily: fontsCustom.primary[700],
               marginTop: 8,
               marginStart: 16,
               color: 'black',
@@ -1292,9 +1297,9 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 12,
-              fontFamily:fontsCustom.primary[400],
+              fontFamily: fontsCustom.primary[400],
               marginTop: 8,
-              marginBottom:8,
+              marginBottom: 8,
               marginStart: 16,
               color: 'black',
             }}
@@ -1304,7 +1309,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 14,
-              fontFamily:fontsCustom.primary[700],
+              fontFamily: fontsCustom.primary[700],
               marginTop: 8,
               marginStart: 16,
               color: 'black',
@@ -1315,10 +1320,10 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 12,
-              fontFamily:fontsCustom.primary[400],
+              fontFamily: fontsCustom.primary[400],
               marginTop: 8,
               marginStart: 16,
-              marginBottom:8,
+              marginBottom: 8,
               color: 'black',
             }}
           >
@@ -1327,7 +1332,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <Text
             style={{
               fontSize: 14,
-              fontFamily:fontsCustom.primary[700],
+              fontFamily: fontsCustom.primary[700],
               marginTop: 8,
               marginStart: 16,
               color: 'black',
@@ -1392,7 +1397,7 @@ const DetailMonitoring = ({ navigation, route }) => {
                   fontSize: 18,
                   color: 'black',
                   alignSelf: 'center',
-                  fontFamily:fontsCustom.primary[700],
+                  fontFamily: fontsCustom.primary[700],
                 }}
               >
                 Tutup
@@ -1417,7 +1422,7 @@ const DetailMonitoring = ({ navigation, route }) => {
                   fontSize: 18,
                   color: 'white',
                   alignSelf: 'center',
-                  fontFamily:fontsCustom.primary[700],
+                  fontFamily: fontsCustom.primary[700],
                 }}
               >
                 Unduh
@@ -1426,10 +1431,13 @@ const DetailMonitoring = ({ navigation, route }) => {
           </View>
         </View>
       </BottomSheet>
-      <BottomSheet  isVisible={openBottom1} onBackdropPress={()=>{
-  setOpenBottom1(false);
-}}>
- <View
+      <BottomSheet
+        isVisible={openBottom1}
+        onBackdropPress={() => {
+          setOpenBottom1(false);
+        }}
+      >
+        <View
           style={{
             backgroundColor: 'white',
             flexDirection: 'column',
@@ -1441,7 +1449,7 @@ const DetailMonitoring = ({ navigation, route }) => {
           <TouchableOpacity
             onPress={() => {
               setOpenBottom1(false);
-             pickImage()
+              pickImage();
             }}
             style={[
               style.btnBottom,
@@ -1461,19 +1469,16 @@ const DetailMonitoring = ({ navigation, route }) => {
             ]}
             onPress={() => {
               setOpenBottom1(false);
-             pickGalery();
+              pickGalery();
             }}
           >
             <Text style={style.textBtn}>Ambil dari Galeri</Text>
           </TouchableOpacity>
-         
         </View>
-
-</BottomSheet>
+      </BottomSheet>
     </View>
   );
 };
- 
 
 const style = StyleSheet.create({
   container: {
@@ -1500,7 +1505,7 @@ const style = StyleSheet.create({
   },
   textTitle: {
     fontSize: 16,
-    fontFamily:fontsCustom.primary[700],
+    fontFamily: fontsCustom.primary[700],
     color: 'black',
     marginBottom: 8,
   },
@@ -1514,7 +1519,7 @@ const style = StyleSheet.create({
   textBtn: {
     fontSize: 16,
     color: 'white',
-    fontFamily:fontsCustom.primary[700],
+    fontFamily: fontsCustom.primary[700],
     textAlign: 'center',
   },
 });

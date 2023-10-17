@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { SessionManager } from './SessionUtil/SessionManager';
 
+export const urlBapenda = 'https://bapenda.gmedia.bz/';
+
 export const Api = axios.create({
-  baseURL: 'https://gmedia.bz/bapenda/api/',
+  baseURL: `${urlBapenda}api/`,
   headers: {
     'Client-Service': 'monitoring-bapeda',
     'Auth-Key': 'gmedia',
@@ -65,7 +67,7 @@ Api.interceptors.response.use(
 );
 
 export const ApiMultiPart = axios.create({
-  baseURL: 'https://gmedia.bz/bapenda/api/',
+  baseURL: `${urlBapenda}/api/`,
   headers: {
     'Client-Service': 'monitoring-bapeda',
     'Auth-Key': 'gmedia',

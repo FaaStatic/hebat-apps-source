@@ -127,7 +127,7 @@ const AbsenCheck = ({ navigation, route }) => {
     console.log('====================================');
 
     // prettier-ignore
-    RNFetchBlob.fetch('POST', 'https://gmedia.bz/bapenda/api/authentication/absens', {
+    RNFetchBlob.fetch('POST', `${URL}api/authentication/absens`, {
         'Client-Service': 'monitoring-bapeda',
         'Auth-Key': 'gmedia',
         'Content-Type': 'x-www-form-urlencoded',

@@ -1,4 +1,4 @@
-import react, { useEffect, useState,useCallback } from 'react';
+import react, { useEffect, useState, useCallback } from 'react';
 import {
   View,
   Alert,
@@ -13,12 +13,17 @@ import {
   ActivityIndicator,
   ScrollView,
   InteractionManager,
-  Linking
+  Linking,
 } from 'react-native';
 import { Button, CustomModal, Gap, HeaderPrimary, Input } from './PakdesemarScreen/components';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch } from 'react-redux';
-import { storeUsername, storePassword, loginProcess, updateFcm } from '../statemanager/LoginState/LoginSlicer';
+import {
+  storeUsername,
+  storePassword,
+  loginProcess,
+  updateFcm,
+} from '../statemanager/LoginState/LoginSlicer';
 import { SessionManager } from '../util/SessionUtil/SessionManager';
 import { colorApp, fontsCustom, stringApp } from '../util/globalvar';
 import { BackgroundLocationServices } from '../util/BackgroundLocationServices';
@@ -35,17 +40,7 @@ export default function Login({ navigation, route }) {
   const [loading, setLoading] = useState(false);
   const [first, setFirst] = useState(false);
   const [isSecure, setIsSecure] = useState(true);
-  const supportedURL = "https://register.nexa.net.id/bapenda/";
-
-  useFocusEffect(useCallback(()=>{
-    const task = InteractionManager.runAfterInteractions(()=>{
-      setLoading(true);
-      sessionCheck();
-    });
-    return()=> task.cancel();
-  },[]));
-
- 
+  const supportedURL = 'https://register.nexa.net.id/bapenda/';
 
   const sessionCheck = () => {
     setFirst(true);
@@ -62,12 +57,22 @@ export default function Login({ navigation, route }) {
     }
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      const task = InteractionManager.runAfterInteractions(() => {
+        setLoading(true);
+        sessionCheck();
+      });
+      return () => task.cancel();
+    }, [])
+  );
+
   const loginResponse = async () => {
-    if(userName.length === 0 && passWord.length === 0){
-      MessageUtil.errorMessage("Username dan password kosong! mohon diisi terlebih dahulu");
+    if (userName.length === 0 && passWord.length === 0) {
+      MessageUtil.errorMessage('Username dan password kosong! mohon diisi terlebih dahulu');
       return;
-    }else if(userName.length === 0 || passWord.length === 0){
-      MessageUtil.errorMessage("Username atau password masih kosong! mohon diisi terlebih dahulu");
+    } else if (userName.length === 0 || passWord.length === 0) {
+      MessageUtil.errorMessage('Username atau password masih kosong! mohon diisi terlebih dahulu');
 
       return;
     }
@@ -85,9 +90,7 @@ export default function Login({ navigation, route }) {
       clearTimeout();
     }, 6000);
   };
- 
 
- 
   return (
     <View style={style.container}>
       <KeyboardAvoidingView
@@ -115,7 +118,7 @@ export default function Login({ navigation, route }) {
                   <View style={{ height: ViewPortHeight / 5 }} />
                   <Input
                     label="Username"
-                    placeholder={"Username"}
+                    placeholder={'Username'}
                     icon="user"
                     type="label"
                     onChangeText={(val) => setUsername(val)}
@@ -126,20 +129,18 @@ export default function Login({ navigation, route }) {
                   <Gap height={30} />
                   <Input
                     label="Password"
-                    placeholder={"Password"}
+                    placeholder={'Password'}
                     type="label"
                     keyboardType="password"
                     onChangeText={(val) => setPassword(val)}
                     isSecure={isSecure}
-                  
                     onPress={() => setIsSecure(!isSecure)}
                     borderColor={colorApp.primary}
                     backgroundColor={colorApp.primary}
                     backgroundColorInInput={colorApp.button.primary}
                   />
                   <Gap height={20} />
-                  <View style={{ flexDirection: 'row', justifyContent:'flex-end' }}>
-                   
+                  <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                     <Button
                       height={35}
                       title="MASUK"
@@ -150,31 +151,47 @@ export default function Login({ navigation, route }) {
                   </View>
                   <Gap height={40} />
                 </View>
-                {Platform.OS === "ios" &&  <View style={{
-                  flexDirection:'row',
-                  justifyContent:'center',
-                  alignSelf:'center',
-                }}>
-                  <Text style={{
-                      color: colorApp.black,
-                      fontFamily: fontsCustom.primary[400],
-                      fontSize: 12,
-                  }}>Belum Memiliki Akun ? </Text>
-                  <TouchableOpacity 
-                  onPress={()=>{navigation.navigate("RegisterMitra")}}
-                  style={{
-                    padding:0,
-                    
-                    flexDirection:'column',
-                    justifyContent:'flex-end',
-                    paddingBottom:1,
-                  }}>
-                    <Text style={{
-                      color: colorApp.button.primary, fontSize: 12, 
-                      fontFamily: fontsCustom.primary[700],
-                    }}>Daftar Disini!</Text>
-                  </TouchableOpacity>
-                </View>}
+                {Platform.OS === 'ios' && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignSelf: 'center',
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: colorApp.black,
+                        fontFamily: fontsCustom.primary[400],
+                        fontSize: 12,
+                      }}
+                    >
+                      Belum Memiliki Akun ?{' '}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate('RegisterMitra');
+                      }}
+                      style={{
+                        padding: 0,
+
+                        flexDirection: 'column',
+                        justifyContent: 'flex-end',
+                        paddingBottom: 1,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: colorApp.button.primary,
+                          fontSize: 12,
+                          fontFamily: fontsCustom.primary[700],
+                        }}
+                      >
+                        Daftar Disini!
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
               </View>
             </ScrollView>
           </LinearGradient>
@@ -198,7 +215,7 @@ const style = StyleSheet.create({
     marginEnd: 8,
     flex: 1,
     fontSize: 14,
-    fontFamily:fontsCustom.primary[400],
+    fontFamily: fontsCustom.primary[400],
   },
   textInputContainer: {
     padding: 8,

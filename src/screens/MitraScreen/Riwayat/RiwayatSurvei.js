@@ -24,7 +24,7 @@ import {
   setShowSearch,
   setEndShowIos,
 } from '../../../statemanager/HeaderDateState/HeaderDateSlicer';
-import { Api } from '../../../util/ApiManager';
+import { Api, urlBapenda } from '../../../util/ApiManager';
 import { SessionManager } from '../../../util/SessionUtil/SessionManager';
 import { colorApp, fontsCustom, stringApp } from '../../../util/globalvar';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -108,10 +108,7 @@ export default function RiwayatSurvey({ navigation, route }) {
         },
       });
       RNFetchBlob.config(configOption)
-        .fetch(
-          'GET',
-          `https://gmedia.bz/bapenda/api/Survey/download_surat_pernyataan?id=${tempItem.id}`
-        )
+        .fetch('GET', `${urlBapenda}api/Survey/download_surat_pernyataan?id=${tempItem.id}`)
         .progress((received, total) => {
           var totalReceived = (received / total) * 100;
           var finalValue = Math.floor(totalReceived);
@@ -453,7 +450,7 @@ export default function RiwayatSurvey({ navigation, route }) {
           <Text
             style={{
               fontSize: 18,
-              fontFamily:fontsCustom.primary[700],
+              fontFamily: fontsCustom.primary[700],
 
               marginBottom: 8,
               color: 'black',
@@ -464,7 +461,7 @@ export default function RiwayatSurvey({ navigation, route }) {
           <Text
             style={{
               fontSize: 16,
-              fontFamily:fontsCustom.primary[400],
+              fontFamily: fontsCustom.primary[400],
 
               color: 'black',
             }}
@@ -482,7 +479,7 @@ export default function RiwayatSurvey({ navigation, route }) {
           <Text
             style={{
               fontSize: 14,
-              fontFamily:fontsCustom.primary[500],
+              fontFamily: fontsCustom.primary[500],
 
               color: 'blue',
             }}
@@ -732,7 +729,7 @@ const style = StyleSheet.create({
   textBtn: {
     fontSize: 16,
     color: 'white',
-    fontFamily:fontsCustom.primary[700],
+    fontFamily: fontsCustom.primary[700],
 
     textAlign: 'center',
   },

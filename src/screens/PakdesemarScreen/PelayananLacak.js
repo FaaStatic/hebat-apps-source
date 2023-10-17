@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { colorApp, fontsCustom } from '../../util/globalvar';
 import {
   Platform,
@@ -6,9 +6,9 @@ import {
   View,
   Text,
   InputAccessoryView,
-  Button,
   Keyboard,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import { CustomModal, Gap, HeaderSubMenu, Input } from './components';
 import axios from 'axios';
@@ -27,7 +27,9 @@ const PelayananLacak = ({ navigation, route }) => {
     tanggal: null,
     status: null,
   });
-  const APPBAR_HEIGHT = Platform.isPad == true ? height / 7 : 110;
+  const { height: ViewPortHeight } = Dimensions.get('window');
+
+  const APPBAR_HEIGHT = Platform.isPad == true ? ViewPortHeight / 7 : 110;
   const inputAccessoryViewID = '123DoneX';
   const optionSetNomor = (val) => {
     if (val.length == 2) {

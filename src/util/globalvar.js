@@ -42,7 +42,6 @@ const fontsCustom = {
   },
 };
 
-
 const firebaseConfig = {
   apiKey: 'AIzaSyBTnDJ5qVv8E7GwhnIkBsvZtgNQF_g9Y-k',
   authDomain: 'bapendaapps.firebaseapp.com',
@@ -52,8 +51,6 @@ const firebaseConfig = {
   appId: '1:461986255627:web:0217d48606ba79e0fbc80e',
   measurementId: 'G-NDBHBCJRZ4',
 };
-
-
 
 const menuMain = [
   {

@@ -1,25 +1,25 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useEffect, useRef, useState,useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { View, StyleSheet, BackHandler, Alert, InteractionManager } from 'react-native';
 import WebView from 'react-native-webview';
 import { Header } from '../../Komponen/Header';
-
+import { urlBapenda } from '../../../util/ApiManager';
 
 export default function FormKelengkapan({ navigation, route }) {
   const { modelData } = route.params;
 
-  var urlForm = `https://gmedia.bz/bapenda/Form/form_kategori/?id=${modelData.id_merchant}&kategori=${modelData.id_kategori}&petugas=${modelData.id_user_potensi}&idp=&flag=${modelData.flag}&id_potensi=${modelData.id_potensi}&pendapatan=${modelData.pendapatan}&pajak=${modelData.pajak}&flag_sumber=${modelData.flag_sumber}`;
+  var urlForm = `${urlBapenda}bapenda/Form/form_kategori/?id=${modelData.id_merchant}&kategori=${modelData.id_kategori}&petugas=${modelData.id_user_potensi}&idp=&flag=${modelData.flag}&id_potensi=${modelData.id_potensi}&pendapatan=${modelData.pendapatan}&pajak=${modelData.pajak}&flag_sumber=${modelData.flag_sumber}`;
 
-  useFocusEffect(useCallback(()=>{
-    const backPage = BackHandler.addEventListener('hardwareBackPress', () => backActionHandler);
-    const task = InteractionManager.runAfterInteractions(()=>{
-      
-    });
-    return()=>{
-      task.cancel();
-      backPage.remove();
-    } 
-  },[]));
+  useFocusEffect(
+    useCallback(() => {
+      const backPage = BackHandler.addEventListener('hardwareBackPress', () => backActionHandler);
+      const task = InteractionManager.runAfterInteractions(() => {});
+      return () => {
+        task.cancel();
+        backPage.remove();
+      };
+    }, [])
+  );
 
   const webViewRef = useRef();
 
@@ -57,7 +57,6 @@ export default function FormKelengkapan({ navigation, route }) {
       return false;
     }
   };
-    
 
   const messageResponse = (event) => {
     var data = JSON.parse(event.nativeEvent.data);
